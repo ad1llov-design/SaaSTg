@@ -14,11 +14,11 @@ import {
 import { cn } from '@/lib/utils';
 
 const menuItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Appointments', href: '/appointments', icon: Calendar },
-  { name: 'Services', href: '/services', icon: Package },
-  { name: 'Clients', href: '/clients', icon: Users },
-  { name: 'Bot Settings', href: '/settings', icon: MessageSquare },
+  { name: 'Панель управления', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Записи на прием', href: '/appointments', icon: Calendar },
+  { name: 'Услуги', href: '/services', icon: Package },
+  { name: 'Клиенты', href: '/clients', icon: Users },
+  { name: 'Настройки бота', href: '/settings', icon: MessageSquare },
 ];
 
 export default function Sidebar() {
@@ -50,7 +50,7 @@ export default function Sidebar() {
               )}
             >
               <item.icon className="w-5 h-5" />
-              <span className="font-medium">{item.name}</span>
+              <span className="font-medium text-sm">{item.name}</span>
             </Link>
           );
         })}
@@ -59,7 +59,7 @@ export default function Sidebar() {
       <div className="mt-auto pt-6 border-t border-slate-800">
         <button className="flex items-center gap-3 px-4 py-3 w-full text-slate-400 hover:text-rose-400 hover:bg-rose-500/5 rounded-xl transition-colors">
           <LogOut className="w-5 h-5" />
-          <span className="font-medium">Sign Out</span>
+          <span className="font-medium text-sm">Выход</span>
         </button>
       </div>
     </div>
