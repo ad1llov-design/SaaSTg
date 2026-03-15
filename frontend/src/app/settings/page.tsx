@@ -37,7 +37,8 @@ export default function SettingsPage() {
           bizId = data.id;
       }
 
-      const response = await fetch('http://localhost:5000/api/register-bot', {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+      const response = await fetch(`${backendUrl}/api/register-bot`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ businessId: bizId, token })
