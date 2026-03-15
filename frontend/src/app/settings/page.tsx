@@ -37,12 +37,22 @@ export default function SettingsPage() {
           bizId = data.id;
       }
 
-      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+      let backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+      if (backendUrl.endsWith('/')) backendUrl = backendUrl.slice(0, -1);
+
+      console.log('Connecting to:', `${backendUrl}/api/register-bot`);
+      
       const response = await fetch(`${backendUrl}/api/register-bot`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ businessId: bizId, token })
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Backend error:', errorData);
+        throw new Error(errorData.error || 'Server error');
+      }
 
       const result = await response.json();
       if (result.success) {
