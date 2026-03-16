@@ -170,7 +170,7 @@ export default function Sidebar() {
             className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-indigo-600 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 active:scale-[0.98] transition-all tracking-wide"
           >
             <Sparkles className="w-4 h-4" />
-            Let's Start
+            {t.auth.join}
           </Link>
         )}
       </div>

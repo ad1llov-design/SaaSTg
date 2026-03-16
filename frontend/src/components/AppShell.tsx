@@ -3,6 +3,7 @@ import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import Sidebar from '@/components/Sidebar';
+import { useLanguage } from '@/context/LanguageContext';
 
 const PUBLIC_ROUTES = ['/login', '/register'];
 
@@ -10,6 +11,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, loading, business, trialDaysLeft, isAdmin } = useAuth();
+  const { t } = useLanguage();
   
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
 
@@ -22,7 +24,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen flex items-center justify-center bg-main transition-colors">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin shadow-lg shadow-indigo-500/10" />
-          <p className="text-slate-500 font-medium text-sm animate-pulse">Загрузка...</p>
+          <p className="text-slate-500 font-medium text-sm animate-pulse">{t.common.loading}</p>
         </div>
       </div>
     );

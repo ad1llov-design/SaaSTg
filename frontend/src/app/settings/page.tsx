@@ -38,7 +38,7 @@ export default function SettingsPage() {
         const { error } = await supabase.from('businesses').update({ bot_token: token }).eq('id', business.id);
         if (error) throw error;
         setStatus('success');
-      } else { throw new Error('Некорректный токен бота'); }
+      } else { throw new Error(t.settings.invalid_token); }
     } catch (err: any) { setStatus('error'); setErrorMsg(err.message); }
     setLoading(false);
   };

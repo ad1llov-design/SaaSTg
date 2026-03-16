@@ -76,7 +76,7 @@ export default function AppointmentsPage() {
                  <span className="text-sm font-bold text-slate-900 dark:text-white truncate block">{app.services?.name}</span>
               </div>
               <div className="space-y-1 text-right">
-                 <p className="text-xs font-semibold text-slate-400">Стоимость</p>
+                 <p className="text-xs font-semibold text-slate-400">{t.appointments.table_price}</p>
                  <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{app.services?.price} {t.common.currency}</span>
               </div>
             </div>
@@ -103,10 +103,10 @@ export default function AppointmentsPage() {
               <tr className="bg-slate-50 dark:bg-white/5 border-b border-slate-100 dark:border-white/10">
                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t.common.clients}</th>
                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t.common.services}</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Дата / Время</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Стоимость</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Статус</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest text-right">Управление</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t.appointments.table_datetime}</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t.appointments.table_price}</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t.appointments.table_status}</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest text-right">{t.appointments.table_actions}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-white/5">

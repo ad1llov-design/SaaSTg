@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 export default function ClientsPage() {
   const { business } = useAuth();
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const [clients, setClients] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -65,9 +65,9 @@ export default function ClientsPage() {
               <tr>
                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t.common.clients}</th>
                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Telegram ID</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Визиты</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Последний визит</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest text-right">Связь</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t.clients.table_visits}</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t.clients.table_last_visit}</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest text-right">{t.clients.table_contact}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-white/5">
@@ -91,7 +91,7 @@ export default function ClientsPage() {
                     </div>
                   </td>
                   <td className="px-6 py-4 text-sm font-medium text-slate-500">
-                    {client.last_visit ? new Date(client.last_visit).toLocaleDateString('ru-RU') : 'Нет визитов'}
+                    {client.last_visit ? new Date(client.last_visit).toLocaleDateString(locale === 'ru' ? 'ru-RU' : locale === 'en' ? 'en-US' : 'ru-RU') : t.clients.no_visits}
                   </td>
                   <td className="px-6 py-4 text-right">
                     <a href={`https://t.me/${client.telegram_id}`} target="_blank" className="w-10 h-10 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-xl hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-all inline-flex items-center justify-center shadow-sm">
@@ -102,7 +102,7 @@ export default function ClientsPage() {
               ))}
               {filtered.length === 0 && (
                 <tr>
-                   <td colSpan={5} className="py-12 text-center text-slate-400 font-medium">Нет клиентов, соответствующих поиску</td>
+                   <td colSpan={5} className="py-12 text-center text-slate-400 font-medium">{t.clients.no_clients}</td>
                 </tr>
               )}
             </tbody>
