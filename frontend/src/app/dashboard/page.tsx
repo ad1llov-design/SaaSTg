@@ -16,7 +16,7 @@ import {
 import { cn } from '@/lib/utils';
 
 export default function Dashboard() {
-  const { business, user, theme } = useAuth();
+  const { business, user } = useAuth();
   const [stats, setStats] = useState({ appointments: 0, clients: 0, revenue: 0, todayAppointments: 0 });
   const [recentAppointments, setRecentAppointments] = useState<any[]>([]);
 
@@ -59,7 +59,6 @@ export default function Dashboard() {
   return (
     <div className="space-y-6 md:space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       
-      {/* ДЕМО-БАННЕР */}
       {!user && (
         <div className="relative overflow-hidden premium-card !bg-emerald-500 !border-none p-6 md:p-8">
           <div className="absolute right-0 top-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-xl" />
@@ -80,13 +79,12 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* ЗАГОЛОВОК */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-[var(--text-main)]">
             Бизнес-аналитика <span className="font-premium text-emerald-500 italic">Aura</span>
           </h1>
-          <p className="text-slate-500 mt-2 font-medium">Добро пожаловать, <span className="text-slate-900 dark:text-white font-bold">{business?.name || 'Гость'}</span></p>
+          <p className="text-slate-500 mt-2 font-medium">Добро пожаловать, <span className="text-emerald-500 font-bold">{business?.name || 'Гость'}</span></p>
         </div>
         <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full self-start">
           <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
@@ -94,7 +92,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* КАРТОЧКИ */}
       <div className="dashboard-grid">
         {cards.map((card) => (
           <div key={card.name} className="premium-card">
@@ -102,47 +99,46 @@ export default function Dashboard() {
               <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center", card.bg)}>
                 <card.icon className={cn("w-6 h-6", card.color)} />
               </div>
-              <div className="h-1.5 w-12 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+              <div className="h-1.5 w-12 bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
                  <div className={cn("h-full w-2/3", card.bg.replace('/10', ''))} />
               </div>
             </div>
-            <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">{card.name}</p>
-            <p className="text-2xl font-bold">{card.value}</p>
+            <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-1">{card.name}</p>
+            <p className="text-2xl font-bold text-[var(--text-main)]">{card.value}</p>
           </div>
         ))}
       </div>
 
-      {/* ПОСЛЕДНИЕ СОБЫТИЯ */}
       <div className="premium-card">
         <div className="flex items-center justify-between mb-8">
-          <h3 className="text-xl font-bold">Последние записи</h3>
+          <h3 className="text-xl font-bold text-[var(--text-main)]">Последние записи</h3>
           <Link href="/appointments" className="flex items-center gap-1 text-xs font-bold text-emerald-500 hover:gap-2 transition-all">
             Все записи <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
         <div className="space-y-3">
           {recentAppointments.map((apt: any) => (
-            <div key={apt.id} className="flex items-center justify-between p-4 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-transparent hover:border-slate-100 dark:hover:border-white/5 transition-all group">
+            <div key={apt.id} className="flex items-center justify-between p-4 rounded-2xl bg-[var(--bg-input)] border border-transparent hover:border-emerald-500/20 transition-all group">
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 bg-slate-200 dark:bg-white/10 rounded-full flex items-center justify-center font-bold text-[10px] text-slate-600 dark:text-slate-300">
+                <div className="w-10 h-10 bg-white dark:bg-white/10 rounded-full flex items-center justify-center font-bold text-[10px] text-slate-600 dark:text-slate-300 shadow-sm">
                   {apt.users?.name?.[0] || 'U'}
                 </div>
                 <div>
-                  <p className="font-bold text-sm leading-tight text-slate-900 dark:text-slate-100">{apt.users?.name || 'Клиент'}</p>
-                  <p className="text-[11px] text-slate-500 font-medium underline underline-offset-4 decoration-emerald-500/30">{apt.services?.name}</p>
+                  <p className="font-bold text-sm leading-tight text-[var(--text-main)]">{apt.users?.name || 'Клиент'}</p>
+                  <p className="text-[11px] text-slate-500 font-medium">{apt.services?.name}</p>
                 </div>
               </div>
               <div className="flex items-center gap-6">
                 <div className="hidden sm:block text-right">
-                  <p className="text-xs font-bold text-slate-900 dark:text-slate-100">{apt.appointment_time}</p>
+                  <p className="text-xs font-bold text-[var(--text-main)]">{apt.appointment_time}</p>
                   <p className="text-[10px] text-slate-500">{apt.appointment_date}</p>
                 </div>
                 <div className={cn(
-                  "px-3 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-wider",
-                  apt.status === 'confirmed' ? "bg-emerald-500/10 text-emerald-500" :
+                  "px-3 py-1.5 rounded-full text-[9px] font-bold uppercase tracking-wider shadow-sm",
+                  apt.status === 'confirmed' ? "bg-emerald-500 text-white" :
                   apt.status === 'cancelled' ? "bg-rose-500/10 text-rose-500" : "bg-amber-500/10 text-amber-500"
                 )}>
-                  {apt.status === 'confirmed' ? 'Ok' : apt.status === 'cancelled' ? 'No' : 'Wait'}
+                  {apt.status === 'confirmed' ? 'Ок' : apt.status === 'cancelled' ? 'Нет' : 'Ждет'}
                 </div>
               </div>
             </div>
