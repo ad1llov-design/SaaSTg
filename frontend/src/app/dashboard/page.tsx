@@ -1,128 +1,312 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/components/AuthProvider';
 import { 
   Users, 
   Calendar, 
   TrendingUp, 
   Plus,
   ArrowUpRight,
-  Clock
+  ArrowDownRight,
+  Clock,
+  DollarSign
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+// Мини-SVG график (Sparkline)
+function Sparkline({ data, color = '#10b981' }: { data: number[], color?: string }) {
+  if (!data.length) return null;
+  const max = Math.max(...data, 1);
+  const min = Math.min(...data, 0);
+  const range = max - min || 1;
+  const w = 200;
+  const h = 60;
+  const points = data.map((v, i) => {
+    const x = (i / (data.length - 1 || 1)) * w;
+    const y = h - ((v - min) / range) * h;
+    return `${x},${y}`;
+  }).join(' ');
+
+  const areaPoints = `0,${h} ${points} ${w},${h}`;
+
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-16" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id={`grad-${color.replace('#','')}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity="0.3" />
+          <stop offset="100%" stopColor={color} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <polygon points={areaPoints} fill={`url(#grad-${color.replace('#','')})`} />
+      <polyline points={points} fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+// Барный график за последние 7 дней
+function WeeklyBarChart({ data }: { data: { day: string, count: number }[] }) {
+  const max = Math.max(...data.map(d => d.count), 1);
+  
+  return (
+    <div className="flex items-end gap-3 h-40">
+      {data.map((d, i) => (
+        <div key={i} className="flex-1 flex flex-col items-center gap-2">
+          <span className="text-xs text-slate-500 font-medium">{d.count}</span>
+          <div className="w-full relative rounded-t-lg overflow-hidden" style={{ height: `${(d.count / max) * 100}%`, minHeight: '4px' }}>
+            <div className="absolute inset-0 bg-gradient-to-t from-emerald-600 to-emerald-400 opacity-80 group-hover:opacity-100 transition-opacity" />
+          </div>
+          <span className="text-[10px] text-slate-500 font-medium">{d.day}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Dashboard() {
+  const { business } = useAuth();
   const [stats, setStats] = useState({
     appointments: 0,
     clients: 0,
     revenue: 0,
+    todayAppointments: 0,
   });
   const [recentAppointments, setRecentAppointments] = useState<any[]>([]);
+  const [weeklyData, setWeeklyData] = useState<{ day: string, count: number }[]>([]);
+  const [sparklineData, setSparklineData] = useState<number[]>([]);
 
   useEffect(() => {
-    async function loadStats() {
-      const { data: apts } = await supabase.from('appointments').select('*');
-      const { data: clients } = await supabase.from('clients').select('*');
-      const { data: services } = await supabase.from('services').select('price');
+    if (!business?.id) return;
+    
+    async function loadAll() {
+      const bizId = business.id;
+
+      // Все записи с ценой услуги
+      const { data: apts } = await supabase
+        .from('appointments')
+        .select('*, services(price, name)')
+        .eq('business_id', bizId);
+
+      // Клиенты
+      const { data: clients } = await supabase
+        .from('clients')
+        .select('id')
+        .eq('business_id', bizId);
+
+      // Сегодняшняя дата
+      const today = new Date().toISOString().split('T')[0];
 
       if (apts) {
+        // Реальный доход = сумма цен подтвержденных записей
+        const revenue = apts
+          .filter(a => a.status === 'confirmed' || a.status === 'completed')
+          .reduce((sum, a) => sum + (Number(a.services?.price) || 0), 0);
+
+        const todayCount = apts.filter(a => a.appointment_date === today).length;
+
         setStats({
           appointments: apts.length,
           clients: clients?.length || 0,
-          revenue: apts
-            .filter(a => a.status === 'confirmed')
-            .length * 50, // Временная логика расчета
+          revenue,
+          todayAppointments: todayCount,
         });
+
+        // Еженедельные данные для графика
+        const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+        const weekly: { day: string, count: number }[] = [];
+        for (let i = 6; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          const dateStr = d.toISOString().split('T')[0];
+          const count = apts.filter(a => a.appointment_date === dateStr).length;
+          weekly.push({ day: days[d.getDay()], count });
+        }
+        setWeeklyData(weekly);
+
+        // Данные для sparkline (последние 14 дней)
+        const spark: number[] = [];
+        for (let i = 13; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          const dateStr = d.toISOString().split('T')[0];
+          spark.push(apts.filter(a => a.appointment_date === dateStr).length);
+        }
+        setSparklineData(spark);
       }
 
+      // Последние записи
       const { data: recent } = await supabase
         .from('appointments')
         .select('*, services(*), users(*)')
+        .eq('business_id', bizId)
         .order('created_at', { ascending: false })
         .limit(5);
       
       if (recent) setRecentAppointments(recent);
     }
-    loadStats();
-  }, []);
+    
+    loadAll();
+  }, [business]);
 
   const cards = [
-    { name: 'Всего записей', value: stats.appointments, icon: Calendar, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-    { name: 'Активные клиенты', value: stats.clients, icon: Users, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
-    { name: 'Прогноз дохода', value: `${stats.revenue}$`, icon: TrendingUp, color: 'text-purple-500', bg: 'bg-purple-500/10' },
+    { 
+      name: 'Всего записей', 
+      value: stats.appointments, 
+      icon: Calendar, 
+      color: 'text-blue-500', 
+      bg: 'bg-blue-500/10',
+      trend: '+12%',
+      trendUp: true 
+    },
+    { 
+      name: 'Активные клиенты', 
+      value: stats.clients, 
+      icon: Users, 
+      color: 'text-emerald-500', 
+      bg: 'bg-emerald-500/10',
+      trend: `+${stats.clients}`,
+      trendUp: true 
+    },
+    { 
+      name: 'Доход', 
+      value: `${stats.revenue.toLocaleString()} сом`, 
+      icon: DollarSign, 
+      color: 'text-purple-500', 
+      bg: 'bg-purple-500/10',
+      trend: stats.revenue > 0 ? `${stats.revenue.toLocaleString()}` : '0',
+      trendUp: stats.revenue > 0 
+    },
+    { 
+      name: 'Сегодня', 
+      value: stats.todayAppointments, 
+      icon: Clock, 
+      color: 'text-amber-500', 
+      bg: 'bg-amber-500/10',
+      trend: `${stats.todayAppointments} записей`,
+      trendUp: stats.todayAppointments > 0 
+    },
   ];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
+      {/* Заголовок */}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold">Панель управления</h2>
-          <p className="text-slate-400 mt-1">Добро пожаловать обратно! Вот что происходит сегодня.</p>
+          <p className="text-slate-400 mt-1">
+            Добро пожаловать! Вот обзор вашего бизнеса <span className="text-emerald-400 font-medium">{business?.name || ''}</span>
+          </p>
         </div>
-        <button className="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold transition-all shadow-lg shadow-emerald-500/20 flex items-center gap-2 active:scale-95">
-          <Plus className="w-5 h-5" />
-          Новая запись
-        </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Карточки статистики */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {cards.map((card) => (
-          <div key={card.name} className="glass p-6 rounded-3xl border border-slate-800 hover:border-slate-700 transition-colors group">
-            <div className="flex items-center justify-between mb-4">
-              <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center", card.bg)}>
-                <card.icon className={cn("w-6 h-6", card.color)} />
+          <div key={card.name} className="glass p-5 rounded-2xl border border-slate-800 hover:border-slate-700 transition-all group">
+            <div className="flex items-center justify-between mb-3">
+              <div className={cn("w-11 h-11 rounded-xl flex items-center justify-center", card.bg)}>
+                <card.icon className={cn("w-5 h-5", card.color)} />
               </div>
-              <div className="flex items-center gap-1 text-emerald-500 text-sm font-bold bg-emerald-500/10 px-2 py-1 rounded-lg">
-                <ArrowUpRight className="w-4 h-4" />
-                +12%
+              <div className={cn(
+                "flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-lg",
+                card.trendUp 
+                  ? "text-emerald-500 bg-emerald-500/10" 
+                  : "text-slate-500 bg-slate-800"
+              )}>
+                {card.trendUp 
+                  ? <ArrowUpRight className="w-3 h-3" /> 
+                  : <ArrowDownRight className="w-3 h-3" />
+                }
+                {card.trend}
               </div>
             </div>
-            <p className="text-slate-400 font-medium">{card.name}</p>
-            <p className="text-3xl font-bold mt-1">{card.value}</p>
+            <p className="text-slate-400 text-sm font-medium">{card.name}</p>
+            <p className="text-2xl font-bold mt-0.5">{card.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="glass rounded-3xl border border-slate-800 p-8">
-          <div className="flex items-center justify-between mb-8">
-            <h3 className="text-xl font-bold">Последние записи</h3>
-            <button className="text-sm text-emerald-500 font-bold hover:underline">См. все</button>
+      {/* Графики */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Барный график записей за неделю */}
+        <div className="glass rounded-2xl border border-slate-800 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-lg font-bold">Записи за неделю</h3>
+              <p className="text-slate-500 text-sm">Динамика последних 7 дней</p>
+            </div>
+            <div className="px-3 py-1.5 bg-emerald-500/10 rounded-lg text-emerald-500 text-xs font-bold">
+              Всего: {weeklyData.reduce((s, d) => s + d.count, 0)}
+            </div>
           </div>
-          <div className="space-y-6">
-            {recentAppointments.length === 0 ? (
-               <p className="text-slate-500 text-center py-8">Записей пока нет.</p>
-            ) : recentAppointments.map((apt) => (
-              <div key={apt.id} className="flex items-center justify-between group cursor-default">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center font-bold text-lg">
-                    {apt.users?.full_name?.[0] || 'U'}
-                  </div>
-                  <div>
-                    <p className="font-bold group-hover:text-emerald-400 transition-colors">{apt.users?.full_name || 'Клиент'}</p>
-                    <p className="text-sm text-slate-400">{apt.services?.name}</p>
-                  </div>
-                </div>
-                <div className="text-right text-sm">
-                  <p className="font-medium">{apt.appointment_time}</p>
-                  <p className="text-slate-500 text-xs">{apt.appointment_date}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          {weeklyData.length > 0 ? (
+            <WeeklyBarChart data={weeklyData} />
+          ) : (
+            <div className="h-40 flex items-center justify-center text-slate-500 text-sm">
+              Пока нет данных для графика
+            </div>
+          )}
         </div>
 
-        <div className="glass rounded-3xl border border-slate-800 p-8 flex flex-col items-center justify-center text-center space-y-4">
-            <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center">
-                <Clock className="w-10 h-10 text-emerald-500" />
+        {/* Sparkline тренда */}
+        <div className="glass rounded-2xl border border-slate-800 p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h3 className="text-lg font-bold">Тренд за 14 дней</h3>
+              <p className="text-slate-500 text-sm">Кривая активности клиентов</p>
             </div>
-            <h3 className="text-xl font-bold">График работы</h3>
-            <p className="text-slate-400 max-w-xs text-sm">
-              Ваш бот принимает записи по настроенному графику. Вы можете изменить его в настройках.
-            </p>
-            <button className="text-emerald-500 font-bold border border-emerald-500/20 px-6 py-2 rounded-xl hover:bg-emerald-500/5 transition-colors">
-              Настроить
-            </button>
+          </div>
+          {sparklineData.length > 0 ? (
+            <div className="mt-4">
+              <Sparkline data={sparklineData} color="#10b981" />
+              <div className="flex justify-between text-[10px] text-slate-600 mt-2">
+                <span>14 дней назад</span>
+                <span>Сегодня</span>
+              </div>
+            </div>
+          ) : (
+            <div className="h-40 flex items-center justify-center text-slate-500 text-sm">
+              Пока нет данных
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Последние записи */}
+      <div className="glass rounded-2xl border border-slate-800 p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-bold">Последние записи</h3>
+          <a href="/appointments" className="text-sm text-emerald-500 font-bold hover:underline">Все записи →</a>
+        </div>
+        <div className="space-y-4">
+          {recentAppointments.length === 0 ? (
+            <p className="text-slate-500 text-center py-8">Записей пока нет. Ваш первый клиент уже в пути!</p>
+          ) : recentAppointments.map((apt) => (
+            <div key={apt.id} className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-800/30 transition-colors">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center font-bold text-sm">
+                  {apt.users?.name?.[0] || 'U'}
+                </div>
+                <div>
+                  <p className="font-semibold text-sm">{apt.users?.name || 'Клиент'}</p>
+                  <p className="text-xs text-slate-500">{apt.services?.name} • {apt.services?.price} сом</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-medium">{apt.appointment_time}</p>
+                <p className="text-xs text-slate-500">{apt.appointment_date}</p>
+              </div>
+              <span className={cn(
+                "px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border",
+                apt.status === 'confirmed' ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/20" :
+                apt.status === 'cancelled' ? "bg-rose-500/10 text-rose-400 border-rose-500/20" :
+                "bg-amber-500/10 text-amber-500 border-amber-500/20"
+              )}>
+                {apt.status === 'confirmed' ? 'Подтв.' : 
+                 apt.status === 'cancelled' ? 'Отменено' : 'Ожидает'}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

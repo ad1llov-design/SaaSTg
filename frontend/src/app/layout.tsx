@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
+import { AuthProvider } from "@/components/AuthProvider";
+import AppShell from "@/components/AppShell";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "LinkHub SaaS - Client Booking System",
-  description: "Manage your Telegram bot bookings easily",
+  title: "LinkHub SaaS — Система онлайн-записи",
+  description: "Управляйте записями клиентов через Telegram-бота. Автоматизация бронирования, аналитика и уведомления.",
 };
 
 export default function RootLayout({
@@ -16,16 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <body className={`${inter.className} min-h-screen bg-slate-950 text-slate-50`}>
-        <div className="flex">
-          <Sidebar />
-          <main className="flex-1 ml-72 p-8 min-h-screen">
-            <div className="max-w-6xl mx-auto">
-              {children}
-            </div>
-          </main>
-        </div>
+        <AuthProvider>
+          <AppShell>{children}</AppShell>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Package, Clock, DollarSign, Trash2, Edit3 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/components/AuthProvider';
 
 interface Service {
   id: string;
@@ -12,30 +13,28 @@ interface Service {
 }
 
 export default function ServicesPage() {
+  const { business } = useAuth();
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
   const [newService, setNewService] = useState({ name: '', price: '', duration: '30' });
 
-  // Load services
   useEffect(() => {
+    if (!business?.id) return;
     async function fetchServices() {
       const { data, error } = await supabase
         .from('services')
-        .select('*');
-      
+        .select('*')
+        .eq('business_id', business.id);
       if (!error && data) setServices(data);
       setLoading(false);
     }
     fetchServices();
-  }, []);
+  }, [business]);
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    // For MVP we assume business_id is hardcoded or fetched from auth
-    // In real app, get from supabase.auth.user()
-    const { data: bus } = await supabase.from('businesses').select('id').limit(1).single();
-    if (!bus) return alert('Register your business first!');
+    if (!business?.id) return;
 
     const { data, error } = await supabase
       .from('services')
@@ -43,7 +42,7 @@ export default function ServicesPage() {
         name: newService.name,
         price: parseFloat(newService.price),
         duration_minutes: parseInt(newService.duration),
-        business_id: bus.id
+        business_id: business.id
       })
       .select()
       .single();
@@ -55,19 +54,26 @@ export default function ServicesPage() {
     }
   };
 
+  const handleDelete = async (id: string) => {
+    const { error } = await supabase.from('services').delete().eq('id', id);
+    if (!error) {
+      setServices(services.filter(s => s.id !== id));
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold">Services</h2>
-          <p className="text-slate-400 mt-1">Manage the services your clients can book.</p>
+          <h2 className="text-3xl font-bold">Услуги</h2>
+          <p className="text-slate-400 mt-1">Управляйте списком услуг для ваших клиентов.</p>
         </div>
         <button 
           onClick={() => setIsAdding(true)}
           className="flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl transition-all shadow-lg shadow-emerald-500/20"
         >
           <Plus className="w-5 h-5" />
-          Add Service
+          Добавить услугу
         </button>
       </div>
 
@@ -81,18 +87,18 @@ export default function ServicesPage() {
           >
             <form onSubmit={handleAdd} className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-400">Service Name</label>
+                <label className="text-sm font-medium text-slate-400">Название услуги</label>
                 <input 
                   required
                   type="text" 
-                  placeholder="e.g. Haircut"
+                  placeholder="Например: Стрижка"
                   className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500 transition-colors"
                   value={newService.name}
                   onChange={e => setNewService({...newService, name: e.target.value})}
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-400">Price (Som)</label>
+                <label className="text-sm font-medium text-slate-400">Цена (сом)</label>
                 <input 
                   required
                   type="number" 
@@ -103,28 +109,30 @@ export default function ServicesPage() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-400">Duration (min)</label>
+                <label className="text-sm font-medium text-slate-400">Длительность</label>
                 <select 
                   className="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-500 transition-colors"
                   value={newService.duration}
                   onChange={e => setNewService({...newService, duration: e.target.value})}
                 >
-                  <option value="15">15 min</option>
-                  <option value="30">30 min</option>
-                  <option value="45">45 min</option>
-                  <option value="60">1 hour</option>
+                  <option value="15">15 минут</option>
+                  <option value="30">30 минут</option>
+                  <option value="45">45 минут</option>
+                  <option value="60">1 час</option>
+                  <option value="90">1.5 часа</option>
+                  <option value="120">2 часа</option>
                 </select>
               </div>
               <div className="flex gap-2">
                 <button type="submit" className="flex-1 bg-emerald-500 py-3 rounded-xl font-bold hover:bg-emerald-600 transition-colors">
-                  Save
+                  Сохранить
                 </button>
                 <button 
                   type="button"
                   onClick={() => setIsAdding(false)}
                   className="px-6 bg-slate-800 py-3 rounded-xl font-bold hover:bg-slate-700 transition-colors"
                 >
-                  Cancel
+                  Отмена
                 </button>
               </div>
             </form>
@@ -134,7 +142,12 @@ export default function ServicesPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
-            <p>Loading services...</p>
+            <p className="text-slate-500">Загрузка услуг...</p>
+        ) : services.length === 0 ? (
+            <div className="col-span-full text-center py-12 text-slate-500">
+              <Package className="w-12 h-12 mx-auto mb-4 opacity-30" />
+              <p>Услуг пока нет. Добавьте первую услугу!</p>
+            </div>
         ) : services.map((service) => (
           <motion.div 
             layout
@@ -145,9 +158,14 @@ export default function ServicesPage() {
               <div className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
                 <Package className="w-6 h-6 text-slate-400 group-hover:text-emerald-400" />
               </div>
-              <div className="flex gap-2">
-                  <button className="p-2 text-slate-500 hover:text-white transition-colors"><Edit3 className="w-4 h-4" /></button>
-                  <button className="p-2 text-slate-500 hover:text-rose-400 transition-colors"><Trash2 className="w-4 h-4" /></button>
+              <div className="flex gap-1">
+                <button 
+                  onClick={() => handleDelete(service.id)}
+                  className="p-2 text-slate-500 hover:text-rose-400 transition-colors"
+                  title="Удалить"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
               </div>
             </div>
             <h3 className="text-xl font-bold mb-4">{service.name}</h3>
@@ -158,7 +176,7 @@ export default function ServicesPage() {
               </div>
               <div className="flex items-center gap-2 text-slate-400">
                 <Clock className="w-4 h-4 text-emerald-500" />
-                <span>{service.duration_minutes} minutes</span>
+                <span>{service.duration_minutes} мин</span>
               </div>
             </div>
           </motion.div>
