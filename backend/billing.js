@@ -1,10 +1,17 @@
 const express = require('express');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripeKey = process.env.STRIPE_SECRET_KEY;
+if (!stripeKey) {
+  console.warn('⚠️ STRIPE_SECRET_KEY не найден в .env. Функции оплаты будут недоступны.');
+}
+const stripe = stripeKey ? require('stripe')(stripeKey) : null;
 const supabase = require('./supabase');
 const router = express.Router();
 
 // 1. Создание сессии оплаты
 router.post('/create-checkout-session', async (req, res) => {
+  if (!stripe) {
+    return res.status(503).json({ error: 'Платежная система не настроена на сервере' });
+  }
   const { businessId, ownerEmail } = req.body;
 
   try {
@@ -42,6 +49,7 @@ router.post('/create-checkout-session', async (req, res) => {
 
 // 2. Webhook для подтверждения оплаты
 router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+  if (!stripe) return res.sendStatus(503);
   const sig = req.headers['stripe-signature'];
   let event;
 

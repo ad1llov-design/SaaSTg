@@ -30,7 +30,7 @@ const menuItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const { user, business, signOut, theme, toggleTheme, trialDaysLeft } = useAuth();
+  const { user, business, signOut, theme, toggleTheme, trialDaysLeft, isAdmin } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const SidebarContent = () => (
@@ -116,6 +116,23 @@ export default function Sidebar() {
               <p className="text-xs font-bold truncate mb-0.5 text-slate-900 dark:text-white">{business?.name || 'Мой бизнес'}</p>
               <p className="text-[10px] text-slate-400 truncate tracking-tight">{user?.email}</p>
             </div>
+            {/* Admin Section */}
+            {isAdmin && (
+              <div className="pt-4 mt-4 border-t border-slate-200 dark:border-white/5">
+                <p className="px-5 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Система</p>
+                <Link 
+                  href="/admin"
+                  className={cn(
+                    "flex items-center gap-3 px-5 py-3 rounded-2xl transition-all duration-300 group",
+                    pathname === '/admin' ? "bg-amber-500 text-white shadow-lg shadow-amber-500/20" : "text-slate-500 hover:bg-amber-500/10 hover:text-amber-500"
+                  )}
+                >
+                  <ShieldCheck className="w-5 h-5 flex-shrink-0" />
+                  <span className="font-bold text-sm tracking-tight">Админ-панель</span>
+                </Link>
+              </div>
+            )}
+
             <button 
               onClick={signOut}
               className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-[13px] font-bold text-slate-500 hover:text-rose-500 hover:bg-rose-500/5 transition-all"

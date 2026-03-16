@@ -15,13 +15,14 @@ interface Business {
 }
 
 interface AuthContextType {
-  user: User | null; // Keeping User type for consistency with useState, though instruction snippet had 'any'
+  user: User | null;
   business: Business | null;
   loading: boolean;
   theme: 'light' | 'dark';
   toggleTheme: () => void;
   signOut: () => Promise<void>;
   trialDaysLeft: number;
+  isAdmin: boolean;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -31,7 +32,8 @@ const AuthContext = createContext<AuthContextType>({
   theme: 'dark',
   toggleTheme: () => {},
   signOut: async () => {},
-  trialDaysLeft: 7
+  trialDaysLeft: 7,
+  isAdmin: false
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -114,8 +116,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     router.push('/login');
   };
 
+  const isAdmin = user?.email === 'admin@aurasync.com'; // ЗАМЕНИТЕ на ваш email
+
   return (
-    <AuthContext.Provider value={{ user, business, loading, theme, toggleTheme, signOut, trialDaysLeft }}>
+    <AuthContext.Provider value={{ user, business, loading, theme, toggleTheme, signOut, trialDaysLeft, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

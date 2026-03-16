@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { CheckCircle2, Zap, Shield, CreditCard, Sparkles, Star } from 'lucide-react';
+import { CheckCircle2, Zap, Shield, Bot, Sparkles, Star } from 'lucide-react';
 import { useAuth } from '@/components/AuthProvider';
 import { motion } from 'framer-motion';
 
@@ -19,24 +19,10 @@ export default function BillingPage() {
     "Техподдержка 24/7"
   ];
 
-  const handlePayment = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/billing/create-checkout-session`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          businessId: business?.id,
-          ownerEmail: user?.email,
-        }),
-      });
-      const data = await response.json();
-      if (data.url) {
-        window.location.href = data.url; // Redirect to Stripe
-      }
-    } catch (err) {
-      console.error('Payment failed:', err);
-      alert('Ошибка при инициализации оплаты. Попробуйте позже.');
-    }
+  const handlePayment = () => {
+    // ЗАМЕНИТЕ ЭТУ ССЫЛКУ на ваш Telegram бот или ваш личный аккаунт
+    const TELEGRAM_ADMIN_URL = "https://t.me/AuraSyncAdminBot"; 
+    window.open(TELEGRAM_ADMIN_URL, '_blank');
   };
 
   return (
@@ -46,7 +32,7 @@ export default function BillingPage() {
           AuraSync <span className="font-premium text-emerald-500 italic">Pro</span>
         </h1>
         <p className="text-slate-500 font-medium max-w-lg mx-auto">
-          Разблокируйте полный потенциал вашего бизнеса с нашей профессиональной подпиской.
+          Подписка активируется вручную после подтверждения оплаты.
         </p>
       </div>
 
@@ -83,11 +69,11 @@ export default function BillingPage() {
             onClick={handlePayment}
             className="w-full py-5 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-600 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3"
           >
-            <CreditCard className="w-5 h-5" /> Оплатить сейчас
+            <Bot className="w-5 h-5" /> Оплатить в Telegram
           </button>
           
-          <p className="text-center text-[10px] text-slate-400 mt-4 font-bold uppercase tracking-widest">
-            Безопасная оплата через Stripe & Crypto
+          <p className="text-center text-[10px] text-slate-400 mt-4 font-bold uppercase tracking-widest leading-relaxed">
+            Нажмите, чтобы перейти в бот оплаты.<br/>Реквизиты карты будут предоставлены внутри.
           </p>
         </motion.div>
 
@@ -125,11 +111,14 @@ export default function BillingPage() {
                <div className="w-10 h-10 bg-blue-500/10 rounded-xl flex items-center justify-center">
                  <Shield className="w-5 h-5 text-blue-500" />
                </div>
-               <h4 className="font-bold">Гарантия возврата</h4>
+               <h4 className="font-bold">Как это работает?</h4>
              </div>
-             <p className="text-xs text-slate-500 leading-relaxed font-medium">
-               Мы уверены в AuraSync. Если в течение первых 7 дней после оплаты вы решите, что сервис вам не подходит, мы вернем 100% стоимости подписки без лишних вопросов.
-             </p>
+             <div className="space-y-4 text-xs text-slate-500 leading-relaxed font-medium">
+               <p>1. Нажмите кнопку <b>«Оплатить в Telegram»</b>.</p>
+               <p>2. В боте выберите способ оплаты и получите реквизиты.</p>
+               <p>3. Отправьте скриншот чека об оплате администратору.</p>
+               <p>4. В течение 10-15 минут ваш доступ будет активирован.</p>
+             </div>
           </div>
 
           {isExpired && (
