@@ -29,8 +29,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // Если нет пользователя на закрытом маршруте — AuthProvider перенаправит
-  if (!user) {
+  // Позволяем гостям видеть дашборд и другие ознакомительные страницы
+  const isDemoAllowed = ['/', '/dashboard', '/appointments', '/clients'].includes(pathname);
+
+  if (!user && !isDemoAllowed) {
     return null;
   }
 

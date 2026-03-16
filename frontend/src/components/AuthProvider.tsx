@@ -20,7 +20,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export const useAuth = () => useContext(AuthContext);
 
-const PUBLIC_ROUTES = ['/login', '/register'];
+const PUBLIC_ROUTES = ['/login', '/register', '/dashboard', '/'];
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -30,7 +30,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Проверяем текущую сессию
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -40,7 +39,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     });
 
-    // Слушаем изменения авторизации
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -66,16 +64,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(false);
   }
 
-  // Редирект неавторизованных пользователей
+  // Редирект только если пользователь лезет в защищенные настройки
   useEffect(() => {
     if (loading) return;
     
     const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
+    const isProtectingSettings = pathname === '/settings' || pathname === '/services';
     
-    if (!user && !isPublicRoute) {
+    if (!user && isProtectingSettings) {
       router.push('/login');
-    } else if (user && isPublicRoute) {
-      router.push('/dashboard');
     }
   }, [user, loading, pathname, router]);
 

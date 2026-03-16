@@ -10,7 +10,8 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Clock,
-  DollarSign
+  DollarSign,
+  Sparkles
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -76,9 +77,28 @@ export default function Dashboard() {
   const [sparklineData, setSparklineData] = useState<number[]>([]);
 
   useEffect(() => {
-    if (!business?.id) return;
-    
     async function loadAll() {
+      if (!business?.id) {
+        // ДЕМО-ДАННЫЕ для незарегистрированных пользователей
+        setStats({
+          appointments: 124,
+          clients: 89,
+          revenue: 62500,
+          todayAppointments: 8,
+        });
+        setWeeklyData([
+          { day: 'Пн', count: 12 }, { day: 'Вт', count: 15 }, { day: 'Ср', count: 11 },
+          { day: 'Чт', count: 18 }, { day: 'Пт', count: 22 }, { day: 'Сб', count: 25 }, { day: 'Вс', count: 14 }
+        ]);
+        setSparklineData([10, 15, 8, 12, 20, 18, 25, 22, 30, 28, 35, 32, 40, 38]);
+        setRecentAppointments([
+          { id: '1', users: { name: 'Александр К.' }, services: { name: 'Стрижка', price: 800 }, appointment_date: 'Сегодня', appointment_time: '14:00', status: 'confirmed' },
+          { id: '2', users: { name: 'Мария С.' }, services: { name: 'Маникюр', price: 1200 }, appointment_date: 'Сегодня', appointment_time: '15:30', status: 'pending' },
+          { id: '3', users: { name: 'Дмитрий В.' }, services: { name: 'Массаж', price: 2500 }, appointment_date: 'Вчера', appointment_time: '11:00', status: 'completed' },
+        ]);
+        return;
+      }
+      
       const bizId = business.id;
 
       // Все записи с ценой услуги
@@ -190,6 +210,18 @@ export default function Dashboard() {
   return (
     <div className="space-y-8 animate-in fade-in duration-700">
       {/* Заголовок */}
+      {!business?.id && (
+        <div className="bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-2xl flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Sparkles className="w-5 h-5 text-emerald-400" />
+            <p className="text-sm text-emerald-100">Вы просматриваете панель в <b>демо-режиме</b>. Чтобы начать работу, создайте свой аккаунт.</p>
+          </div>
+          <a href="/register" className="px-4 py-2 bg-emerald-500 text-white text-xs font-bold rounded-lg hover:bg-emerald-600 transition-colors">
+            Создать аккаунт
+          </a>
+        </div>
+      )}
+
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold">Панель управления</h2>
