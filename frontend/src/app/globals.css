@@ -1,15 +1,22 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,500;1,600&display=swap');
 
+@theme {
+  --font-premium: "Playfair Display", serif;
+  --font-outfit: "Outfit", sans-serif;
+  
+  --radius-premium: 2rem;
+  
+  --color-accent: #10b981;
+  --color-accent-secondary: #06b6d4;
+}
+
 :root {
   --bg-main: #f8fafc;
   --bg-glass: rgba(255, 255, 255, 0.7);
   --border-color: rgba(0, 0, 0, 0.08);
   --text-main: #0f172a;
   --text-muted: #64748b;
-  --accent: #10b981;
-  --accent-secondary: #06b6d4;
-  --sidebar-w: 280px;
 }
 
 [data-theme='dark'] {
@@ -23,30 +30,30 @@
 body {
   background-color: var(--bg-main);
   color: var(--text-main);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-outfit);
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
 }
 
 .font-premium {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-premium);
 }
 
-/* Glassmorphism */
-.glass {
+/* Glassmorphism Utilities */
+@utility glass {
   background: var(--bg-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
 }
 
-.glass-dark {
+@utility glass-dark {
   background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Custom Scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -54,23 +61,58 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--accent);
+  background: #10b981;
   border-radius: 10px;
 }
 
-/* Mobile Adjustments */
-@layer components {
+/* Premium Classes */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
   .dashboard-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6;
-  }
-  
-  .premium-card {
-    @apply glass p-5 md:p-6 rounded-[2rem] transition-all duration-300 hover:scale-[1.02] hover:shadow-xl;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+.premium-card {
+  @apply glass rounded-premium transition-all duration-300;
+  padding: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .premium-card {
+    padding: 1.5rem;
+  }
+}
+
+.premium-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
 .mobile-menu-overlay {
-  @apply fixed inset-0 bg-slate-950/50 backdrop-blur-sm z-40 lg:hidden;
+  position: fixed;
+  inset: 0;
+  background-color: rgb(2 6 23 / 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 40;
+}
+
+@media (min-width: 1024px) {
+  .mobile-menu-overlay {
+    display: none;
+  }
 }
 
 @keyframes slide-in {
