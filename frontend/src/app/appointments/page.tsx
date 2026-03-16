@@ -42,12 +42,12 @@ export default function AppointmentsPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold">Appointments</h2>
-          <p className="text-slate-400 mt-1">Manage all your client sessions in one place.</p>
+          <h2 className="text-3xl font-bold">Записи на прием</h2>
+          <p className="text-slate-400 mt-1">Управляйте всеми сессиями ваших клиентов в одном месте.</p>
         </div>
         <button className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl transition-all border border-slate-700">
           <Filter className="w-4 h-4" />
-          Filter
+          Фильтр
         </button>
       </div>
 
@@ -56,18 +56,18 @@ export default function AppointmentsPage() {
           <table className="w-full text-left">
             <thead>
               <tr className="border-b border-slate-800 bg-slate-900/50">
-                <th className="px-6 py-4 text-sm font-semibold text-slate-400">Client</th>
-                <th className="px-6 py-4 text-sm font-semibold text-slate-400">Service</th>
-                <th className="px-6 py-4 text-sm font-semibold text-slate-400">Date & Time</th>
-                <th className="px-6 py-4 text-sm font-semibold text-slate-400">Status</th>
-                <th className="px-6 py-4 text-sm font-semibold text-slate-400">Actions</th>
+                <th className="px-6 py-4 text-sm font-semibold text-slate-400">Клиент</th>
+                <th className="px-6 py-4 text-sm font-semibold text-slate-400">Услуга</th>
+                <th className="px-6 py-4 text-sm font-semibold text-slate-400">Дата и время</th>
+                <th className="px-6 py-4 text-sm font-semibold text-slate-400">Статус</th>
+                <th className="px-6 py-4 text-sm font-semibold text-slate-400">Действия</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
               {loading ? (
-                  <tr><td colSpan={5} className="px-6 py-8 text-center text-slate-400">Loading appointments...</td></tr>
+                  <tr><td colSpan={5} className="px-6 py-8 text-center text-slate-400">Загрузка записей...</td></tr>
               ) : appointments.length === 0 ? (
-                  <tr><td colSpan={5} className="px-6 py-8 text-center text-slate-400">No appointments found.</td></tr>
+                  <tr><td colSpan={5} className="px-6 py-8 text-center text-slate-400">Записей пока нет.</td></tr>
               ) : appointments.map((app) => (
                 <tr key={app.id} className="hover:bg-slate-800/30 transition-colors group">
                   <td className="px-6 py-4">
@@ -76,8 +76,8 @@ export default function AppointmentsPage() {
                         {app.users?.name?.[0] || 'U'}
                       </div>
                       <div>
-                        <p className="font-medium text-slate-200">{app.users?.name || 'Unknown'}</p>
-                        <p className="text-xs text-slate-500">@{app.users?.username || 'user'}</p>
+                        <p className="font-medium text-slate-200">{app.users?.name || 'Неизвестно'}</p>
+                        <p className="text-xs text-slate-500">@{app.users?.username || 'пользователь'}</p>
                       </div>
                     </div>
                   </td>
@@ -101,7 +101,7 @@ export default function AppointmentsPage() {
                         "px-3 py-1 rounded-full text-xs font-bold border",
                         getStatusColor(app.status)
                     )}>
-                      {app.status.toUpperCase()}
+                      {getTranslatedStatus(app.status)}
                     </span>
                   </td>
                   <td className="px-6 py-4">
