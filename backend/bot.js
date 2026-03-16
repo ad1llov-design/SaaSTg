@@ -193,18 +193,22 @@ function setupBotLogic(bot, businessId) {
   bot.start(async (ctx) => {
     const { data: biz } = await supabase
       .from('businesses')
-      .select('name')
+      .select('name, bot_config')
       .eq('id', businessId)
       .single();
 
+    const config = biz?.bot_config || {};
+    const welcomeText = config.welcome_text || `👋 Добро пожаловать в <b>${biz?.name || 'сервис записи'}</b>!`;
+    const emoji = config.theme_emoji || '✨';
+
     await ctx.reply(
-      `👋 Добро пожаловать в <b>${biz?.name || 'сервис записи'}</b>!\n\n` +
+      `${welcomeText}\n\n` +
       `Я помогу вам записаться на прием. Выберите действие:`,
       {
         parse_mode: 'HTML',
         reply_markup: {
           inline_keyboard: [
-            [{ text: '📅 Записаться', callback_data: 'start_booking' }],
+            [{ text: `${emoji} Записаться`, callback_data: 'start_booking' }],
             [{ text: '📋 Мои записи', callback_data: 'my_bookings' }],
             [{ text: '❌ Отменить запись', callback_data: 'cancel_booking' }]
           ]
