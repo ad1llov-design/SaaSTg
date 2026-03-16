@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/components/AuthProvider';
+import Link from 'next/link';
 import { 
   Users, 
   Calendar, 
@@ -98,8 +99,8 @@ export default function Dashboard() {
       const today = new Date().toISOString().split('T')[0];
 
       if (apts) {
-        const revenue = apts.filter(a => a.status === 'confirmed' || a.status === 'completed').reduce((sum, a) => sum + (Number(a.services?.price) || 0), 0);
-        const todayCount = apts.filter(a => a.appointment_date === today).length;
+        const revenue = apts.filter((a: any) => a.status === 'confirmed' || a.status === 'completed').reduce((sum: number, a: any) => sum + (Number(a.services?.price) || 0), 0);
+        const todayCount = apts.filter((a: any) => a.appointment_date === today).length;
         setStats({ appointments: apts.length, clients: clients?.length || 0, revenue, todayAppointments: todayCount });
 
         const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
@@ -107,7 +108,7 @@ export default function Dashboard() {
         for (let i = 6; i >= 0; i--) {
           const d = new Date(); d.setDate(d.getDate() - i);
           const dateStr = d.toISOString().split('T')[0];
-          weekly.push({ day: days[d.getDay()], count: apts.filter(a => a.appointment_date === dateStr).length });
+          weekly.push({ day: days[d.getDay()], count: apts.filter((a: any) => a.appointment_date === dateStr).length });
         }
         setWeeklyData(weekly);
 
@@ -115,7 +116,7 @@ export default function Dashboard() {
         for (let i = 13; i >= 0; i--) {
           const d = new Date(); d.setDate(d.getDate() - i);
           const dateStr = d.toISOString().split('T')[0];
-          spark.push(apts.filter(a => a.appointment_date === dateStr).length);
+          spark.push(apts.filter((a: any) => a.appointment_date === dateStr).length);
         }
         setSparklineData(spark);
       }
@@ -234,7 +235,7 @@ export default function Dashboard() {
           </Link>
         </div>
         <div className="space-y-2">
-          {recentAppointments.map((apt) => (
+          {recentAppointments.map((apt: any) => (
             <div key={apt.id} className="flex items-center justify-between p-4 rounded-2xl hover:bg-slate-500/5 transition-all group border border-transparent hover:border-slate-500/10">
               <div className="flex items-center gap-4">
                 <div className="w-11 h-11 bg-slate-100 dark:bg-white/5 rounded-full flex items-center justify-center font-bold text-xs ring-2 ring-transparent group-hover:ring-emerald-500/20 transition-all">
