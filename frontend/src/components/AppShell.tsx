@@ -21,8 +21,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-main transition-colors">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin shadow-lg shadow-emerald-500/10" />
-          <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] animate-pulse">Initializing AuraSync</p>
+          <div className="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin shadow-lg shadow-indigo-500/10" />
+          <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em] animate-pulse">Initializing Protocol</p>
         </div>
       </div>
     );

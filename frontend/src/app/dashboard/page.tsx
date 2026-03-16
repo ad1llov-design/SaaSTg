@@ -50,64 +50,63 @@ export default function Dashboard() {
   }, [business]);
 
   const cards = [
-    { name: 'Активные записи', value: stats.appointments, icon: Calendar, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
-    { name: 'База клиентов', value: stats.clients, icon: UserCheck, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
-    { name: 'Выручка (сом)', value: stats.revenue.toLocaleString(), icon: DollarSign, color: 'text-amber-500', bg: 'bg-amber-500/10' },
-    { name: 'За сегодня', value: stats.todayAppointments, icon: Clock, color: 'text-cyan-500', bg: 'bg-cyan-500/10' },
+    { name: 'Aktive Protocols', value: stats.appointments, icon: Calendar, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
+    { name: 'Identity Base', value: stats.clients, icon: UserCheck, color: 'text-violet-500', bg: 'bg-violet-500/10' },
+    { name: 'Yield (сом)', value: stats.revenue.toLocaleString(), icon: DollarSign, color: 'text-indigo-400', bg: 'bg-indigo-500/10' },
+    { name: 'Daily Flux', value: stats.todayAppointments, icon: Clock, color: 'text-violet-400', bg: 'bg-violet-500/10' },
   ];
 
   return (
-    <div className="space-y-6 md:space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
       
       {!user && (
-        <div className="relative overflow-hidden premium-card !bg-indigo-600 !border-none p-6 md:p-10 shadow-2xl shadow-indigo-500/10">
-          <div className="absolute right-0 top-0 w-64 h-64 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl animate-pulse" />
-          <div className="relative flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex items-center gap-6 text-center md:text-left text-white">
-              <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center shrink-0 border border-white/10 shadow-xl">
-                <Zap className="w-8 h-8 text-white" />
+        <div className="relative overflow-hidden premium-card !bg-indigo-600 !border-none p-8 md:p-12 shadow-2xl shadow-indigo-500/10 rounded-[2.5rem]">
+          <div className="absolute right-0 top-0 w-80 h-80 bg-white/10 rounded-full -mr-32 -mt-32 blur-[100px] animate-pulse" />
+          <div className="relative flex flex-col md:flex-row items-center justify-between gap-10">
+            <div className="flex items-center gap-8 text-center md:text-left text-white">
+              <div className="w-20 h-20 bg-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center shrink-0 border border-white/10 shadow-3xl">
+                <Zap className="w-10 h-10 text-white" />
               </div>
               <div>
-                <h4 className="font-bold text-2xl md:text-4xl tracking-tight">AuraSync <span className="text-indigo-200 italic font-premium">Premium</span></h4>
-                <p className="text-sm md:text-base text-indigo-50/80 mt-2 max-w-md font-medium">Бескомпромиссная автоматизация для масштабирования вашего бренда.</p>
+                <h4 className="font-bold text-3xl md:text-5xl tracking-tighter uppercase leading-none">AuraSync <span className="text-indigo-200 italic font-premium lowercase tracking-tight">Premium</span></h4>
+                <p className="text-sm md:text-lg text-indigo-100/70 mt-3 max-w-md font-bold uppercase tracking-widest opacity-80">Autonomous infrastructure for global scale.</p>
               </div>
             </div>
-            <Link href="/register" className="w-full md:w-auto px-12 py-5 bg-white text-indigo-600 font-bold rounded-2xl hover:scale-[1.02] active:scale-95 transition-all shadow-2xl shadow-black/10 text-center uppercase tracking-widest text-[11px]">
-              Начать бесплатно
+            <Link href="/register" className="w-full md:w-auto px-14 py-6 bg-white text-indigo-600 font-bold rounded-2xl hover:scale-[1.02] active:scale-95 transition-all shadow-3xl text-center uppercase tracking-[0.3em] text-xs">
+              Initialize Protocol
             </Link>
           </div>
         </div>
       )}
 
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border pb-10">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-border pb-12">
         <div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter text-[var(--text-main)] uppercase leading-none">
-            Business <span className="font-premium text-indigo-500 italic lowercase tracking-tight">Intelligence</span>
+          <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-[var(--text-main)] uppercase leading-[0.8]">
+            Core <span className="font-premium text-indigo-500 italic lowercase tracking-tight">Intelligence</span>
           </h1>
-          <p className="text-slate-500 mt-6 font-semibold text-sm flex items-center gap-2 uppercase tracking-widest opacity-70">
-            <UserCheck className="w-4 h-4 text-indigo-500" />
-            Welcome back, <span className="text-[var(--text-main)] underline decoration-indigo-500/30 underline-offset-4">{business?.name || 'Partner'}</span>
+          <p className="text-slate-500 mt-8 font-bold text-xs flex items-center gap-3 uppercase tracking-[0.3em] opacity-60">
+            <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full" />
+            Active Terminal: <span className="text-[var(--text-main)] italic">{business?.name || 'Authorized Partner'}</span>
           </p>
         </div>
-        <div className="flex items-center gap-3 px-6 py-3 bg-indigo-500/5 border border-indigo-500/10 rounded-full">
-          <div className="w-2.5 h-2.5 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(99,102,241,0.5)]" />
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-indigo-500">Live Analytics</span>
+        <div className="flex items-center gap-4 px-8 py-4 bg-indigo-500/[0.03] border border-indigo-500/10 rounded-full shadow-sm">
+          <div className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_12px_rgba(99,102,241,0.6)]" />
+          <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-indigo-500">System Monitoring</span>
         </div>
       </div>
 
       <div className="dashboard-grid">
         {cards.map((card) => (
-          <div key={card.name} className="premium-card group hover:-translate-y-1">
-            <div className="flex items-center justify-between mb-10">
-              <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-all group-hover:scale-110 shadow-sm", card.bg.replace('emerald', 'indigo').replace('cyan', 'violet'))}>
-                <card.icon className={cn("w-7 h-7", card.color.replace('emerald', 'indigo').replace('cyan', 'violet'))} />
+          <div key={card.name} className="premium-card group hover:-translate-y-2 !p-10 transition-all duration-500 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/[0.01] rounded-full -mr-12 -mt-12 group-hover:scale-150 transition-transform duration-1000" />
+            <div className="flex items-center justify-between mb-12 relative z-10">
+              <div className={cn("w-16 h-16 rounded-2xl flex items-center justify-center transition-all group-hover:rotate-6 shadow-sm border border-indigo-500/10", card.bg)}>
+                <card.icon className={cn("w-8 h-8", card.color)} />
               </div>
-              <div className="h-1.5 w-14 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
-                 <div className={cn("h-full w-2/3 opacity-40", card.bg.replace('/10', '').replace('emerald', 'indigo').replace('cyan', 'violet'))} />
-              </div>
+              <TrendingUp className="w-5 h-5 text-slate-300 dark:text-slate-800" />
             </div>
-            <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 opacity-80">{card.name}</p>
-            <p className="text-3xl font-bold text-[var(--text-main)] tracking-tight">{card.value}</p>
+            <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em] mb-3 opacity-60 relative z-10">{card.name}</p>
+            <p className="text-4xl font-bold text-[var(--text-main)] tracking-tighter relative z-10">{card.value}</p>
           </div>
         ))}
       </div>

@@ -35,15 +35,15 @@ export default function RegisterPage() {
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-slate-50 dark:bg-[#020617] transition-colors duration-500">
-        <div className="w-full max-w-md glass p-10 rounded-[3rem] text-center space-y-6 border-white/5 shadow-2xl animate-in zoom-in duration-500">
-          <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+        <div className="w-full max-w-md glass p-10 rounded-[3rem] text-center space-y-8 border-white/5 shadow-2xl animate-in zoom-in duration-500">
+          <div className="w-24 h-24 bg-indigo-500/10 rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm">
+            <CheckCircle2 className="w-12 h-12 text-indigo-500" />
           </div>
-          <h2 className="text-3xl font-bold">Проверьте почту!</h2>
-          <p className="text-slate-500 font-medium">Мы отправили ссылку для подтверждения на <span className="text-emerald-500 font-bold">{form.email}</span></p>
+          <h2 className="text-4xl font-bold tracking-tight uppercase">Protocol <span className="text-indigo-500 italic font-premium lowercase tracking-normal">Sent</span></h2>
+          <p className="text-slate-500 font-bold text-sm uppercase tracking-widest leading-relaxed">Система подтверждения отправлена на <br/><span className="text-indigo-600 dark:text-indigo-400 font-bold italic">{form.email}</span></p>
           <div className="h-px bg-slate-500/10 w-full" />
-          <button onClick={() => router.push('/login')} className="w-full py-4 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/20">
-            Перейти ко входу
+          <button onClick={() => router.push('/login')} className="w-full py-5 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-600/20 uppercase tracking-[0.2em] text-xs">
+            Initialize Access
           </button>
         </div>
       </div>
@@ -52,60 +52,68 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-slate-50 dark:bg-[#020617] transition-colors duration-500 overflow-hidden relative">
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] -ml-48 -mt-48" />
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] -mr-48 -mb-48" />
+      <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-indigo-500/[0.03] rounded-full blur-[120px] -ml-48 -mt-48" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-violet-500/[0.03] rounded-full blur-[120px] -mr-48 -mb-48" />
 
-      <div className="w-full max-w-md relative z-10 animate-in fade-in slide-in-from-bottom-6 duration-700">
-        <div className="text-center mb-10">
-          <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-2xl shadow-emerald-500/20 -rotate-3 border border-white/20">
-            <Sparkles className="w-10 h-10 text-white" />
+      <div className="w-full max-w-lg relative z-10 animate-in fade-in slide-in-from-bottom-6 duration-700">
+        <div className="text-center mb-12">
+          <div className="w-24 h-24 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-[2.5rem] flex items-center justify-center mx-auto mb-10 shadow-2xl shadow-indigo-500/30 -rotate-3 border border-white/20">
+            <Sparkles className="w-12 h-12 text-white" />
           </div>
-          <h1 className="text-4xl font-bold tracking-tight mb-3">Создать аккаунт</h1>
-          <p className="text-slate-500 dark:text-slate-400 font-medium italic">Ваш новый стандарт управления на <span className="font-premium text-emerald-500">AuraSync</span></p>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tighter mb-4 uppercase text-[var(--text-main)]">System <span className="font-premium text-indigo-500 italic lowercase tracking-tight">Deployment</span></h1>
+          <p className="text-slate-500 dark:text-slate-400 font-bold text-[10px] uppercase tracking-[0.4em] opacity-70 italic">Digital infrastructure for <span className="text-indigo-500 font-bold">AuraSync</span> ecosystem</p>
         </div>
 
-        <div className="glass p-8 md:p-10 rounded-[3rem] shadow-2xl border-white/5">
-          <form onSubmit={handleRegister} className="space-y-5">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Название бизнеса</label>
-                <div className="relative">
-                  <Building className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                  <input required type="text" placeholder="Barber Shop Premium" className="w-full bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl pl-12 pr-6 py-4.5 focus:outline-none focus:border-emerald-500 transition-all font-medium" value={form.businessName} onChange={(e) => setForm({...form, businessName: e.target.value})} />
+        <div className="glass p-10 md:p-14 rounded-[3.5rem] shadow-2xl border-white/5 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/[0.02] rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-1000" />
+          
+          <form onSubmit={handleRegister} className="space-y-8">
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] ml-1 opacity-70">Brand Identity</label>
+                <div className="relative group/input">
+                  <div className="absolute left-6 top-1/2 -translate-y-1/2 w-8 h-8 bg-indigo-500/5 rounded-xl flex items-center justify-center group-focus-within/input:bg-indigo-600 group-focus-within/input:text-white transition-all text-slate-400 shadow-inner">
+                    <Building className="w-4 h-4" />
+                  </div>
+                  <input required type="text" placeholder="Organizational Identity" className="w-full bg-input/50 border-2 border-transparent focus:border-indigo-500/30 rounded-[1.5rem] pl-16 pr-8 py-5 focus:outline-none transition-all font-bold text-sm shadow-inner" value={form.businessName} onChange={(e) => setForm({...form, businessName: e.target.value})} />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Email</label>
-                <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                  <input required type="email" placeholder="owner@aura.sync" className="w-full bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl pl-12 pr-6 py-4.5 focus:outline-none focus:border-emerald-500 transition-all font-medium" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} />
+              <div className="space-y-3">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] ml-1 opacity-70">Auth Credentials</label>
+                <div className="relative group/input">
+                  <div className="absolute left-6 top-1/2 -translate-y-1/2 w-8 h-8 bg-indigo-500/5 rounded-xl flex items-center justify-center group-focus-within/input:bg-indigo-600 group-focus-within/input:text-white transition-all text-slate-400 shadow-inner">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <input required type="email" placeholder="owner@aura.sync" className="w-full bg-input/50 border-2 border-transparent focus:border-indigo-500/30 rounded-[1.5rem] pl-16 pr-8 py-5 focus:outline-none transition-all font-bold text-sm shadow-inner" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Пароль</label>
-                <div className="relative">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                  <input required type="password" placeholder="Мин. 6 символов" className="w-full bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl pl-12 pr-6 py-4.5 focus:outline-none focus:border-emerald-500 transition-all font-medium" value={form.password} onChange={(e) => setForm({...form, password: e.target.value})} />
+              <div className="space-y-3">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] ml-1 opacity-70">Secure Protocol Key</label>
+                <div className="relative group/input">
+                  <div className="absolute left-6 top-1/2 -translate-y-1/2 w-8 h-8 bg-indigo-500/5 rounded-xl flex items-center justify-center group-focus-within/input:bg-indigo-600 group-focus-within/input:text-white transition-all text-slate-400 shadow-inner">
+                    <Lock className="w-4 h-4" />
+                  </div>
+                  <input required type="password" placeholder="Secure Key Override" className="w-full bg-input/50 border-2 border-transparent focus:border-indigo-500/30 rounded-[1.5rem] pl-16 pr-8 py-5 focus:outline-none transition-all font-bold text-sm shadow-inner" value={form.password} onChange={(e) => setForm({...form, password: e.target.value})} />
                 </div>
               </div>
             </div>
 
             {error && (
-              <div className="bg-rose-500/10 border border-rose-500/20 p-4 rounded-2xl text-rose-500 text-xs font-bold text-center">
+              <div className="bg-rose-500/10 border border-rose-500/20 p-5 rounded-2xl text-rose-500 text-[10px] font-bold uppercase tracking-[0.3em] text-center animate-shake leading-relaxed">
                 {error}
               </div>
             )}
 
-            <button type="submit" disabled={loading} className="w-full py-5 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3">
-              {loading ? 'Создание...' : <><CheckCircle2 className="w-5 h-5" /> Начать 7 дней Demo <ArrowRight className="w-5 h-5" /></>}
+            <button type="submit" disabled={loading} className="w-full py-6 bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-3xl shadow-indigo-600/30 flex items-center justify-center gap-4 uppercase tracking-[0.3em] text-[11px]">
+              {loading ? 'Processing Protocol...' : <><CheckCircle2 className="w-5 h-5" /> Start 7-Day Cycle <ArrowRight className="w-4 h-4" /></>}
             </button>
           </form>
         </div>
 
-        <p className="text-center mt-10 text-slate-500 font-medium">
-          Уже есть аккаунт? <Link href="/login" className="text-emerald-500 font-bold hover:underline">Войти</Link>
+        <p className="text-center mt-12 text-slate-500 font-bold text-[10px] uppercase tracking-[0.3em] opacity-60 italic">
+          Already verified? <Link href="/login" className="text-indigo-500 ml-2 hover:underline decoration-2 underline-offset-4 font-bold">Log Access</Link>
         </p>
       </div>
     </div>

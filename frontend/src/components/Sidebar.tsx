@@ -37,20 +37,20 @@ export default function Sidebar() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-[var(--bg-card)] lg:bg-transparent">
       {/* Логотип */}
-      <div className="p-6">
-        <Link href="/dashboard" className="flex items-center gap-3 group" onClick={() => setIsMobileMenuOpen(false)}>
-          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all border border-white/10">
-            <Bot className="w-5 h-5 text-white" />
+      <div className="p-8">
+        <Link href="/dashboard" className="flex items-center gap-4 group" onClick={() => setIsMobileMenuOpen(false)}>
+          <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all border border-white/10 group-hover:-rotate-6">
+            <Bot className="w-6 h-6 text-white" />
           </div>
           <div>
-            <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-white transition-colors">AuraSync</span>
-            <p className="text-[10px] text-indigo-500 uppercase tracking-[0.2em] font-black">Premium SaaS</p>
+            <span className="font-bold text-2xl tracking-tighter text-slate-900 dark:text-white uppercase leading-none">Aura<span className="text-indigo-500">Sync</span></span>
+            <p className="text-[9px] text-slate-400 uppercase tracking-[0.4em] font-bold mt-1 opacity-70">Premium Node</p>
           </div>
         </Link>
       </div>
 
       {/* Навигация */}
-      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+      <nav className="flex-1 px-6 space-y-2 overflow-y-auto pt-4">
         {menuItems.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -59,97 +59,98 @@ export default function Sidebar() {
               href={item.href}
               onClick={() => setIsMobileMenuOpen(false)}
               className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-2xl text-[13px] font-bold transition-all duration-300",
+                "flex items-center gap-4 px-5 py-4 rounded-2xl text-[13px] font-bold transition-all duration-300 group",
                 isActive 
-                  ? "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-l-4 border-indigo-500" 
-                  : "text-slate-500 hover:text-indigo-500 hover:bg-slate-100 dark:hover:bg-white/5"
+                  ? "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/10 shadow-sm" 
+                  : "text-slate-500 hover:text-indigo-600 hover:bg-indigo-500/[0.03]"
               )}
             >
-              <item.icon className={cn("w-5 h-5", isActive ? "text-indigo-500" : "text-slate-400")} />
-              {item.name}
+              <item.icon className={cn("w-5 h-5 transition-transform group-hover:scale-110", isActive ? "text-indigo-500" : "text-slate-400")} />
+              <span className="uppercase tracking-widest text-[10px]">{item.name}</span>
             </Link>
           );
         })}
       </nav>
 
       {/* Подвал сайдбара */}
-      <div className="p-4 border-t border-slate-200 dark:border-white/5 space-y-4">
+      <div className="p-6 border-t border-slate-200 dark:border-white/5 space-y-6">
         {/* Trial Status Sidebar Item */}
-        <div className="px-3 mb-4">
-          <div className="bg-indigo-500/5 border border-indigo-500/10 rounded-2xl p-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-                {trialDaysLeft > 0 ? "Пробный период" : "Триал завершен"}
+        <div className="px-2">
+          <div className="bg-indigo-500/[0.02] border border-indigo-500/10 rounded-3xl p-5 shadow-sm relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-500/[0.02] rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700" />
+            <div className="flex items-center justify-between mb-3 relative z-10">
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+                {trialDaysLeft > 0 ? "System Access" : "Protocol Expired"}
               </span>
-              <span className="text-xs font-bold text-indigo-500">
-                {trialDaysLeft > 0 ? `${trialDaysLeft} дн.` : "0 дн."}
+              <span className="text-[10px] font-bold text-indigo-500 bg-indigo-500/10 px-2 py-0.5 rounded-full">
+                {trialDaysLeft > 0 ? `${trialDaysLeft} Days` : "Locked"}
               </span>
             </div>
-            <div className="w-full h-1.5 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden mb-3">
+            <div className="w-full h-1 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden mb-4 relative z-10">
               <div 
-                className="h-full bg-indigo-500 transition-all duration-1000" 
+                className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-1000 shadow-[0_0_10px_rgba(99,102,241,0.3)]" 
                 style={{ width: `${(trialDaysLeft / 7) * 100}%` }} 
               />
             </div>
             <Link 
               href="/billing" 
-              className="flex items-center justify-center gap-2 w-full py-2 bg-indigo-500 text-white text-[10px] font-bold rounded-xl hover:bg-indigo-600 transition-all shadow-sm"
+              className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 text-white text-[10px] font-bold rounded-xl hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-600/10 uppercase tracking-widest"
             >
-              <Zap className="w-3 h-3" /> Улучшить до Pro
+              <Zap className="w-3 h-3" /> Upgrade to Pro
             </Link>
           </div>
         </div>
 
         {/* Переключатель темы */}
-        <div className="flex items-center justify-between gap-2 px-3">
-           <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Тема</span>
+        <div className="flex items-center justify-between px-2">
+           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Mode</span>
            <button 
               onClick={toggleTheme}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-400 hover:scale-110 active:scale-95 transition-all"
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-white/5 text-slate-600 dark:text-slate-400 border border-border/50 hover:bg-indigo-500/5 hover:text-indigo-500 transition-all"
            >
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
            </button>
         </div>
 
         {user ? (
-          <div className="space-y-2">
-            <div className="p-4 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5">
-              <p className="text-xs font-bold truncate mb-0.5 text-slate-900 dark:text-white">{business?.name || 'Мой бизнес'}</p>
-              <p className="text-[10px] text-slate-400 truncate tracking-tight">{user?.email}</p>
+          <div className="space-y-3">
+            <div className="p-4 rounded-2xl bg-indigo-500/[0.02] border border-indigo-500/5 group hover:border-indigo-500/20 transition-all">
+              <p className="text-[10px] font-bold truncate mb-1 text-slate-900 dark:text-white uppercase tracking-tight">{business?.name || 'Active Node'}</p>
+              <p className="text-[9px] text-slate-400 truncate tracking-widest font-medium italic opacity-70">{user?.email}</p>
             </div>
             {/* Admin Section */}
             {isAdmin && (
               <div className="pt-4 mt-4 border-t border-slate-200 dark:border-white/5">
-                <p className="px-5 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Система</p>
+                <p className="px-5 mb-3 text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] opacity-60">System Core</p>
                 <Link 
                   href="/admin"
                   className={cn(
-                    "flex items-center gap-3 px-5 py-3 rounded-2xl transition-all duration-300 group",
-                    pathname === '/admin' ? "bg-amber-500 text-white shadow-lg shadow-amber-500/20" : "text-slate-500 hover:bg-amber-500/10 hover:text-amber-500"
+                    "flex items-center gap-3 px-5 py-4 rounded-2xl transition-all duration-300 group",
+                    pathname === '/admin' ? "bg-amber-500 text-white shadow-xl shadow-amber-500/20" : "text-slate-500 hover:bg-amber-500/10 hover:text-amber-500"
                   )}
                 >
                   <ShieldCheck className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-bold text-sm tracking-tight">Админ-панель</span>
+                  <span className="font-bold text-[10px] uppercase tracking-widest">Admin Control</span>
                 </Link>
               </div>
             )}
 
             <button 
               onClick={signOut}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-[13px] font-bold text-slate-500 hover:text-rose-500 hover:bg-rose-500/5 transition-all"
+              className="w-full flex items-center gap-3 px-5 py-3 rounded-2xl text-[10px] font-bold text-slate-400 hover:text-rose-500 hover:bg-rose-500/5 transition-all uppercase tracking-widest"
             >
               <LogOut className="w-4 h-4" />
-              Выход
+              Terminate Session
             </button>
           </div>
         ) : (
           <Link 
             href="/register"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="w-full flex items-center justify-center gap-2 px-4 py-4 bg-indigo-500 text-white rounded-2xl text-[13px] font-bold shadow-xl shadow-indigo-500/20 hover:scale-[1.02] active:scale-95 transition-all"
+            className="w-full flex items-center justify-center gap-2 px-6 py-5 bg-indigo-600 text-white rounded-2xl text-[11px] font-bold shadow-2xl shadow-indigo-600/20 hover:bg-indigo-700 active:scale-[0.98] transition-all uppercase tracking-widest"
           >
             <Sparkles className="w-4 h-4" />
-            Начать бесплатно
+            Initialize Free
           </Link>
         )}
       </div>

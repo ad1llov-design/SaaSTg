@@ -34,22 +34,22 @@ export default function ClientsPage() {
 
   return (
     <div className="space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border pb-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-border pb-10">
         <div>
-          <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase text-[var(--text-main)]">
-            Audience <span className="font-premium text-indigo-500 italic lowercase tracking-tight">Database</span>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase text-[var(--text-main)] leading-none">
+            Audience <span className="font-premium text-indigo-500 italic lowercase tracking-tight">Intelligence</span>
           </h1>
-          <p className="text-slate-500 mt-2 font-bold text-sm uppercase tracking-widest opacity-80">Глубоко понимайте свою аудиторию и историю их визитов.</p>
+          <p className="text-slate-500 mt-6 font-bold text-xs uppercase tracking-[0.3em] opacity-60 italic">Mapping behavioral artifacts and interaction cycles.</p>
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6">
-        <div className="premium-card flex-1 flex items-center gap-5 px-8 pt-2 transition-all border-none shadow-xl bg-input/50 focus-within:ring-2 focus-within:ring-indigo-500/20">
-          <Search className="w-6 h-6 text-slate-400" />
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="premium-card flex-1 flex items-center gap-6 px-10 !py-2 transition-all border-none shadow-2xl bg-input/40 focus-within:ring-2 focus-within:ring-indigo-500/20 backdrop-blur-sm">
+          <Search className="w-7 h-7 text-slate-400 opacity-50" />
           <input 
             type="text" 
             placeholder="Search by Identity or Digital ID..." 
-            className="flex-1 bg-transparent py-6 focus:outline-none text-sm font-black uppercase tracking-tight text-[var(--text-main)] placeholder:text-slate-400 placeholder:font-bold" 
+            className="flex-1 bg-transparent py-7 focus:outline-none text-[15px] font-bold uppercase tracking-tight text-[var(--text-main)] placeholder:text-slate-400 placeholder:opacity-50" 
             value={search} 
             onChange={e => setSearch(e.target.value)} 
           />
@@ -58,42 +58,42 @@ export default function ClientsPage() {
 
       <div className="premium-card !p-0 overflow-hidden border-border/50">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[700px]">
+          <table className="w-full text-left border-collapse min-w-[800px]">
             <thead className="bg-slate-50 dark:bg-white/5 border-b border-border">
               <tr>
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Client Identity</th>
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Digital ID (TG)</th>
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Retention / Loyalty</th>
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Recent Interaction</th>
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Direct Protocol</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Client Identity</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Digital ID (TG)</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Retention Logic</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Temporal Delta</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] text-right">Direct Protocol</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/50">
               {filtered.map(client => (
                 <tr key={client.id} className="hover:bg-indigo-500/[0.02] transition-colors group">
-                  <td className="px-8 py-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-11 h-11 bg-white dark:bg-white/10 border border-border rounded-xl flex items-center justify-center font-black text-slate-400 text-xs group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-all shadow-sm">
+                  <td className="px-10 py-8">
+                    <div className="flex items-center gap-5">
+                      <div className="w-12 h-12 bg-white dark:bg-white/10 border border-border rounded-xl flex items-center justify-center font-bold text-slate-400 text-xs group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-all shadow-sm">
                         {(client.name || 'U')[0]}
                       </div>
-                      <span className="font-black text-sm uppercase tracking-tight text-[var(--text-main)]">{client.name || 'Anonymous User'}</span>
+                      <span className="font-bold text-[15px] uppercase tracking-tight text-[var(--text-main)] group-hover:text-indigo-600 transition-colors">{client.name || 'Anonymous User'}</span>
                     </div>
                   </td>
-                  <td className="px-8 py-6 text-[11px] text-slate-400 font-bold tracking-widest">#{client.telegram_id}</td>
-                  <td className="px-8 py-6">
-                    <div className="flex items-center gap-4">
-                       <div className="w-24 h-2 bg-slate-100 dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
-                          <div className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 shadow-[0_0_15px_rgba(99,102,241,0.4)]" style={{ width: `${Math.min(client.visits_count * 10, 100)}%` }} />
+                  <td className="px-10 py-8 text-[12px] text-slate-400 font-bold tracking-[0.1em] italic opacity-70">#{client.telegram_id}</td>
+                  <td className="px-10 py-8">
+                    <div className="flex items-center gap-5">
+                       <div className="w-32 h-1.5 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden shadow-inner flex items-center">
+                          <div className="h-full bg-indigo-500 opacity-60 rounded-full" style={{ width: `${Math.min(client.visits_count * 10, 100)}%` }} />
                        </div>
-                       <span className="text-[10px] font-black text-indigo-500 uppercase tracking-widest">{client.visits_count} Hits</span>
+                       <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">{client.visits_count} Elements</span>
                     </div>
                   </td>
-                  <td className="px-8 py-6 text-[11px] font-black text-slate-500 italic">
-                    {client.last_visit ? new Date(client.last_visit).toLocaleDateString('ru-RU') : 'Pending Interaction'}
+                  <td className="px-10 py-8 text-[11px] font-bold text-slate-500 italic tracking-tight">
+                    {client.last_visit ? new Date(client.last_visit).toLocaleDateString('ru-RU') : 'No Recent Cycles'}
                   </td>
-                  <td className="px-8 py-6 text-right">
-                    <a href={`https://t.me/${client.telegram_id}`} target="_blank" className="p-3.5 bg-indigo-500/5 text-indigo-500 border border-indigo-500/10 rounded-xl hover:bg-indigo-600 hover:text-white transition-all inline-flex items-center shadow-sm hover:shadow-indigo-500/20">
-                      <ExternalLink className="w-4 h-4" />
+                  <td className="px-10 py-8 text-right">
+                    <a href={`https://t.me/${client.telegram_id}`} target="_blank" className="w-12 h-12 bg-indigo-500/5 text-indigo-500 border border-indigo-500/10 rounded-2xl hover:bg-indigo-600 hover:text-white transition-all inline-flex items-center justify-center shadow-sm hover:shadow-indigo-500/30 group-hover:rotate-12">
+                      <ExternalLink className="w-5 h-5" />
                     </a>
                   </td>
                 </tr>

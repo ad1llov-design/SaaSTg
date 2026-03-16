@@ -40,53 +40,53 @@ export default function AppointmentsPage() {
     <div className="space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <DemoModal isOpen={showDemoModal} onClose={() => setShowDemoModal(false)} />
       
-      <div className="flex flex-col gap-3 border-b border-border pb-8">
-        <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase text-[var(--text-main)]">
-          Schedule <span className="font-premium text-indigo-500 italic lowercase tracking-tight">Flow</span>
+      <div className="flex flex-col gap-4 border-b border-border pb-10">
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase text-[var(--text-main)]">
+          Schedule <span className="font-premium text-indigo-500 italic lowercase tracking-tight">Protocol</span>
         </h1>
-        <p className="text-slate-500 text-sm font-bold uppercase tracking-widest opacity-80">Управление сессиями ваших клиентов в режиме реального времени.</p>
+        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.4em] opacity-60 italic">Real-time session management for business nodes.</p>
       </div>
 
       {/* Список для мобильных */}
-      <div className="md:hidden space-y-6">
+      <div className="md:hidden space-y-8">
         {appointments.map((app) => (
-          <div key={app.id} className="premium-card space-y-6 border-indigo-500/5">
+          <div key={app.id} className="premium-card !p-8 space-y-8 border-indigo-500/10 hover:border-indigo-500/30 transition-all">
             <div className="flex justify-between items-start">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center font-black text-indigo-500 text-xs shadow-inner">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center font-bold text-indigo-500 text-xs shadow-inner border border-indigo-500/10">
                   {app.users?.name?.[0]}
                 </div>
                 <div>
-                  <p className="font-black text-sm uppercase tracking-tight text-[var(--text-main)]">{app.users?.name}</p>
-                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">@{app.users?.username}</p>
+                  <p className="font-bold text-sm uppercase tracking-tight text-[var(--text-main)]">{app.users?.name}</p>
+                  <p className="text-[9px] text-slate-400 font-bold uppercase tracking-[0.3em] mt-1 opacity-70">@{app.users?.username}</p>
                 </div>
               </div>
-              <span className={cn("px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.2em] shadow-sm", 
-                app.status === 'confirmed' ? "bg-indigo-500 text-white" : 
+              <span className={cn("px-5 py-2 rounded-xl text-[9px] font-bold uppercase tracking-[0.2em] shadow-sm", 
+                app.status === 'confirmed' ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20" : 
                 app.status === 'cancelled' ? "bg-rose-500/10 text-rose-500" : "bg-amber-500/10 text-amber-500")}>
-                {app.status === 'confirmed' ? 'Active' : app.status === 'cancelled' ? 'Denied' : 'Pending'}
+                {app.status === 'confirmed' ? 'Verified' : app.status === 'cancelled' ? 'Denied' : 'Pending'}
               </span>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 py-4 border-y border-slate-100 dark:border-white/5">
-              <div className="space-y-1">
-                 <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Service</p>
-                 <span className="text-xs font-bold truncate block text-[var(--text-main)]">{app.services?.name}</span>
+            <div className="grid grid-cols-2 gap-6 py-6 border-y border-slate-100 dark:border-white/5">
+              <div className="space-y-2">
+                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] opacity-60">Identity / Service</p>
+                 <span className="text-xs font-bold truncate block text-[var(--text-main)] uppercase tracking-tight">{app.services?.name}</span>
               </div>
-              <div className="space-y-1 text-right">
-                 <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Investment</p>
-                 <span className="text-xs font-black text-indigo-600 dark:text-indigo-400 italic">{app.services?.price} сом</span>
+              <div className="space-y-2 text-right">
+                 <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] opacity-60">Value Exchange</p>
+                 <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400 italic tracking-tighter">{app.services?.price} сом</span>
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-4">
-               <div className="flex items-center gap-4 text-[10px] text-slate-500 font-black uppercase tracking-widest">
-                  <div className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-indigo-500" />{app.appointment_date}</div>
-                  <div className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-indigo-500" />{app.appointment_time}</div>
+            <div className="flex items-center justify-between gap-6">
+               <div className="flex flex-col gap-2 text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">
+                  <div className="flex items-center gap-3"><Calendar className="w-4 h-4 text-indigo-500 opacity-70" />{app.appointment_date}</div>
+                  <div className="flex items-center gap-3"><Clock className="w-4 h-4 text-indigo-500 opacity-70" />{app.appointment_time}</div>
                </div>
-               <div className="flex gap-2">
-                  <button onClick={() => updateStatus(app.id, 'confirmed')} className="p-3 bg-indigo-600 text-white rounded-xl active:scale-95 transition-all shadow-xl shadow-indigo-600/20"><CheckCircle className="w-4 h-4" /></button>
-                  <button onClick={() => updateStatus(app.id, 'cancelled')} className="p-3 bg-rose-600 text-white rounded-xl active:scale-95 transition-all shadow-xl shadow-rose-600/20"><XCircle className="w-4 h-4" /></button>
+               <div className="flex gap-3">
+                  <button onClick={() => updateStatus(app.id, 'confirmed')} className="w-12 h-12 bg-indigo-600 text-white rounded-2xl active:scale-95 transition-all shadow-2xl shadow-indigo-600/20 flex items-center justify-center hover:bg-indigo-700"><CheckCircle className="w-5 h-5" /></button>
+                  <button onClick={() => updateStatus(app.id, 'cancelled')} className="w-12 h-12 bg-rose-600 text-white rounded-2xl active:scale-95 transition-all shadow-2xl shadow-rose-600/20 flex items-center justify-center hover:bg-rose-700"><XCircle className="w-5 h-5" /></button>
                </div>
             </div>
           </div>
@@ -99,45 +99,45 @@ export default function AppointmentsPage() {
           <table className="w-full text-left">
             <thead>
               <tr className="bg-slate-50 dark:bg-white/5 border-b border-border">
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Client Identity</th>
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Service Type</th>
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Date & Time</th>
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Revenue</th>
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Status</th>
-                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Actions</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Client Identity</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Service Type</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Temporal Slot</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Yield</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Protocol State</th>
+                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] text-right">Control</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/50">
               {appointments.map((app) => (
                 <tr key={app.id} className="hover:bg-indigo-500/[0.02] transition-colors group">
-                  <td className="px-8 py-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-11 h-11 bg-white dark:bg-white/10 border border-border rounded-xl flex items-center justify-center font-black text-slate-400 text-xs group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-all shadow-sm">{app.users?.name?.[0]}</div>
+                  <td className="px-10 py-8">
+                    <div className="flex items-center gap-5">
+                      <div className="w-12 h-12 bg-white dark:bg-white/10 border border-border rounded-xl flex items-center justify-center font-bold text-slate-400 text-xs group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-all shadow-sm">{app.users?.name?.[0]}</div>
                       <div>
-                        <p className="font-black text-sm uppercase tracking-tight text-[var(--text-main)]">{app.users?.name}</p>
-                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">@{app.users?.username}</p>
+                        <p className="font-bold text-sm uppercase tracking-tight text-[var(--text-main)] transition-colors group-hover:text-indigo-600">{app.users?.name}</p>
+                        <p className="text-[9px] text-slate-400 font-bold uppercase tracking-[0.25em] mt-1 italic opacity-60">@{app.users?.username}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-8 py-6 text-sm font-black uppercase tracking-tight text-[var(--text-main)]">{app.services?.name}</td>
-                  <td className="px-8 py-6">
-                    <div className="text-sm font-black text-[var(--text-main)] italic">{app.appointment_date}</div>
-                    <div className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">{app.appointment_time}</div>
+                  <td className="px-10 py-8 text-sm font-bold uppercase tracking-tight text-[var(--text-main)]">{app.services?.name}</td>
+                  <td className="px-10 py-8">
+                    <div className="text-sm font-bold text-[var(--text-main)] italic tracking-tight">{app.appointment_date}</div>
+                    <div className="text-[9px] text-slate-400 font-bold uppercase tracking-[0.3em] mt-1 opacity-70">{app.appointment_time}</div>
                   </td>
-                  <td className="px-8 py-6 font-black text-sm text-indigo-600 italic">{app.services?.price} сом</td>
-                  <td className="px-8 py-6">
+                  <td className="px-10 py-8 font-bold text-sm text-indigo-600 italic tracking-tighter">{app.services?.price} сом</td>
+                  <td className="px-10 py-8">
                     <span className={cn(
-                      "px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] inline-block min-w-[90px] text-center shadow-sm", 
-                      app.status === 'confirmed' ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20" : 
+                      "px-5 py-2.5 rounded-xl text-[9px] font-bold uppercase tracking-[0.3em] inline-block min-w-[100px] text-center shadow-sm", 
+                      app.status === 'confirmed' ? "bg-indigo-600 text-white shadow-xl shadow-indigo-600/20" : 
                       app.status === 'cancelled' ? "bg-rose-500/10 text-rose-500" : "bg-amber-500/10 text-amber-500"
                     )}>
-                      {app.status === 'confirmed' ? 'Active' : app.status === 'cancelled' ? 'Denied' : 'Pending'}
+                      {app.status === 'confirmed' ? 'Verified' : app.status === 'cancelled' ? 'Denied' : 'Pending'}
                     </span>
                   </td>
-                  <td className="px-8 py-6 text-right">
-                    <div className="flex gap-3 justify-end">
-                       <button onClick={() => updateStatus(app.id, 'confirmed')} className="p-3 text-slate-400 hover:text-indigo-600 hover:bg-indigo-500/5 rounded-2xl transition-all"><CheckCircle className="w-5 h-5" /></button>
-                       <button onClick={() => updateStatus(app.id, 'cancelled')} className="p-3 text-slate-400 hover:text-rose-600 hover:bg-rose-500/5 rounded-2xl transition-all"><XCircle className="w-5 h-5" /></button>
+                  <td className="px-10 py-8 text-right">
+                    <div className="flex gap-4 justify-end">
+                       <button onClick={() => updateStatus(app.id, 'confirmed')} className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-500/10 rounded-xl transition-all"><CheckCircle className="w-5 h-5" /></button>
+                       <button onClick={() => updateStatus(app.id, 'cancelled')} className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-rose-600 hover:bg-rose-500/10 rounded-xl transition-all"><XCircle className="w-5 h-5" /></button>
                     </div>
                   </td>
                 </tr>

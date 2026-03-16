@@ -1,4 +1,4 @@
--- LinkHub SaaS: Полная структура базы данных (v2)
+-- AuraSync SaaS: Полная структура базы данных
 -- Используйте этот файл для первичной настройки базы данных в Supabase
 
 -- 1. Расширения
@@ -11,7 +11,11 @@ CREATE TABLE IF NOT EXISTS businesses (
   owner_email TEXT NOT NULL UNIQUE,
   owner_id UUID, -- Связь с Supabase Auth
   bot_token TEXT UNIQUE,
+  bot_config JSONB DEFAULT '{}'::jsonb, -- Настройки бота (тексты, эмодзи)
   admin_telegram_id BIGINT, -- Для уведомлений владельцу
+  subscription_status TEXT DEFAULT 'trialing', -- trialing, active, expired
+  trial_ends_at TIMESTAMP WITH TIME ZONE DEFAULT (NOW() + INTERVAL '7 days'),
+  stripe_customer_id TEXT, -- Резервное поле для Stripe
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 

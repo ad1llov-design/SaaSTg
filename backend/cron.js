@@ -25,6 +25,7 @@ async function sendReminders() {
     }
 
     for (const app of apps) {
+        if (!app.businesses?.bot_token) continue;
         try {
             const bot = new Telegraf(app.businesses.bot_token);
             await bot.telegram.sendMessage(

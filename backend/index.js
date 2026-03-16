@@ -8,14 +8,8 @@ require('./cron'); // Start cron scheduler
 
 const app = express();
 
-// Stripe Webhook needs raw body - must be define BEFORE express.json()
-const billingRouter = require('./billing');
-app.use('/api/billing/webhook', express.raw({ type: 'application/json' }));
-
 app.use(express.json());
 app.use(cors({ origin: '*' }));
-
-app.use('/api/billing', billingRouter);
 
 const bots = new Map();
 
@@ -93,13 +87,13 @@ app.post('/api/register-bot', async (req, res) => {
   }
 });
 
-// Простой Health Check
-app.get('/', (req, res) => res.send('SaaS Booking Backend is Running...'));
+// Health Check for Render/Railway
+app.get('/health', (req, res) => res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() }));
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-  loadAllBots();
+const PORT = parseInt(process.env.PORT) || 5000;
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server is running on port ${PORT} (0.0.0.0)`);
+  loadAllBots().catch(err => console.error('CRITICAL: Failed to load bots:', err));
 });
 
 // Graceful stop
