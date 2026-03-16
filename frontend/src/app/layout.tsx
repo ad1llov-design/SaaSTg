@@ -7,7 +7,7 @@ import AppShell from "@/components/AppShell";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "LinkHub SaaS — Система онлайн-записи",
+  title: "AuraSync SaaS — Система онлайн-записи",
   description: "Управляйте записями клиентов через Telegram-бота. Автоматизация бронирования, аналитика и уведомления.",
 };
 
@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${inter.className} min-h-screen bg-slate-950 text-slate-50`}>
+      <body className={inter.className}>
         <AuthProvider>
           <AppShell>{children}</AppShell>
         </AuthProvider>

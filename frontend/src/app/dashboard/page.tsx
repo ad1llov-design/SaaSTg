@@ -118,7 +118,7 @@ export default function Dashboard() {
         </div>
         <div className="space-y-3">
           {recentAppointments.map((apt: any) => (
-            <div key={apt.id} className="flex items-center justify-between p-4 rounded-2xl bg-[var(--bg-input)] border border-transparent hover:border-emerald-500/20 transition-all group">
+            <div key={apt.id} className="flex items-center justify-between p-4 rounded-2xl bg-input border border-transparent hover:border-emerald-500/20 transition-all group">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 bg-white dark:bg-white/10 rounded-full flex items-center justify-center font-bold text-[10px] text-slate-600 dark:text-slate-300 shadow-sm">
                   {apt.users?.name?.[0] || 'U'}

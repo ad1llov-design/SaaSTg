@@ -78,11 +78,11 @@ export default function ServicesPage() {
             <form onSubmit={handleAdd} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Название</label>
-                <input required type="text" placeholder="Например: Стрижка" className="w-full bg-[var(--bg-input)] border border-transparent focus:border-emerald-500 rounded-xl px-4 py-4 focus:outline-none transition-all font-bold text-sm" value={newService.name} onChange={e => setNewService({...newService, name: e.target.value})}/>
+                <input required type="text" placeholder="Например: Стрижка" className="w-full bg-input border border-transparent focus:border-emerald-500 rounded-xl px-4 py-4 focus:outline-none transition-all font-bold text-sm" value={newService.name} onChange={e => setNewService({...newService, name: e.target.value})}/>
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Цена (сом)</label>
-                <input required type="number" placeholder="500" className="w-full bg-[var(--bg-input)] border border-transparent focus:border-emerald-500 rounded-xl px-4 py-4 focus:outline-none transition-all font-bold text-sm" value={newService.price} onChange={e => setNewService({...newService, price: e.target.value})}/>
+                <input required type="number" placeholder="500" className="w-full bg-input border border-transparent focus:border-emerald-500 rounded-xl px-4 py-4 focus:outline-none transition-all font-bold text-sm" value={newService.price} onChange={e => setNewService({...newService, price: e.target.value})}/>
               </div>
               <button type="submit" className="bg-emerald-500 py-4 rounded-xl font-bold text-white hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/10">Сохранить</button>
             </form>
