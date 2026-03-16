@@ -7,6 +7,7 @@ export default function SettingsPage() {
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
   const [botInfo, setBotInfo] = useState<{ username: string } | null>(null);
   const [business, setBusiness] = useState<any>(null);
 
@@ -25,6 +26,7 @@ export default function SettingsPage() {
     if (!token) return;
     setLoading(true);
     setStatus('idle');
+    setErrorMsg(''); // Clear previous errors
 
     try {
       // For MVP, create a business if it doesn't exist
@@ -52,8 +54,8 @@ export default function SettingsPage() {
         const errorData = await response.json();
         const msg = errorData.error || 'Server error';
         console.error('Backend error:', errorData);
-        setError(msg);
-        setStatus('idle');
+        setErrorMsg(msg);
+        setStatus('error');
         return;
       }
 
@@ -112,7 +114,7 @@ export default function SettingsPage() {
               {status === 'error' && (
               <div className="mt-6 p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl flex items-center gap-3 text-rose-400">
                 <AlertCircle className="w-5 h-5 shrink-0" />
-                <p className="text-sm">{error || 'Произошла ошибка при подключении. Проверьте консоль (F12).'}</p>
+                <p className="text-sm">{errorMsg || 'Произошла ошибка при подключении.'}</p>
               </div>
             )}
             </div>
