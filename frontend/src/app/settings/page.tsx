@@ -66,7 +66,9 @@ export default function SettingsPage() {
       } else {
         setStatus('error');
       }
-    } catch (err) {
+    } catch (err: any) {
+      console.error('Fetch error:', err);
+      setErrorMsg(err.message || 'Ошибка сети: бэкенд недоступен');
       setStatus('error');
     } finally {
       setLoading(false);
