@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { Search, Users as UsersIcon, ExternalLink, ChevronRight, Zap, Target } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/components/AuthProvider';
+import { useLanguage } from '@/context/LanguageContext';
 import { cn } from '@/lib/utils';
 
 export default function ClientsPage() {
   const { business } = useAuth();
+  const { t } = useLanguage();
   const [clients, setClients] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -33,71 +35,76 @@ export default function ClientsPage() {
   const filtered = clients.filter(c => (c.name || '').toLowerCase().includes(search.toLowerCase()) || String(c.telegram_id).includes(search));
 
   return (
-    <div className="space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-border pb-10">
+    <div className="space-y-8 md:space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-4 border-b border-slate-200 dark:border-white/10">
         <div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase text-[var(--text-main)] leading-none">
-            Audience <span className="font-premium text-indigo-500 italic lowercase tracking-tight">Intelligence</span>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+            {t.clients.title}
           </h1>
-          <p className="text-slate-500 mt-6 font-bold text-xs uppercase tracking-[0.3em] opacity-60 italic">Mapping behavioral artifacts and interaction cycles.</p>
+          <p className="text-slate-500 mt-2 text-sm">{t.clients.subtitle}</p>
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="premium-card flex-1 flex items-center gap-6 px-10 !py-2 transition-all border-none shadow-2xl bg-input/40 focus-within:ring-2 focus-within:ring-indigo-500/20 backdrop-blur-sm">
-          <Search className="w-7 h-7 text-slate-400 opacity-50" />
+      <div className="flex flex-col md:flex-row gap-6">
+        <div className="premium-card flex-1 flex items-center gap-4 px-6 !py-1 transition-all border-slate-200 dark:border-white/10 shadow-sm bg-white dark:bg-white/5 focus-within:ring-2 focus-within:ring-indigo-500/20">
+          <Search className="w-5 h-5 text-slate-400" />
           <input 
             type="text" 
-            placeholder="Search by Identity or Digital ID..." 
-            className="flex-1 bg-transparent py-7 focus:outline-none text-[15px] font-bold uppercase tracking-tight text-[var(--text-main)] placeholder:text-slate-400 placeholder:opacity-50" 
+            placeholder={t.common.search_placeholder || "Поиск по имени или ID..."} 
+            className="flex-1 bg-transparent py-4 focus:outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400" 
             value={search} 
             onChange={e => setSearch(e.target.value)} 
           />
         </div>
       </div>
 
-      <div className="premium-card !p-0 overflow-hidden border-border/50">
+      <div className="premium-card !p-0 overflow-hidden bg-white dark:bg-[#1a1c23]">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[800px]">
-            <thead className="bg-slate-50 dark:bg-white/5 border-b border-border">
+            <thead className="bg-slate-50 dark:bg-white/5 border-b border-slate-100 dark:border-white/10">
               <tr>
-                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Client Identity</th>
-                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Digital ID (TG)</th>
-                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Retention Logic</th>
-                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Temporal Delta</th>
-                <th className="px-10 py-8 text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] text-right">Direct Protocol</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">{t.common.clients}</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Telegram ID</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Визиты</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Последний визит</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest text-right">Связь</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border/50">
+            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
               {filtered.map(client => (
-                <tr key={client.id} className="hover:bg-indigo-500/[0.02] transition-colors group">
-                  <td className="px-10 py-8">
-                    <div className="flex items-center gap-5">
-                      <div className="w-12 h-12 bg-white dark:bg-white/10 border border-border rounded-xl flex items-center justify-center font-bold text-slate-400 text-xs group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-all shadow-sm">
+                <tr key={client.id} className="hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors group">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl flex items-center justify-center font-bold text-slate-500 text-xs transition-colors shadow-sm">
                         {(client.name || 'U')[0]}
                       </div>
-                      <span className="font-bold text-[15px] uppercase tracking-tight text-[var(--text-main)] group-hover:text-indigo-600 transition-colors">{client.name || 'Anonymous User'}</span>
+                      <span className="font-bold text-sm text-slate-900 dark:text-white group-hover:text-indigo-600 transition-colors">{client.name || 'Anonymous User'}</span>
                     </div>
                   </td>
-                  <td className="px-10 py-8 text-[12px] text-slate-400 font-bold tracking-[0.1em] italic opacity-70">#{client.telegram_id}</td>
-                  <td className="px-10 py-8">
-                    <div className="flex items-center gap-5">
-                       <div className="w-32 h-1.5 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden shadow-inner flex items-center">
-                          <div className="h-full bg-indigo-500 opacity-60 rounded-full" style={{ width: `${Math.min(client.visits_count * 10, 100)}%` }} />
+                  <td className="px-6 py-4 text-sm text-slate-500 font-medium tracking-wide">#{client.telegram_id}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                       <span className="text-sm font-semibold text-slate-900 dark:text-white">{client.visits_count}</span>
+                       <div className="w-24 h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex items-center">
+                          <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${Math.min(client.visits_count * 10, 100)}%` }} />
                        </div>
-                       <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest">{client.visits_count} Elements</span>
                     </div>
                   </td>
-                  <td className="px-10 py-8 text-[11px] font-bold text-slate-500 italic tracking-tight">
-                    {client.last_visit ? new Date(client.last_visit).toLocaleDateString('ru-RU') : 'No Recent Cycles'}
+                  <td className="px-6 py-4 text-sm font-medium text-slate-500">
+                    {client.last_visit ? new Date(client.last_visit).toLocaleDateString('ru-RU') : 'Нет визитов'}
                   </td>
-                  <td className="px-10 py-8 text-right">
-                    <a href={`https://t.me/${client.telegram_id}`} target="_blank" className="w-12 h-12 bg-indigo-500/5 text-indigo-500 border border-indigo-500/10 rounded-2xl hover:bg-indigo-600 hover:text-white transition-all inline-flex items-center justify-center shadow-sm hover:shadow-indigo-500/30 group-hover:rotate-12">
-                      <ExternalLink className="w-5 h-5" />
+                  <td className="px-6 py-4 text-right">
+                    <a href={`https://t.me/${client.telegram_id}`} target="_blank" className="w-10 h-10 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-xl hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-all inline-flex items-center justify-center shadow-sm">
+                      <ExternalLink className="w-4 h-4" />
                     </a>
                   </td>
                 </tr>
               ))}
+              {filtered.length === 0 && (
+                <tr>
+                   <td colSpan={5} className="py-12 text-center text-slate-400 font-medium">Нет клиентов, соответствующих поиску</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
