@@ -92,8 +92,8 @@ export default function SettingsPage() {
               <div className="flex items-start gap-4">
                 <Bell className="w-6 h-6 text-emerald-500 mt-1" />
                 <div>
-                  <p className="font-bold text-slate-200 mb-1 leading-tight">Мгновенные Telegram оповещения</p>
-                  <p className="text-sm text-slate-400">Чтобы получать уведомления о новых записях лично, отправьте команду <b>/start</b> вашему зарегистрированному боту.</p>
+                  <p className="font-bold text-slate-900 dark:text-slate-100 mb-1 leading-tight">Мгновенные Telegram оповещения</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Чтобы получать уведомления о новых записях лично, отправьте команду <b>/start</b> вашему зарегистрированному боту.</p>
                 </div>
               </div>
             </div>
