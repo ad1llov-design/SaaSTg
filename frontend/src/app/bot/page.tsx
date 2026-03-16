@@ -89,6 +89,17 @@ export default function BotCustomizePage() {
                   placeholder="Расскажите о преимуществах вашего бизнеса..."
                 />
               </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block ml-1">Контакты / Адрес</label>
+                <textarea 
+                  rows={2}
+                  className="w-full bg-input border border-transparent focus:border-emerald-500 rounded-2xl px-5 py-4 focus:outline-none transition-all font-bold text-sm resize-none"
+                  value={config.contact_info}
+                  onChange={(e) => setConfig({...config, contact_info: e.target.value})}
+                  placeholder="Адрес, телефон, ссылки..."
+                />
+              </div>
             </div>
           </div>
 

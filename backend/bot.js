@@ -218,7 +218,25 @@ function setupBotLogic(bot, businessId) {
         }
       }
     );
-
+    // Сохраняем admin_telegram_id если это первый /start от владельца
+    // (упрощенная логика: владелец — первый кто написал /start)
+    const { data: bizData } = await supabase
+      .from('businesses')
+      .select('admin_telegram_id')
+      .eq('id', businessId)
+      .single();
+    
+    if (!bizData?.admin_telegram_id) {
+      await supabase
+        .from('businesses')
+        .update({ admin_telegram_id: ctx.from.id })
+        .eq('id', businessId);
+      
+      await ctx.reply(
+        '🔔 Вы зарегистрированы как администратор этого бота. ' +
+        'Вы будете получать уведомления о новых записях!'
+      );
+    }
   });
 
   // Обработка кнопки "О нас"
@@ -256,26 +274,6 @@ function setupBotLogic(bot, businessId) {
         ]
       }
     });
-  });
-    // Сохраняем admin_telegram_id если это первый /start от владельца
-    // (упрощенная логика: владелец — первый кто написал /start)
-    const { data: bizData } = await supabase
-      .from('businesses')
-      .select('admin_telegram_id')
-      .eq('id', businessId)
-      .single();
-    
-    if (!bizData?.admin_telegram_id) {
-      await supabase
-        .from('businesses')
-        .update({ admin_telegram_id: ctx.from.id })
-        .eq('id', businessId);
-      
-      await ctx.reply(
-        '🔔 Вы зарегистрированы как администратор этого бота. ' +
-        'Вы будете получать уведомления о новых записях!'
-      );
-    }
   });
 
   bot.action('start_booking', (ctx) => {
