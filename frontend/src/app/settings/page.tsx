@@ -110,11 +110,11 @@ export default function SettingsPage() {
               </button>
 
               {status === 'error' && (
-                <div className="flex items-center gap-2 p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 text-sm">
-                  <AlertCircle className="w-5 h-5" />
-                  Invalid token or server error. Please try again.
-                </div>
-              )}
+              <div className="mt-6 p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl flex items-center gap-3 text-rose-400">
+                <AlertCircle className="w-5 h-5 shrink-0" />
+                <p className="text-sm">{error || 'Произошла ошибка при подключении. Проверьте консоль (F12).'}</p>
+              </div>
+            )}
             </div>
           </div>
 
