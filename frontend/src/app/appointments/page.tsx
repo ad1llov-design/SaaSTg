@@ -37,51 +37,56 @@ export default function AppointmentsPage() {
   };
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <DemoModal isOpen={showDemoModal} onClose={() => setShowDemoModal(false)} />
       
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl md:text-5xl font-bold tracking-tight">График <span className="font-premium text-emerald-500 italic">Записей</span></h1>
-        <p className="text-slate-500 text-sm font-medium">Управляйте сессиями ваших клиентов в режиме реального времени.</p>
+      <div className="flex flex-col gap-3 border-b border-border pb-8">
+        <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase text-[var(--text-main)]">
+          Schedule <span className="font-premium text-indigo-500 italic lowercase tracking-tight">Flow</span>
+        </h1>
+        <p className="text-slate-500 text-sm font-bold uppercase tracking-widest opacity-80">Управление сессиями ваших клиентов в режиме реального времени.</p>
       </div>
 
       {/* Список для мобильных */}
-      <div className="md:hidden space-y-4">
+      <div className="md:hidden space-y-6">
         {appointments.map((app) => (
-          <div key={app.id} className="premium-card space-y-4">
+          <div key={app.id} className="premium-card space-y-6 border-indigo-500/5">
             <div className="flex justify-between items-start">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center font-bold text-emerald-500 text-xs">{app.users?.name?.[0]}</div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center font-black text-indigo-500 text-xs shadow-inner">
+                  {app.users?.name?.[0]}
+                </div>
                 <div>
-                  <p className="font-bold text-sm tracking-tight">{app.users?.name}</p>
-                  <p className="text-[10px] text-slate-400">@{app.users?.username}</p>
+                  <p className="font-black text-sm uppercase tracking-tight text-[var(--text-main)]">{app.users?.name}</p>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">@{app.users?.username}</p>
                 </div>
               </div>
-              <span className={cn("px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider", 
-                app.status === 'confirmed' ? "bg-emerald-500/10 text-emerald-500" : 
+              <span className={cn("px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.2em] shadow-sm", 
+                app.status === 'confirmed' ? "bg-indigo-500 text-white" : 
                 app.status === 'cancelled' ? "bg-rose-500/10 text-rose-500" : "bg-amber-500/10 text-amber-500")}>
                 {app.status === 'confirmed' ? 'Active' : app.status === 'cancelled' ? 'Denied' : 'Pending'}
               </span>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100 dark:border-white/5">
-              <div className="flex items-center gap-2">
-                 <Tag className="w-3.5 h-3.5 text-slate-400" />
-                 <span className="text-xs font-bold truncate">{app.services?.name}</span>
+            <div className="grid grid-cols-2 gap-4 py-4 border-y border-slate-100 dark:border-white/5">
+              <div className="space-y-1">
+                 <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Service</p>
+                 <span className="text-xs font-bold truncate block text-[var(--text-main)]">{app.services?.name}</span>
               </div>
-              <div className="flex items-center gap-2 justify-end">
-                 <span className="text-xs font-bold text-emerald-500">{app.services?.price} сом</span>
+              <div className="space-y-1 text-right">
+                 <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Investment</p>
+                 <span className="text-xs font-black text-indigo-600 dark:text-indigo-400 italic">{app.services?.price} сом</span>
               </div>
             </div>
 
-            <div className="flex items-center justify-between gap-4 pt-2">
-               <div className="flex items-center gap-4 text-[11px] text-slate-500 font-medium">
-                  <div className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" />{app.appointment_date}</div>
-                  <div className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" />{app.appointment_time}</div>
+            <div className="flex items-center justify-between gap-4">
+               <div className="flex items-center gap-4 text-[10px] text-slate-500 font-black uppercase tracking-widest">
+                  <div className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 text-indigo-500" />{app.appointment_date}</div>
+                  <div className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-indigo-500" />{app.appointment_time}</div>
                </div>
                <div className="flex gap-2">
-                  <button onClick={() => updateStatus(app.id, 'confirmed')} className="p-2.5 bg-emerald-500 text-white rounded-xl active:scale-90 transition-all shadow-lg shadow-emerald-500/20"><CheckCircle className="w-4 h-4" /></button>
-                  <button onClick={() => updateStatus(app.id, 'cancelled')} className="p-2.5 bg-rose-500 text-white rounded-xl active:scale-90 transition-all shadow-lg shadow-rose-500/20"><XCircle className="w-4 h-4" /></button>
+                  <button onClick={() => updateStatus(app.id, 'confirmed')} className="p-3 bg-indigo-600 text-white rounded-xl active:scale-95 transition-all shadow-xl shadow-indigo-600/20"><CheckCircle className="w-4 h-4" /></button>
+                  <button onClick={() => updateStatus(app.id, 'cancelled')} className="p-3 bg-rose-600 text-white rounded-xl active:scale-95 transition-all shadow-xl shadow-rose-600/20"><XCircle className="w-4 h-4" /></button>
                </div>
             </div>
           </div>
@@ -89,44 +94,50 @@ export default function AppointmentsPage() {
       </div>
 
       {/* Таблица для ПК */}
-      <div className="hidden md:block premium-card !p-0 overflow-hidden">
+      <div className="hidden md:block premium-card !p-0 overflow-hidden border-border/50">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="bg-slate-50 dark:bg-white/5">
-                <th className="px-6 py-5 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Клиент</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Услуга</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Дата / Время</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Стоимость</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Статус</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] text-right">Действие</th>
+              <tr className="bg-slate-50 dark:bg-white/5 border-b border-border">
+                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Client Identity</th>
+                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Service Type</th>
+                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Date & Time</th>
+                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Revenue</th>
+                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Status</th>
+                <th className="px-8 py-6 text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+            <tbody className="divide-y divide-border/50">
               {appointments.map((app) => (
-                <tr key={app.id} className="hover:bg-slate-50 dark:hover:bg-white/[0.02] transition-colors group">
-                  <td className="px-6 py-5">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center font-bold text-emerald-500 text-xs ring-2 ring-transparent group-hover:ring-emerald-500/20 transition-all">{app.users?.name?.[0]}</div>
+                <tr key={app.id} className="hover:bg-indigo-500/[0.02] transition-colors group">
+                  <td className="px-8 py-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-11 h-11 bg-white dark:bg-white/10 border border-border rounded-xl flex items-center justify-center font-black text-slate-400 text-xs group-hover:bg-indigo-600 group-hover:text-white group-hover:border-indigo-600 transition-all shadow-sm">{app.users?.name?.[0]}</div>
                       <div>
-                        <p className="font-bold text-sm">{app.users?.name}</p>
-                        <p className="text-[10px] text-slate-400">@{app.users?.username}</p>
+                        <p className="font-black text-sm uppercase tracking-tight text-[var(--text-main)]">{app.users?.name}</p>
+                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">@{app.users?.username}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-5 text-sm font-bold">{app.services?.name}</td>
-                  <td className="px-6 py-5">
-                    <div className="text-sm font-bold">{app.appointment_date}</div>
-                    <div className="text-[11px] text-slate-500 font-medium">{app.appointment_time}</div>
+                  <td className="px-8 py-6 text-sm font-black uppercase tracking-tight text-[var(--text-main)]">{app.services?.name}</td>
+                  <td className="px-8 py-6">
+                    <div className="text-sm font-black text-[var(--text-main)] italic">{app.appointment_date}</div>
+                    <div className="text-[10px] text-slate-500 font-black uppercase tracking-widest mt-1">{app.appointment_time}</div>
                   </td>
-                  <td className="px-6 py-5 font-bold text-sm text-emerald-600 dark:text-emerald-400">{app.services?.price} сом</td>
-                  <td className="px-6 py-5">
-                    <span className={cn("px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider", app.status === 'confirmed' ? "bg-emerald-500/10 text-emerald-500" : app.status === 'cancelled' ? "bg-rose-500/10 text-rose-500" : "bg-amber-500/10 text-amber-500")}>{app.status === 'confirmed' ? 'Active' : app.status === 'cancelled' ? 'Denied' : 'Pending'}</span>
+                  <td className="px-8 py-6 font-black text-sm text-indigo-600 italic">{app.services?.price} сом</td>
+                  <td className="px-8 py-6">
+                    <span className={cn(
+                      "px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] inline-block min-w-[90px] text-center shadow-sm", 
+                      app.status === 'confirmed' ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20" : 
+                      app.status === 'cancelled' ? "bg-rose-500/10 text-rose-500" : "bg-amber-500/10 text-amber-500"
+                    )}>
+                      {app.status === 'confirmed' ? 'Active' : app.status === 'cancelled' ? 'Denied' : 'Pending'}
+                    </span>
                   </td>
-                  <td className="px-6 py-5 text-right">
-                    <div className="flex gap-2 justify-end">
-                       <button onClick={() => updateStatus(app.id, 'confirmed')} className="p-2 text-slate-400 hover:text-emerald-500 hover:bg-emerald-500/5 rounded-xl transition-all"><CheckCircle className="w-5 h-5" /></button>
-                       <button onClick={() => updateStatus(app.id, 'cancelled')} className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-500/5 rounded-xl transition-all"><XCircle className="w-5 h-5" /></button>
+                  <td className="px-8 py-6 text-right">
+                    <div className="flex gap-3 justify-end">
+                       <button onClick={() => updateStatus(app.id, 'confirmed')} className="p-3 text-slate-400 hover:text-indigo-600 hover:bg-indigo-500/5 rounded-2xl transition-all"><CheckCircle className="w-5 h-5" /></button>
+                       <button onClick={() => updateStatus(app.id, 'cancelled')} className="p-3 text-slate-400 hover:text-rose-600 hover:bg-rose-500/5 rounded-2xl transition-all"><XCircle className="w-5 h-5" /></button>
                     </div>
                   </td>
                 </tr>

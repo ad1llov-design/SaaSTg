@@ -56,17 +56,19 @@ export default function ServicesPage() {
   };
 
   return (
-    <div className="space-y-6 md:space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+    <div className="space-y-8 md:space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
       <DemoModal isOpen={showDemoModal} onClose={() => setShowDemoModal(false)} />
       
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-border pb-8">
         <div>
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">Ваши <span className="font-premium text-emerald-500 italic">Услуги</span></h1>
-          <p className="text-slate-500 mt-2 font-medium">Создавайте и управляйте пакетами услуг для бронирования.</p>
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter uppercase text-[var(--text-main)]">
+            Product <span className="font-premium text-indigo-500 italic lowercase tracking-tight">Catalog</span>
+          </h1>
+          <p className="text-slate-500 mt-2 font-bold text-sm uppercase tracking-widest opacity-80">Создавайте и управляйте пакетами услуг для бронирования.</p>
         </div>
         <button 
           onClick={() => setIsAdding(!isAdding)}
-          className="flex items-center justify-center gap-2 px-8 py-4 bg-emerald-500 text-white font-bold rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-emerald-500/20"
+          className="flex items-center justify-center gap-2 px-10 py-5 bg-indigo-600 text-white font-black rounded-2xl hover:bg-indigo-700 hover:scale-[1.02] active:scale-95 transition-all shadow-2xl shadow-indigo-600/20 uppercase tracking-widest text-xs"
         >
           {isAdding ? 'Отменить' : <><Plus className="w-5 h-5" /> Добавить услугу</>}
         </button>
@@ -74,40 +76,50 @@ export default function ServicesPage() {
 
       <AnimatePresence>
         {isAdding && (
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="premium-card !border-emerald-500/30">
-            <form onSubmit={handleAdd} className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Название</label>
-                <input required type="text" placeholder="Например: Стрижка" className="w-full bg-input border border-transparent focus:border-emerald-500 rounded-xl px-4 py-4 focus:outline-none transition-all font-bold text-sm" value={newService.name} onChange={e => setNewService({...newService, name: e.target.value})}/>
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="premium-card !border-indigo-500/30">
+            <form onSubmit={handleAdd} className="grid grid-cols-1 md:grid-cols-3 gap-8 items-end">
+              <div className="space-y-3">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block ml-1">Identity (Название)</label>
+                <input required type="text" placeholder="Например: Стрижка" className="w-full bg-input border-2 border-transparent focus:border-indigo-500 rounded-2xl px-6 py-4 focus:outline-none transition-all font-bold text-sm shadow-sm" value={newService.name} onChange={e => setNewService({...newService, name: e.target.value})}/>
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Цена (сом)</label>
-                <input required type="number" placeholder="500" className="w-full bg-input border border-transparent focus:border-emerald-500 rounded-xl px-4 py-4 focus:outline-none transition-all font-bold text-sm" value={newService.price} onChange={e => setNewService({...newService, price: e.target.value})}/>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest block ml-1">Value (сом)</label>
+                <input required type="number" placeholder="500" className="w-full bg-input border-2 border-transparent focus:border-indigo-500 rounded-2xl px-6 py-4 focus:outline-none transition-all font-bold text-sm shadow-sm" value={newService.price} onChange={e => setNewService({...newService, price: e.target.value})}/>
               </div>
-              <button type="submit" className="bg-emerald-500 py-4 rounded-xl font-bold text-white hover:bg-emerald-600 transition-all shadow-lg shadow-emerald-500/10">Сохранить</button>
+              <button type="submit" className="bg-indigo-600 py-4 rounded-xl font-black uppercase text-white hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-600/20 tracking-widest text-[11px]">Deploy Service</button>
             </form>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {services.map((service) => (
-          <div key={service.id} className="premium-card group relative flex flex-col">
-            <div className="flex justify-between items-start mb-6">
-              <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-500">
-                <Package className="w-6 h-6 text-emerald-500" />
+          <div key={service.id} className="premium-card group relative flex flex-col hover:border-indigo-500/30">
+            <div className="flex justify-between items-start mb-8">
+              <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center transition-all group-hover:bg-indigo-500 group-hover:text-white group-hover:rotate-6 shadow-sm">
+                <Package className="w-7 h-7 text-indigo-500 transition-colors group-hover:text-white" />
               </div>
-              <button onClick={() => handleDelete(service.id)} className="p-2 text-slate-300 dark:text-slate-600 hover:text-rose-500 transition-colors opacity-0 group-hover:opacity-100"><Trash2 className="w-5 h-5" /></button>
+              <button onClick={() => handleDelete(service.id)} className="p-3 text-slate-300 dark:text-slate-600 hover:text-rose-500 transition-all opacity-0 group-hover:opacity-100 hover:scale-110"><Trash2 className="w-5 h-5" /></button>
             </div>
-            <h3 className="text-xl font-bold mb-4">{service.name}</h3>
-            <div className="flex items-center gap-6 border-t border-slate-100 dark:border-white/5 pt-4 mt-auto">
-               <div className="flex items-center gap-2">
-                  <DollarSign className="w-4 h-4 text-emerald-500" />
-                  <span className="font-bold">{service.price} сом</span>
+            
+            <h3 className="text-xl font-black uppercase tracking-tight text-[var(--text-main)] mb-6">{service.name}</h3>
+            
+            <div className="flex items-center gap-8 py-5 border-t border-slate-100 dark:border-white/5 mt-auto">
+               <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-indigo-500/10 rounded-lg flex items-center justify-center">
+                    <DollarSign className="w-4 h-4 text-indigo-500" />
+                  </div>
+                  <span className="font-black text-lg tracking-tighter text-[var(--text-main)] italic">{service.price} сом</span>
                </div>
                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-                  <span className="text-sm font-medium text-slate-500">{service.duration_minutes} мин</span>
+                  <Clock className="w-4 h-4 text-slate-400" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{service.duration_minutes} min</span>
+               </div>
+            </div>
+
+            <div className="absolute top-4 right-14">
+               <div className="px-3 py-1 bg-indigo-500/5 rounded-full border border-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                 <span className="text-[8px] font-black text-indigo-500 uppercase tracking-widest">Active Tier</span>
                </div>
             </div>
           </div>
