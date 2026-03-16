@@ -15,7 +15,8 @@ import {
   X,
   Sun,
   Moon,
-  Zap
+  Zap,
+  ShieldCheck
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
