@@ -4,9 +4,7 @@
 @theme {
   --font-premium: "Playfair Display", serif;
   --font-outfit: "Outfit", sans-serif;
-  
   --radius-premium: 2rem;
-  
   --color-accent: #10b981;
   --color-accent-secondary: #06b6d4;
 }
@@ -32,22 +30,21 @@ body {
   color: var(--text-main);
   font-family: var(--font-outfit);
   transition: background-color 0.3s ease, color 0.3s ease;
-  overflow-x: hidden;
 }
 
 .font-premium {
   font-family: var(--font-premium);
 }
 
-/* Glassmorphism Utilities */
-@utility glass {
+/* Glassmorphism Styles */
+.glass {
   background: var(--bg-glass);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
 }
 
-@utility glass-dark {
+.glass-dark {
   background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -65,7 +62,7 @@ body {
   border-radius: 10px;
 }
 
-/* Premium Classes */
+/* Responsive Grid */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -85,8 +82,14 @@ body {
   }
 }
 
+/* Premium Component */
 .premium-card {
-  @apply glass rounded-premium transition-all duration-300;
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-premium);
+  transition: all 0.3s ease;
   padding: 1.25rem;
 }
 
@@ -98,28 +101,13 @@ body {
 
 .premium-card:hover {
   transform: scale(1.02);
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
 }
 
 .mobile-menu-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgb(2 6 23 / 0.5);
+  background-color: rgba(2, 6, 23, 0.5);
   backdrop-filter: blur(4px);
   z-index: 40;
-}
-
-@media (min-width: 1024px) {
-  .mobile-menu-overlay {
-    display: none;
-  }
-}
-
-@keyframes slide-in {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-}
-
-.animate-slide-in {
-  animation: slide-in 0.3s ease-out forwards;
 }
