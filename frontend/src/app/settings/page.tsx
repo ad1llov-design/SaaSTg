@@ -50,8 +50,11 @@ export default function SettingsPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
+        const msg = errorData.error || 'Server error';
         console.error('Backend error:', errorData);
-        throw new Error(errorData.error || 'Server error');
+        setError(msg);
+        setStatus('idle');
+        return;
       }
 
       const result = await response.json();
