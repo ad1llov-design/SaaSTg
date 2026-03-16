@@ -209,13 +209,54 @@ function setupBotLogic(bot, businessId) {
         reply_markup: {
           inline_keyboard: [
             [{ text: `${emoji} Записаться`, callback_data: 'start_booking' }],
-            [{ text: '📋 Мои записи', callback_data: 'my_bookings' }],
-            [{ text: '❌ Отменить запись', callback_data: 'cancel_booking' }]
+            [
+              { text: 'ℹ️ О нас', callback_data: 'show_about' },
+              { text: '📍 Контакты', callback_data: 'show_contacts' }
+            ],
+            [{ text: '📋 Мои записи', callback_data: 'my_bookings' }]
           ]
         }
       }
     );
 
+  });
+
+  // Обработка кнопки "О нас"
+  bot.action('show_about', async (ctx) => {
+    await ctx.answerCbQuery();
+    const { data: biz } = await supabase.from('businesses').select('bot_config').eq('id', businessId).single();
+    const text = biz?.bot_config?.about_text || "Мы предоставляем качественные услуги для вашего бизнеса.";
+    await ctx.editMessageText(text, { reply_markup: { inline_keyboard: [[{ text: '⬅️ Назад', callback_data: 'back_to_start' }]] } });
+  });
+
+  // Обработка кнопки "Контакты"
+  bot.action('show_contacts', async (ctx) => {
+    await ctx.answerCbQuery();
+    const { data: biz } = await supabase.from('businesses').select('bot_config').eq('id', businessId).single();
+    const text = biz?.bot_config?.contact_info || "Наш адрес: ул. Центральная, 1\nТелефон: +7 (900) 000-00-00";
+    await ctx.editMessageText(text, { reply_markup: { inline_keyboard: [[{ text: '⬅️ Назад', callback_data: 'back_to_start' }]] } });
+  });
+
+  bot.action('back_to_start', async (ctx) => {
+    await ctx.answerCbQuery();
+    await ctx.deleteMessage();
+    // Вызываем команду старт без повторного приветствия, просто меню
+    const { data: biz } = await supabase.from('businesses').select('name, bot_config').eq('id', businessId).single();
+    const config = biz?.bot_config || {};
+    const emoji = config.theme_emoji || '✨';
+    await ctx.reply('Выберите действие:', {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: `${emoji} Записаться`, callback_data: 'start_booking' }],
+          [
+            { text: 'ℹ️ О нас', callback_data: 'show_about' },
+            { text: '📍 Контакты', callback_data: 'show_contacts' }
+          ],
+          [{ text: '📋 Мои записи', callback_data: 'my_bookings' }]
+        ]
+      }
+    });
+  });
     // Сохраняем admin_telegram_id если это первый /start от владельца
     // (упрощенная логика: владелец — первый кто написал /start)
     const { data: bizData } = await supabase
