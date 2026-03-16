@@ -4,13 +4,23 @@ import { supabase } from '@/lib/supabase';
 import { useRouter, usePathname } from 'next/navigation';
 import type { User } from '@supabase/supabase-js';
 
+interface Business {
+  id: string;
+  name: string;
+  owner_email: string;
+  bot_token?: string;
+  trial_ends_at?: string;
+  subscription_status?: 'trialing' | 'active' | 'expired';
+}
+
 interface AuthContextType {
-  user: User | null;
-  business: any | null;
+  user: User | null; // Keeping User type for consistency with useState, though instruction snippet had 'any'
+  business: Business | null;
   loading: boolean;
   theme: 'light' | 'dark';
   toggleTheme: () => void;
   signOut: () => Promise<void>;
+  trialDaysLeft: number;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -20,6 +30,7 @@ const AuthContext = createContext<AuthContextType>({
   theme: 'dark',
   toggleTheme: () => {},
   signOut: async () => {},
+  trialDaysLeft: 7
 });
 
 export const useAuth = () => useContext(AuthContext);
@@ -29,6 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [business, setBusiness] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [trialDaysLeft, setTrialDaysLeft] = useState(7);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -78,14 +90,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   async function loadBusiness(userId: string) {
-    const { data } = await supabase
+    const { data: bizData } = await supabase
       .from('businesses')
       .select('*')
       .eq('owner_id', userId)
       .limit(1)
       .single();
-    
-    setBusiness(data);
+      if (bizData) {
+        setBusiness(bizData);
+        if (bizData.trial_ends_at) {
+          const ends = new Date(bizData.trial_ends_at);
+          const now = new Date();
+          const diff = Math.ceil((ends.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+          setTrialDaysLeft(Math.max(0, diff));
+        }
+      }
     setLoading(false);
   }
 
@@ -95,7 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, business, loading, theme, toggleTheme, signOut }}>
+    <AuthContext.Provider value={{ user, business, loading, theme, toggleTheme, signOut, trialDaysLeft }}>
       {children}
     </AuthContext.Provider>
   );

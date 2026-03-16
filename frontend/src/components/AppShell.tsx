@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import Sidebar from '@/components/Sidebar';
 
@@ -8,7 +8,8 @@ const PUBLIC_ROUTES = ['/login', '/register'];
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { user, loading } = useAuth();
+  const router = useRouter();
+  const { user, loading, business, trialDaysLeft } = useAuth();
   
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
 
@@ -25,6 +26,15 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       </div>
     );
+  }
+
+  const isExpired = trialDaysLeft !== undefined && trialDaysLeft <= 0 && business?.subscription_status !== 'active';
+  const isBillingPage = pathname === '/billing';
+
+  // Редирект на оплату, если триал истек (и это не публичный роут)
+  if (isExpired && !isBillingPage) {
+    router.push('/billing');
+    return null; // Or a loading spinner while redirecting
   }
 
   return (

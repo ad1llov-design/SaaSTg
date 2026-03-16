@@ -14,7 +14,8 @@ import {
   Menu,
   X,
   Sun,
-  Moon
+  Moon,
+  Zap
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -29,7 +30,7 @@ const menuItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const { user, business, signOut, theme, toggleTheme } = useAuth();
+  const { user, business, signOut, theme, toggleTheme, trialDaysLeft } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const SidebarContent = () => (
@@ -72,8 +73,34 @@ export default function Sidebar() {
 
       {/* Подвал сайдбара */}
       <div className="p-4 border-t border-slate-200 dark:border-white/5 space-y-4">
+        {/* Trial Status Sidebar Item */}
+        <div className="px-3 mb-4">
+          <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-2xl p-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                {trialDaysLeft > 0 ? "Пробный период" : "Триал завершен"}
+              </span>
+              <span className="text-xs font-bold text-emerald-500">
+                {trialDaysLeft > 0 ? `${trialDaysLeft} дн.` : "0 дн."}
+              </span>
+            </div>
+            <div className="w-full h-1.5 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden mb-3">
+              <div 
+                className="h-full bg-emerald-500 transition-all duration-1000" 
+                style={{ width: `${(trialDaysLeft / 7) * 100}%` }} 
+              />
+            </div>
+            <Link 
+              href="/billing" 
+              className="flex items-center justify-center gap-2 w-full py-2 bg-emerald-500 text-white text-[10px] font-bold rounded-xl hover:bg-emerald-600 transition-all shadow-sm"
+            >
+              <Zap className="w-3 h-3" /> Улучшить до Pro
+            </Link>
+          </div>
+        </div>
+
         {/* Переключатель темы */}
-        <div className="flex items-center justify-between px-2">
+        <div className="flex items-center justify-between gap-2 px-3">
            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Тема</span>
            <button 
               onClick={toggleTheme}
