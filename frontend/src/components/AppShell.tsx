@@ -12,36 +12,26 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
 
-  // На публичных страницах (login/register) — без Sidebar
   if (isPublicRoute) {
-    return <>{children}</>;
+    return <div className="bg-slate-50 dark:bg-[#020617] transition-colors duration-400">{children}</div>;
   }
 
-  // Показываем загрузку, пока Auth проверяет сессию
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#020617] transition-colors">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin shadow-lg shadow-emerald-500/10" />
-          <p className="text-slate-500 text-xs font-bold uppercase tracking-widest animate-pulse">Initializing AuraSync</p>
+          <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] animate-pulse">Initializing AuraSync</p>
         </div>
       </div>
     );
   }
 
-  // Позволяем гостям видеть все страницы в демо-режиме
-  const isDemoAllowed = ['/', '/dashboard', '/appointments', '/clients', '/services', '/settings'].includes(pathname);
-
-  if (!user && !isDemoAllowed) {
-    return null;
-  }
-
-  // Основной лейаут
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors duration-300">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-[#020617] transition-colors duration-400">
       <Sidebar />
-      <main className="flex-1 lg:ml-80 px-4 py-20 lg:py-10 min-h-screen w-full">
-        <div className="max-w-6xl mx-auto w-full">
+      <main className="flex-1 lg:ml-72 px-4 py-20 lg:py-10 min-h-screen overflow-x-hidden">
+        <div className="max-w-6xl mx-auto">
           {children}
         </div>
       </main>
