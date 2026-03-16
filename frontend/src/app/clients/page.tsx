@@ -11,8 +11,18 @@ export default function ClientsPage() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    if (!business?.id) return;
     async function loadClients() {
+      if (!business?.id) {
+        // Демо-данные для клиентов
+        setClients([
+          { id: '1', name: 'Александр Колесников', telegram_id: 12345678, visits_count: 5, last_visit: new Date().toISOString() },
+          { id: '2', name: 'Мария Сидорова', telegram_id: 87654321, visits_count: 12, last_visit: new Date().toISOString() },
+          { id: '3', name: 'Виктор Петров', telegram_id: 13572468, visits_count: 1, last_visit: new Date().toISOString() },
+          { id: '4', name: 'Елена Маркова', telegram_id: 24681357, visits_count: 3, last_visit: new Date().toISOString() },
+        ]);
+        setLoading(false);
+        return;
+      }
       const { data, error } = await supabase
         .from('clients')
         .select('*')

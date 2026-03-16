@@ -29,8 +29,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // Позволяем гостям видеть дашборд и другие ознакомительные страницы
-  const isDemoAllowed = ['/', '/dashboard', '/appointments', '/clients'].includes(pathname);
+  // Позволяем гостям видеть все страницы в демо-режиме
+  const isDemoAllowed = ['/', '/dashboard', '/appointments', '/clients', '/services', '/settings'].includes(pathname);
 
   if (!user && !isDemoAllowed) {
     return null;

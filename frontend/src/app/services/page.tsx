@@ -4,6 +4,7 @@ import { Plus, Package, Clock, DollarSign, Trash2, Edit3 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/components/AuthProvider';
+import DemoModal from '@/components/DemoModal';
 
 interface Service {
   id: string;
@@ -13,15 +14,27 @@ interface Service {
 }
 
 export default function ServicesPage() {
-  const { business } = useAuth();
+  const { business, user } = useAuth();
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
   const [newService, setNewService] = useState({ name: '', price: '', duration: '30' });
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   useEffect(() => {
-    if (!business?.id) return;
     async function fetchServices() {
+      if (!business?.id) {
+        // Демо-данные для услуг
+        setServices([
+          { id: '1', name: 'Мужская стрижка', price: 800, duration_minutes: 30 },
+          { id: '2', name: 'Маникюр + Покрытие', price: 1500, duration_minutes: 60 },
+          { id: '3', name: 'Массаж лица', price: 2000, duration_minutes: 45 },
+          { id: '4', name: 'Окрашивание волос', price: 3500, duration_minutes: 120 },
+        ]);
+        setLoading(false);
+        return;
+      }
+      
       const { data, error } = await supabase
         .from('services')
         .select('*')
@@ -34,6 +47,10 @@ export default function ServicesPage() {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      setShowDemoModal(true);
+      return;
+    }
     if (!business?.id) return;
 
     const { data, error } = await supabase
@@ -55,6 +72,10 @@ export default function ServicesPage() {
   };
 
   const handleDelete = async (id: string) => {
+    if (!user) {
+      setShowDemoModal(true);
+      return;
+    }
     const { error } = await supabase.from('services').delete().eq('id', id);
     if (!error) {
       setServices(services.filter(s => s.id !== id));
@@ -63,6 +84,7 @@ export default function ServicesPage() {
 
   return (
     <div className="space-y-8">
+      <DemoModal isOpen={showDemoModal} onClose={() => setShowDemoModal(false)} />
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold">Услуги</h2>

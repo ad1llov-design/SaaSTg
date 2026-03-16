@@ -3,22 +3,32 @@ import React, { useState, useEffect } from 'react';
 import { MessageSquare, Shield, CheckCircle2, AlertCircle, ExternalLink, Bell } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/components/AuthProvider';
+import DemoModal from '@/components/DemoModal';
 
 export default function SettingsPage() {
-  const { business } = useAuth();
+  const { business, user } = useAuth();
   const [token, setToken] = useState('');
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [botInfo, setBotInfo] = useState<{ username: string } | null>(null);
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   useEffect(() => {
     if (business?.bot_token) {
       setToken(business.bot_token);
+    } else if (!user) {
+      // Демо-токен для вида
+      setToken('6829103541:AAF_demo_token_example_linkhub');
+      setBotInfo({ username: 'DemoBookingBot' });
     }
-  }, [business]);
+  }, [business, user]);
 
   const handleConnect = async () => {
+    if (!user) {
+      setShowDemoModal(true);
+      return;
+    }
     if (!token || !business?.id) return;
     setLoading(true);
     setStatus('idle');
@@ -60,6 +70,7 @@ export default function SettingsPage() {
 
   return (
     <div className="max-w-4xl space-y-8">
+      <DemoModal isOpen={showDemoModal} onClose={() => setShowDemoModal(false)} />
       <div>
         <h2 className="text-3xl font-bold">Настройки бота</h2>
         <p className="text-slate-400 mt-1">Подключите и настройте вашего Telegram-бота для приема записей.</p>

@@ -64,16 +64,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(false);
   }
 
-  // Редирект только если пользователь лезет в защищенные настройки
+  // Убираем редиректы полностью — даем свободу навигации для демо-режима
   useEffect(() => {
-    if (loading) return;
-    
-    const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
-    const isProtectingSettings = pathname === '/settings' || pathname === '/services';
-    
-    if (!user && isProtectingSettings) {
-      router.push('/login');
-    }
+    // Больше не перенаправляем гостей
   }, [user, loading, pathname, router]);
 
   const signOut = async () => {

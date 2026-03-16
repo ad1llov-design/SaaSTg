@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, CheckCircle, XCircle, Filter } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/components/AuthProvider';
+import DemoModal from '@/components/DemoModal';
 import { cn } from '@/lib/utils';
 
 const getStatusColor = (status: string) => {
@@ -24,13 +25,24 @@ const getTranslatedStatus = (status: string) => {
 };
 
 export default function AppointmentsPage() {
-  const { business } = useAuth();
+  const { business, user } = useAuth();
   const [appointments, setAppointments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showDemoModal, setShowDemoModal] = useState(false);
 
   useEffect(() => {
-    if (!business?.id) return;
     async function fetchAppointments() {
+      if (!business?.id) {
+        // Демо-данные для записей
+        setAppointments([
+          { id: '1', appointment_date: '2024-03-20', appointment_time: '14:00', status: 'confirmed', services: { name: 'Стрижка', price: 800 }, users: { name: 'Алексей', username: 'alex99' } },
+          { id: '2', appointment_date: '2024-03-21', appointment_time: '10:30', status: 'pending', services: { name: 'Маникюр', price: 1200 }, users: { name: 'Ольга', username: 'olga_nails' } },
+          { id: '3', appointment_date: '2024-03-22', appointment_time: '12:00', status: 'cancelled', services: { name: 'Массаж', price: 2500 }, users: { name: 'Иван', username: 'vanya_test' } },
+        ]);
+        setLoading(false);
+        return;
+      }
+      
       const { data, error } = await supabase
         .from('appointments')
         .select(`
@@ -48,6 +60,10 @@ export default function AppointmentsPage() {
   }, [business]);
 
   const updateStatus = async (id: string, status: string) => {
+    if (!user) {
+      setShowDemoModal(true);
+      return;
+    }
     const { error } = await supabase
       .from('appointments')
       .update({ status })
@@ -60,6 +76,7 @@ export default function AppointmentsPage() {
 
   return (
     <div className="space-y-8">
+      <DemoModal isOpen={showDemoModal} onClose={() => setShowDemoModal(false)} />
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold">Записи на прием</h2>
