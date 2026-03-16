@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
+import { LanguageProvider } from "@/context/LanguageContext";
 import AppShell from "@/components/AppShell";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Plus_Jakarta_Sans({ subsets: ["latin", "cyrillic-ext"] });
 
 export const metadata: Metadata = {
   title: "AuraSync SaaS — Система онлайн-записи",
@@ -18,9 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={inter.className}>
+      <body className={font.className}>
         <AuthProvider>
-          <AppShell>{children}</AppShell>
+          <LanguageProvider>
+            <AppShell>{children}</AppShell>
+          </LanguageProvider>
         </AuthProvider>
       </body>
     </html>

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
+import { useLanguage, Locale } from '@/context/LanguageContext';
 import { 
   LayoutDashboard, 
   CalendarCheck, 
@@ -16,23 +17,25 @@ import {
   Sun,
   Moon,
   Zap,
-  ShieldCheck
+  ShieldCheck,
+  Globe
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const menuItems = [
-  { name: 'Дашборд', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Записи', href: '/appointments', icon: CalendarCheck },
-  { name: 'Услуги', href: '/services', icon: Sparkles },
-  { name: 'Клиенты', href: '/clients', icon: Users },
-  { name: 'Бот', href: '/settings', icon: Settings },
-];
-
 export default function Sidebar() {
   const pathname = usePathname();
   const { user, business, signOut, theme, toggleTheme, trialDaysLeft, isAdmin } = useAuth();
+  const { locale, setLocale, t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const menuItems = [
+    { name: t.common.dashboard, href: '/dashboard', icon: LayoutDashboard },
+    { name: t.common.appointments, href: '/appointments', icon: CalendarCheck },
+    { name: t.common.services, href: '/services', icon: Sparkles },
+    { name: t.common.clients, href: '/clients', icon: Users },
+    { name: t.common.settings, href: '/settings', icon: Settings },
+  ];
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-[var(--bg-card)] lg:bg-transparent">
@@ -44,7 +47,7 @@ export default function Sidebar() {
           </div>
           <div>
             <span className="font-bold text-2xl tracking-tighter text-slate-900 dark:text-white uppercase leading-none">Aura<span className="text-indigo-500">Sync</span></span>
-            <p className="text-[9px] text-slate-400 uppercase tracking-[0.4em] font-bold mt-1 opacity-70">Premium Node</p>
+            <p className="text-[10px] text-slate-400 font-semibold mt-1 opacity-70 italic tracking-widest">{business?.name || 'Smart Beauty'}</p>
           </div>
         </Link>
       </div>
@@ -59,14 +62,14 @@ export default function Sidebar() {
               href={item.href}
               onClick={() => setIsMobileMenuOpen(false)}
               className={cn(
-                "flex items-center gap-4 px-5 py-4 rounded-2xl text-[13px] font-bold transition-all duration-300 group",
+                "flex items-center gap-4 px-5 py-4 rounded-xl text-sm font-semibold transition-all duration-300 group",
                 isActive 
-                  ? "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/10 shadow-sm" 
-                  : "text-slate-500 hover:text-indigo-600 hover:bg-indigo-500/[0.03]"
+                  ? "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 shadow-sm" 
+                  : "text-slate-500 hover:text-indigo-600 hover:bg-slate-100 dark:hover:bg-white/5"
               )}
             >
               <item.icon className={cn("w-5 h-5 transition-transform group-hover:scale-110", isActive ? "text-indigo-500" : "text-slate-400")} />
-              <span className="uppercase tracking-widest text-[10px]">{item.name}</span>
+              <span className="tracking-wide">{item.name}</span>
             </Link>
           );
         })}
@@ -76,81 +79,98 @@ export default function Sidebar() {
       <div className="p-6 border-t border-slate-200 dark:border-white/5 space-y-6">
         {/* Trial Status Sidebar Item */}
         <div className="px-2">
-          <div className="bg-indigo-500/[0.02] border border-indigo-500/10 rounded-3xl p-5 shadow-sm relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-500/[0.02] rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-700" />
+          <div className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-white/5 dark:to-transparent rounded-2xl p-4 relative overflow-hidden group shadow-inner">
             <div className="flex items-center justify-between mb-3 relative z-10">
-              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]">
-                {trialDaysLeft > 0 ? "System Access" : "Protocol Expired"}
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+                {trialDaysLeft > 0 ? t.common.access : t.common.trial_expired}
               </span>
-              <span className="text-[10px] font-bold text-indigo-500 bg-indigo-500/10 px-2 py-0.5 rounded-full">
-                {trialDaysLeft > 0 ? `${trialDaysLeft} Days` : "Locked"}
+              <span className="text-[11px] font-bold text-indigo-600 bg-indigo-500/10 px-2 py-0.5 rounded-lg">
+                {trialDaysLeft > 0 ? `${trialDaysLeft} ${t.common.days_left}` : t.common.trial_expired}
               </span>
             </div>
-            <div className="w-full h-1 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden mb-4 relative z-10">
+            <div className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden mb-4 relative z-10">
               <div 
-                className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-1000 shadow-[0_0_10px_rgba(99,102,241,0.3)]" 
+                className="h-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-1000" 
                 style={{ width: `${(trialDaysLeft / 7) * 100}%` }} 
               />
             </div>
             <Link 
               href="/billing" 
-              className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 text-white text-[10px] font-bold rounded-xl hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-600/10 uppercase tracking-widest"
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-indigo-600 text-white text-[11px] font-bold rounded-xl hover:bg-indigo-700 transition-all shadow-md uppercase tracking-wider"
             >
-              <Zap className="w-3 h-3" /> Upgrade to Pro
+              <Zap className="w-3.5 h-3.5" /> {t.common.upgrade}
             </Link>
           </div>
         </div>
 
-        {/* Переключатель темы */}
-        <div className="flex items-center justify-between px-2">
-           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Mode</span>
-           <button 
-              onClick={toggleTheme}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 dark:bg-white/5 text-slate-600 dark:text-slate-400 border border-border/50 hover:bg-indigo-500/5 hover:text-indigo-500 transition-all"
-           >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-           </button>
+        {/* Инструменты: Режим + Язык */}
+        <div className="flex items-center justify-between px-2 gap-2">
+           <div className="flex-1">
+             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">{t.common.theme}</span>
+             <button 
+                onClick={toggleTheme}
+                className="w-full h-10 flex items-center justify-center gap-2 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-indigo-500 transition-all text-sm font-semibold"
+             >
+                {theme === 'dark' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+             </button>
+           </div>
+           
+           <div className="flex-1">
+             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">{t.common.language}</span>
+             <div className="relative">
+               <select 
+                 value={locale} 
+                 onChange={(e) => setLocale(e.target.value as Locale)}
+                 className="w-full h-10 appearance-none bg-slate-100 dark:bg-white/5 border-none rounded-xl pl-4 pr-10 text-sm font-semibold text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none uppercase tracking-wider"
+               >
+                 <option value="ru">RU</option>
+                 <option value="en">EN</option>
+                 <option value="ky">KG</option>
+                 <option value="uz">UZ</option>
+               </select>
+               <Globe className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+             </div>
+           </div>
         </div>
 
         {user ? (
           <div className="space-y-3">
-            <div className="p-4 rounded-2xl bg-indigo-500/[0.02] border border-indigo-500/5 group hover:border-indigo-500/20 transition-all">
-              <p className="text-[10px] font-bold truncate mb-1 text-slate-900 dark:text-white uppercase tracking-tight">{business?.name || 'Active Node'}</p>
-              <p className="text-[9px] text-slate-400 truncate tracking-widest font-medium italic opacity-70">{user?.email}</p>
+             <div className="p-4 rounded-xl bg-slate-100 dark:bg-white/5">
+              <p className="text-xs font-bold truncate mb-1 text-slate-900 dark:text-white">{business?.name || 'Owner'}</p>
+              <p className="text-[10px] text-slate-500 truncate tracking-wide">{user?.email}</p>
             </div>
             {/* Admin Section */}
             {isAdmin && (
-              <div className="pt-4 mt-4 border-t border-slate-200 dark:border-white/5">
-                <p className="px-5 mb-3 text-[9px] font-bold text-slate-400 uppercase tracking-[0.3em] opacity-60">System Core</p>
+              <div className="pt-3">
                 <Link 
                   href="/admin"
                   className={cn(
-                    "flex items-center gap-3 px-5 py-4 rounded-2xl transition-all duration-300 group",
-                    pathname === '/admin' ? "bg-amber-500 text-white shadow-xl shadow-amber-500/20" : "text-slate-500 hover:bg-amber-500/10 hover:text-amber-500"
+                    "flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 group",
+                    pathname === '/admin' ? "bg-amber-500 text-white shadow-md shadow-amber-500/20" : "text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-500/10"
                   )}
                 >
                   <ShieldCheck className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-bold text-[10px] uppercase tracking-widest">Admin Control</span>
+                  <span className="font-bold text-sm tracking-wide">{t.common.admin}</span>
                 </Link>
               </div>
             )}
 
             <button 
               onClick={signOut}
-              className="w-full flex items-center gap-3 px-5 py-3 rounded-2xl text-[10px] font-bold text-slate-400 hover:text-rose-500 hover:bg-rose-500/5 transition-all uppercase tracking-widest"
+              className="w-full flex items-center gap-3 px-5 py-3 rounded-xl text-sm font-semibold text-slate-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all tracking-wide"
             >
               <LogOut className="w-4 h-4" />
-              Terminate Session
+              {t.common.logout}
             </button>
           </div>
         ) : (
           <Link 
             href="/register"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="w-full flex items-center justify-center gap-2 px-6 py-5 bg-indigo-600 text-white rounded-2xl text-[11px] font-bold shadow-2xl shadow-indigo-600/20 hover:bg-indigo-700 active:scale-[0.98] transition-all uppercase tracking-widest"
+            className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-indigo-600 text-white rounded-xl text-xs font-bold shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 active:scale-[0.98] transition-all tracking-wide"
           >
             <Sparkles className="w-4 h-4" />
-            Initialize Free
+            Let's Start
           </Link>
         )}
       </div>
@@ -159,16 +179,14 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Десктоп */}
-      <aside className="hidden lg:flex fixed top-0 left-0 w-72 h-screen bg-[var(--bg-card)] border-r border-slate-200 dark:border-white/5 flex-col z-50">
+      <aside className="hidden lg:flex fixed top-0 left-0 w-[280px] h-screen bg-[var(--bg-card)] border-r border-slate-200 dark:border-white/5 flex-col z-50 shadow-sm">
         <SidebarContent />
       </aside>
 
-      {/* Мобильная шапка */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[var(--header-bg)] backdrop-blur-md border-b border-slate-200 dark:border-white/5 z-[60] flex items-center justify-between px-4 transition-colors">
-        <div className="flex items-center gap-2">
-           <Bot className="w-6 h-6 text-indigo-500" />
-           <span className="font-bold text-lg text-slate-900 dark:text-white">AuraSync</span>
+      <header className="lg:hidden fixed top-0 left-0 right-0 h-[72px] bg-[var(--header-bg)] backdrop-blur-md border-b border-slate-200 dark:border-white/5 z-[60] flex items-center justify-between px-6 transition-colors shadow-sm">
+        <div className="flex items-center gap-3">
+           <Bot className="w-7 h-7 text-indigo-500" />
+           <span className="font-bold text-xl text-slate-900 dark:text-white tracking-tight uppercase">AuraSync</span>
         </div>
         <button 
           onClick={() => setIsMobileMenuOpen(true)}
@@ -178,7 +196,6 @@ export default function Sidebar() {
         </button>
       </header>
 
-      {/* Мобильный дровер */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -196,7 +213,7 @@ export default function Sidebar() {
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               className="fixed top-0 left-0 w-[280px] h-screen bg-[var(--bg-card)] z-[70] shadow-2xl overflow-hidden"
             >
-              <div className="absolute top-4 right-4 z-10">
+              <div className="absolute top-6 right-4 z-10">
                 <button onClick={() => setIsMobileMenuOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-white/10 text-slate-500 hover:text-rose-500 transition-all">
                   <X className="w-5 h-5" />
                 </button>

@@ -22,7 +22,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen flex items-center justify-center bg-main transition-colors">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin shadow-lg shadow-indigo-500/10" />
-          <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.3em] animate-pulse">Initializing Protocol</p>
+          <p className="text-slate-500 font-medium text-sm animate-pulse">Загрузка...</p>
         </div>
       </div>
     );
