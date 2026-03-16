@@ -5,7 +5,7 @@ import { useAuth } from '@/components/AuthProvider';
 import { motion } from 'framer-motion';
 
 export default function BillingPage() {
-  const { trialDaysLeft, business } = useAuth();
+  const { trialDaysLeft, business, user } = useAuth();
   
   const isExpired = trialDaysLeft <= 0 && business?.subscription_status !== 'active';
 
@@ -18,6 +18,26 @@ export default function BillingPage() {
     "Аналитика выручки и посещений",
     "Техподдержка 24/7"
   ];
+
+  const handlePayment = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/billing/create-checkout-session`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          businessId: business?.id,
+          ownerEmail: user?.email,
+        }),
+      });
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url; // Redirect to Stripe
+      }
+    } catch (err) {
+      console.error('Payment failed:', err);
+      alert('Ошибка при инициализации оплаты. Попробуйте позже.');
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto space-y-10 py-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -59,7 +79,10 @@ export default function BillingPage() {
             ))}
           </ul>
 
-          <button className="w-full py-5 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-600 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3">
+          <button 
+            onClick={handlePayment}
+            className="w-full py-5 bg-emerald-500 text-white font-bold rounded-2xl hover:bg-emerald-600 hover:scale-[1.02] active:scale-[0.98] transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3"
+          >
             <CreditCard className="w-5 h-5" /> Оплатить сейчас
           </button>
           

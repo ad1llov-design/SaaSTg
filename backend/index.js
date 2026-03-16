@@ -7,8 +7,15 @@ const { setupBotLogic } = require('./bot');
 require('./cron'); // Start cron scheduler
 
 const app = express();
+
+// Stripe Webhook needs raw body - must be define BEFORE express.json()
+const billingRouter = require('./billing');
+app.use('/api/billing/webhook', express.raw({ type: 'application/json' }));
+
 app.use(express.json());
 app.use(cors({ origin: '*' }));
+
+app.use('/api/billing', billingRouter);
 
 const bots = new Map();
 
