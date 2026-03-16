@@ -20,10 +20,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   // Показываем загрузку, пока Auth проверяет сессию
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-slate-950">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-3 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
-          <p className="text-slate-400 text-sm">Загрузка...</p>
+          <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin shadow-lg shadow-emerald-500/10" />
+          <p className="text-slate-500 text-xs font-bold uppercase tracking-widest animate-pulse">Initializing AuraSync</p>
         </div>
       </div>
     );
@@ -36,12 +36,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     return null;
   }
 
-  // Основной лейаут с Sidebar
+  // Основной лейаут
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors duration-300">
       <Sidebar />
-      <main className="flex-1 ml-72 p-8 min-h-screen">
-        <div className="max-w-6xl mx-auto">
+      <main className="flex-1 lg:ml-80 px-4 py-20 lg:py-10 min-h-screen w-full">
+        <div className="max-w-6xl mx-auto w-full">
           {children}
         </div>
       </main>

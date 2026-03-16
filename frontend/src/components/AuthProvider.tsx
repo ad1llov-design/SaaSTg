@@ -8,6 +8,8 @@ interface AuthContextType {
   user: User | null;
   business: any | null;
   loading: boolean;
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
   signOut: () => Promise<void>;
 }
 
@@ -15,21 +17,27 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   business: null,
   loading: true,
+  theme: 'dark',
+  toggleTheme: () => {},
   signOut: async () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
 
-const PUBLIC_ROUTES = ['/login', '/register', '/dashboard', '/'];
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [business, setBusiness] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
+    // Загрузка темы
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' || 'dark';
+    setTheme(savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -52,6 +60,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
+
   async function loadBusiness(userId: string) {
     const { data } = await supabase
       .from('businesses')
@@ -64,18 +79,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setLoading(false);
   }
 
-  // Убираем редиректы полностью — даем свободу навигации для демо-режима
-  useEffect(() => {
-    // Больше не перенаправляем гостей
-  }, [user, loading, pathname, router]);
-
   const signOut = async () => {
     await supabase.auth.signOut();
     router.push('/login');
   };
 
   return (
-    <AuthContext.Provider value={{ user, business, loading, signOut }}>
+    <AuthContext.Provider value={{ user, business, loading, theme, toggleTheme, signOut }}>
       {children}
     </AuthContext.Provider>
   );

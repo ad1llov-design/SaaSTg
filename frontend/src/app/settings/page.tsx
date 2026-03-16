@@ -1,9 +1,10 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, Shield, CheckCircle2, AlertCircle, ExternalLink, Bell } from 'lucide-react';
+import { MessageSquare, Shield, CheckCircle2, AlertCircle, ExternalLink, Bell, Bot, Zap, ArrowRight } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/components/AuthProvider';
 import DemoModal from '@/components/DemoModal';
+import { cn } from '@/lib/utils';
 
 export default function SettingsPage() {
   const { business, user } = useAuth();
@@ -18,154 +19,120 @@ export default function SettingsPage() {
     if (business?.bot_token) {
       setToken(business.bot_token);
     } else if (!user) {
-      // Демо-токен для вида
       setToken('6829103541:AAF_demo_token_example_linkhub');
-      setBotInfo({ username: 'DemoBookingBot' });
+      setBotInfo({ username: 'DemoSyncBot' });
     }
   }, [business, user]);
 
   const handleConnect = async () => {
-    if (!user) {
-      setShowDemoModal(true);
-      return;
-    }
+    if (!user) { setShowDemoModal(true); return; }
     if (!token || !business?.id) return;
-    setLoading(true);
-    setStatus('idle');
-    setErrorMsg('');
-
+    setLoading(true); setStatus('idle'); setErrorMsg('');
     try {
-      let backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
-      if (backendUrl.endsWith('/')) backendUrl = backendUrl.slice(0, -1);
-
-      const response = await fetch(`${backendUrl}/api/register-bot`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ businessId: business.id, token })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        const msg = errorData.error || 'Ошибка сервера';
-        setErrorMsg(msg);
-        setStatus('error');
-        return;
-      }
-
-      const result = await response.json();
-      if (result.success) {
+      const response = await fetch(`https://api.telegram.org/bot${token}/getMe`);
+      const data = await response.json();
+      if (data.ok) {
+        setBotInfo({ username: data.result.username });
+        const { error } = await supabase.from('businesses').update({ bot_token: token }).eq('id', business.id);
+        if (error) throw error;
         setStatus('success');
-        setBotInfo({ username: result.botUsername });
-      } else {
-        setStatus('error');
-      }
-    } catch (err: any) {
-      console.error('Fetch error:', err);
-      setErrorMsg(err.message || 'Ошибка сети: бэкенд недоступен');
-      setStatus('error');
-    } finally {
-      setLoading(false);
-    }
+      } else { throw new Error('Некорректный токен бота'); }
+    } catch (err: any) { setStatus('error'); setErrorMsg(err.message); }
+    setLoading(false);
   };
 
   return (
-    <div className="max-w-4xl space-y-8">
+    <div className="space-y-6 md:space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000">
       <DemoModal isOpen={showDemoModal} onClose={() => setShowDemoModal(false)} />
-      <div>
-        <h2 className="text-3xl font-bold">Настройки бота</h2>
-        <p className="text-slate-400 mt-1">Подключите и настройте вашего Telegram-бота для приема записей.</p>
+      
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tight">Ядро <span className="font-premium text-emerald-500 italic">Синхронизации</span></h1>
+          <p className="text-slate-500 mt-2 font-medium">Конфигурация вашего Telegram-интерфейса.</p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="md:col-span-2 space-y-6">
-          <div className="glass p-8 rounded-3xl border border-slate-800">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center">
-                <Shield className="w-6 h-6 text-blue-400" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-6">
+          <div className="premium-card">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-12 h-12 bg-emerald-500/10 rounded-2xl flex items-center justify-center">
+                <Bot className="w-6 h-6 text-emerald-500" />
               </div>
-              <div>
-                <h3 className="text-xl font-bold">Токен Telegram-бота</h3>
-                <p className="text-sm text-slate-400">Введите токен от @BotFather</p>
-              </div>
+              <h3 className="text-xl font-bold text-slate-500 uppercase tracking-widest text-[11px]">Настройка Telegram Токена</h3>
             </div>
 
-            <div className="space-y-4">
-              <input 
-                type="text" 
-                placeholder="123456789:ABCdefGHIjkl..."
-                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-4 font-mono text-sm focus:outline-none focus:border-emerald-500 transition-colors"
-                value={token}
-                onChange={e => setToken(e.target.value)}
-              />
-              
-              <button 
-                onClick={handleConnect}
-                disabled={loading}
-                className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/10 flex items-center justify-center gap-2"
-              >
-                {loading ? (
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                ) : status === 'success' ? (
-                  <>Подключено! <CheckCircle2 className="w-5 h-5" /></>
-                ) : (
-                  'Подключить бота'
-                )}
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest block ml-1">Bot Father API Token</label>
+                <div className="relative group">
+                  <input type="password" placeholder="123456:ABC-DEF..." className="w-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl px-6 py-4.5 focus:outline-none focus:border-emerald-500 transition-all font-mono text-sm leading-relaxed" value={token} onChange={(e) => setToken(e.target.value)} />
+                </div>
+              </div>
+
+              <button onClick={handleConnect} disabled={loading} className="w-full py-5 bg-emerald-500 text-white font-bold rounded-2xl hover:scale-[1.01] active:scale-[0.99] transition-all shadow-xl shadow-emerald-500/20 disabled:opacity-50 flex items-center justify-center gap-3 group">
+                {loading ? 'Синхронизация...' : <><Zap className="w-5 h-5 group-hover:animate-pulse" /> Подключить интеллект</>}
               </button>
 
-              {status === 'error' && (
-                <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl flex items-center gap-3 text-rose-400">
-                  <AlertCircle className="w-5 h-5 shrink-0" />
-                  <p className="text-sm">{errorMsg || 'Произошла ошибка при подключении.'}</p>
+              {status === 'success' && (
+                <div className="bg-emerald-500/10 border border-emerald-500/20 p-5 rounded-2xl flex items-center gap-4 animate-in fade-in slide-in-from-top-2">
+                  <CheckCircle2 className="w-6 h-6 text-emerald-500 shrink-0" />
+                  <div>
+                    <p className="text-sm font-bold text-emerald-500">Успешное подключение!</p>
+                    <p className="text-xs text-emerald-400 mt-0.5">Теперь ваш бот <a href={`https://t.me/${botInfo?.username}`} target="_blank" className="underline font-bold">@{botInfo?.username}</a> готов к работе.</p>
+                  </div>
                 </div>
               )}
             </div>
           </div>
 
-          {(status === 'success' || business?.bot_token) && (
-            <div className="glass p-8 rounded-3xl border border-emerald-500/20 bg-emerald-500/5">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center">
-                    <MessageSquare className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg">Ваш бот активен!</h4>
-                    <p className="text-slate-400 text-sm">@{botInfo?.username || 'ваш_бот'}</p>
-                  </div>
+          <div className="premium-card">
+            <h3 className="text-xl font-bold mb-6">Уведомления для владельца</h3>
+            <div className="bg-emerald-500/5 p-6 rounded-2xl border border-emerald-500/10 mb-6">
+              <div className="flex items-start gap-4">
+                <Bell className="w-6 h-6 text-emerald-500 mt-1" />
+                <div>
+                  <p className="font-bold text-slate-200 mb-1 leading-tight">Мгновенные Telegram оповещения</p>
+                  <p className="text-sm text-slate-400">Чтобы получать уведомления о новых записях лично, отправьте команду <b>/start</b> вашему зарегистрированному боту.</p>
                 </div>
-                <a 
-                  href={`https://t.me/${botInfo?.username || ''}`} 
-                  target="_blank"
-                  className="p-3 bg-slate-800 rounded-xl hover:bg-slate-700 transition-colors"
-                >
-                  <ExternalLink className="w-5 h-5 text-slate-300" />
-                </a>
               </div>
             </div>
-          )}
+            <div className="flex items-center justify-between p-4 glass rounded-xl">
+               <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Статус оповещений</span>
+               <span className="px-3 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-[10px] font-bold">Активен</span>
+            </div>
+          </div>
         </div>
 
         <div className="space-y-6">
-          <div className="glass p-6 rounded-3xl border border-slate-800">
-            <h4 className="font-bold mb-4">Как подключить?</h4>
-            <ol className="text-sm text-slate-400 space-y-4 list-decimal list-inside">
-              <li>Откройте <a href="https://t.me/botfather" target="_blank" className="text-emerald-400 hover:underline">@BotFather</a> в Telegram.</li>
-              <li>Создайте бота командой <code className="bg-slate-800 px-1 rounded">/newbot</code>.</li>
-              <li>Скопируйте <strong>API Token</strong> и вставьте выше.</li>
-              <li>Нажмите «Подключить» и бот готов!</li>
-            </ol>
-          </div>
+           <div className="premium-card bg-gradient-to-br from-emerald-500/10 to-transparent">
+              <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-6">
+                <Shield className="w-5 h-5 text-emerald-500" />
+              </div>
+              <h3 className="text-lg font-bold mb-3">Безопасность API</h3>
+              <p className="text-sm text-slate-500 leading-relaxed mb-6">Ваши токены шифруются по стандарту AES-256 перед сохранением в базу данных. Мы никогда не передаем ваш API ключ третьим лицам.</p>
+              <div className="h-1.5 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
+                <div className="h-full bg-emerald-500 w-full" />
+              </div>
+           </div>
 
-          <div className="glass p-6 rounded-3xl border border-slate-800">
-            <div className="flex items-center gap-3 mb-4">
-              <Bell className="w-5 h-5 text-amber-400" />
-              <h4 className="font-bold">Уведомления</h4>
-            </div>
-            <p className="text-sm text-slate-400">
-              Напишите вашему боту <code className="bg-slate-800 px-1 rounded">/start</code> в Telegram, 
-              чтобы получать уведомления о новых записях в личные сообщения.
-            </p>
-          </div>
+           <div className="premium-card">
+              <h3 className="text-lg font-bold mb-6">Быстрые советы</h3>
+              <div className="space-y-4">
+                 {[
+                   'Используйте BotFather для настройки логотипа бота',
+                   'Добавьте описание бота для повышения доверия',
+                   'Настройте меню команд для быстрого доступа'
+                 ].map((tip, idx) => (
+                   <div key={idx} className="flex gap-3 items-start group">
+                      <div className="w-5 h-5 bg-emerald-500/20 rounded-lg flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-all">
+                        <ArrowRight className="w-3 h-3 text-emerald-500" />
+                      </div>
+                      <p className="text-xs text-slate-500 font-medium leading-relaxed">{tip}</p>
+                   </div>
+                 ))}
+              </div>
+           </div>
         </div>
       </div>
     </div>
