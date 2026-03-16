@@ -4,6 +4,22 @@ import { Calendar, User, Clock, CheckCircle, XCircle, MoreVertical, Filter } fro
 import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
 
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'confirmed': return 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
+    case 'cancelled': return 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+    default: return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
+  }
+};
+
+const getTranslatedStatus = (status: string) => {
+  switch (status) {
+    case 'confirmed': return 'ПОДТВЕРЖДЕНО';
+    case 'cancelled': return 'ОТМЕНЕНО';
+    default: return 'ОЖИДАЕТ';
+  }
+};
+
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
