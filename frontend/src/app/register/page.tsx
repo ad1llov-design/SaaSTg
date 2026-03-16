@@ -43,19 +43,6 @@ export default function RegisterPage() {
 
       if (authError) throw authError;
 
-      // 2. Создаем запись бизнеса
-      if (authData.user) {
-        const { error: bizError } = await supabase
-          .from('businesses')
-          .insert({
-            name: form.businessName,
-            owner_email: form.email,
-            owner_id: authData.user.id,
-          });
-
-        if (bizError) throw bizError;
-      }
-
       setSuccess(true);
     } catch (err: any) {
       setError(err.message || 'Ошибка при регистрации');

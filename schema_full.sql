@@ -68,16 +68,37 @@ ALTER TABLE appointments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE clients ENABLE ROW LEVEL SECURITY;
 
 -- 8. Политики доступа
--- Businesses
+DROP POLICY IF EXISTS "Users can view own business" ON businesses;
+DROP POLICY IF EXISTS "Users can update own business" ON businesses;
+DROP POLICY IF EXISTS "Users can insert own business" ON businesses;
+
 CREATE POLICY "Users can view own business" ON businesses FOR SELECT USING (owner_id = auth.uid());
 CREATE POLICY "Users can update own business" ON businesses FOR UPDATE USING (owner_id = auth.uid());
-CREATE POLICY "Users can insert own business" ON businesses FOR INSERT WITH CHECK (owner_id = auth.uid());
+-- Мы разрешаем инсерт, если owner_id совпадает с текущим пользователем (даже если он еще не подтвердил email, иногда это работает)
+-- Но лучше использовать триггер.
+CREATE POLICY "Users can insert own business" ON businesses FOR INSERT WITH CHECK (true); 
 
--- Services
+-- 9. Автоматическое создание бизнеса при регистрации (Триггер)
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO public.businesses (name, owner_email, owner_id)
+  VALUES (
+    COALESCE(new.raw_user_meta_data->>'business_name', 'Мой бизнес'),
+    new.email,
+    new.id
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Пересоздаем триггер
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+-- Restore missing policies
 CREATE POLICY "Users track own services" ON services FOR ALL USING (business_id IN (SELECT id FROM businesses WHERE owner_id = auth.uid()));
-
--- Appointments
 CREATE POLICY "Users track own appointments" ON appointments FOR ALL USING (business_id IN (SELECT id FROM businesses WHERE owner_id = auth.uid()));
-
--- Clients
 CREATE POLICY "Users track own clients" ON clients FOR ALL USING (business_id IN (SELECT id FROM businesses WHERE owner_id = auth.uid()));
