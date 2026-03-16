@@ -116,7 +116,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     router.push('/login');
   };
 
-  const isAdmin = user?.email === 'admin@aurasync.com'; // ЗАМЕНИТЕ на ваш email
+  // УКАЖИТЕ ВАШ EMAIL ЗДЕСЬ ДЛЯ ДОСТУПА К АДМИН-ПАНЕЛИ
+  const ADMIN_EMAIL = 'adilovbatir959@gmail.com'; 
+  const isAdmin = user?.email === ADMIN_EMAIL; 
 
   return (
     <AuthContext.Provider value={{ user, business, loading, theme, toggleTheme, signOut, trialDaysLeft, isAdmin }}>

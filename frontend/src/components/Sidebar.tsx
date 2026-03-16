@@ -39,12 +39,12 @@ export default function Sidebar() {
       {/* Логотип */}
       <div className="p-6">
         <Link href="/dashboard" className="flex items-center gap-3 group" onClick={() => setIsMobileMenuOpen(false)}>
-          <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40 transition-all border border-white/10">
+          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all border border-white/10">
             <Bot className="w-5 h-5 text-white" />
           </div>
           <div>
             <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-white transition-colors">AuraSync</span>
-            <p className="text-[10px] text-emerald-500 uppercase tracking-[0.2em] font-bold">Premium SaaS</p>
+            <p className="text-[10px] text-indigo-500 uppercase tracking-[0.2em] font-black">Premium SaaS</p>
           </div>
         </Link>
       </div>
@@ -61,11 +61,11 @@ export default function Sidebar() {
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-2xl text-[13px] font-bold transition-all duration-300",
                 isActive 
-                  ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-l-4 border-emerald-500" 
-                  : "text-slate-500 hover:text-emerald-500 hover:bg-slate-100 dark:hover:bg-white/5"
+                  ? "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-l-4 border-indigo-500" 
+                  : "text-slate-500 hover:text-indigo-500 hover:bg-slate-100 dark:hover:bg-white/5"
               )}
             >
-              <item.icon className={cn("w-5 h-5", isActive ? "text-emerald-500" : "text-slate-400")} />
+              <item.icon className={cn("w-5 h-5", isActive ? "text-indigo-500" : "text-slate-400")} />
               {item.name}
             </Link>
           );
@@ -76,24 +76,24 @@ export default function Sidebar() {
       <div className="p-4 border-t border-slate-200 dark:border-white/5 space-y-4">
         {/* Trial Status Sidebar Item */}
         <div className="px-3 mb-4">
-          <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-2xl p-4">
+          <div className="bg-indigo-500/5 border border-indigo-500/10 rounded-2xl p-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                 {trialDaysLeft > 0 ? "Пробный период" : "Триал завершен"}
               </span>
-              <span className="text-xs font-bold text-emerald-500">
+              <span className="text-xs font-bold text-indigo-500">
                 {trialDaysLeft > 0 ? `${trialDaysLeft} дн.` : "0 дн."}
               </span>
             </div>
             <div className="w-full h-1.5 bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden mb-3">
               <div 
-                className="h-full bg-emerald-500 transition-all duration-1000" 
+                className="h-full bg-indigo-500 transition-all duration-1000" 
                 style={{ width: `${(trialDaysLeft / 7) * 100}%` }} 
               />
             </div>
             <Link 
               href="/billing" 
-              className="flex items-center justify-center gap-2 w-full py-2 bg-emerald-500 text-white text-[10px] font-bold rounded-xl hover:bg-emerald-600 transition-all shadow-sm"
+              className="flex items-center justify-center gap-2 w-full py-2 bg-indigo-500 text-white text-[10px] font-bold rounded-xl hover:bg-indigo-600 transition-all shadow-sm"
             >
               <Zap className="w-3 h-3" /> Улучшить до Pro
             </Link>
@@ -146,7 +146,7 @@ export default function Sidebar() {
           <Link 
             href="/register"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="w-full flex items-center justify-center gap-2 px-4 py-4 bg-emerald-500 text-white rounded-2xl text-[13px] font-bold shadow-xl shadow-emerald-500/20 hover:scale-[1.02] active:scale-95 transition-all"
+            className="w-full flex items-center justify-center gap-2 px-4 py-4 bg-indigo-500 text-white rounded-2xl text-[13px] font-bold shadow-xl shadow-indigo-500/20 hover:scale-[1.02] active:scale-95 transition-all"
           >
             <Sparkles className="w-4 h-4" />
             Начать бесплатно
@@ -166,7 +166,7 @@ export default function Sidebar() {
       {/* Мобильная шапка */}
       <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[var(--header-bg)] backdrop-blur-md border-b border-slate-200 dark:border-white/5 z-[60] flex items-center justify-between px-4 transition-colors">
         <div className="flex items-center gap-2">
-           <Bot className="w-6 h-6 text-emerald-500" />
+           <Bot className="w-6 h-6 text-indigo-500" />
            <span className="font-bold text-lg text-slate-900 dark:text-white">AuraSync</span>
         </div>
         <button 
