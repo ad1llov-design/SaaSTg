@@ -20,7 +20,8 @@ import {
   ShieldCheck,
   Globe,
   UserSquare,
-  Package
+  Package,
+  ShoppingBag
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -37,6 +38,7 @@ export default function Sidebar() {
     { name: t.common.services, href: '/services', icon: Sparkles },
     { name: t.staff.title, href: '/staff', icon: UserSquare },
     { name: t.modules?.title || 'Modules', href: '/modules', icon: Package },
+    ...(business?.modules_config?.shop ? [{ name: t.modules.shop, href: '/shop', icon: ShoppingBag }] : []),
     { name: t.common.clients, href: '/clients', icon: Users },
     { name: t.common.settings, href: '/settings', icon: Settings },
   ];

@@ -230,6 +230,21 @@ export const translations = {
       pricing_title: 'Простые тарифы',
       pricing_subtitle: 'Выберите план, который подходит вашему масштабу'
     },
+    shop: {
+      title: 'Каталог товаров',
+      subtitle: 'Управляйте ассортиментом вашего магазина',
+      add_product: 'Добавить товар',
+      product_name: 'Название товара',
+      product_price: 'Цена',
+      product_stock: 'В наличии (шт)',
+      product_desc: 'Описание',
+      product_img: 'Ссылка на фото',
+      status_instock: 'В наличии',
+      status_outofstock: 'Нет в наличии',
+      no_products: 'В каталоге пока нет товаров.',
+      btn_edit: 'Изменить',
+      btn_delete: 'Удалить'
+    },
     bot: {
       title: 'Конструктор бота',
       subtitle: 'Настройка сообщений и интерфейса вашего Telegram бота',
@@ -481,6 +496,21 @@ export const translations = {
       feature_analytics_desc: 'Complete control over revenue and performance.',
       pricing_title: 'Simple Pricing',
       pricing_subtitle: 'Choose a plan that fits your scale'
+    },
+    shop: {
+      title: 'Product Catalog',
+      subtitle: 'Manage your store inventory',
+      add_product: 'Add Product',
+      product_name: 'Product Name',
+      product_price: 'Price',
+      product_stock: 'Stock Amount',
+      product_desc: 'Description',
+      product_img: 'Image URL',
+      status_instock: 'In Stock',
+      status_outofstock: 'Out of Stock',
+      no_products: 'No products in catalog yet.',
+      btn_edit: 'Edit',
+      btn_delete: 'Delete'
     },
     bot: {
       title: 'Bot Builder',
@@ -734,6 +764,21 @@ export const translations = {
       pricing_title: 'Жөнөкөй тарифтер',
       pricing_subtitle: 'Масштабыңызга ылайыктуу планды тандаңыз'
     },
+    shop: {
+      title: 'Товарлар каталогу',
+      subtitle: 'Дүкөнүңүздүн түрлөрүн башкарыңыз',
+      add_product: 'Товар кошуу',
+      product_name: 'Товардын аталышы',
+      product_price: 'Баасы',
+      product_stock: 'Кампада (даана)',
+      product_desc: 'Сүрөттөмө',
+      product_img: 'Сүрөткө шилтеме',
+      status_instock: 'Бар',
+      status_outofstock: 'Жок',
+      no_products: 'Каталогдо азырынча товар жок.',
+      btn_edit: 'Өзгөртүү',
+      btn_delete: 'Өчүрүү'
+    },
     bot: {
       title: 'Бот конструктору',
       subtitle: 'Telegram ботуңуздун билдирүүлөрүн жана интерфейсин карап чыгыңыз',
@@ -985,6 +1030,21 @@ export const translations = {
       feature_analytics_desc: 'Daromad va samaradorlikni to\'liq nazorat qilish.',
       pricing_title: 'Oddiy tariflar',
       pricing_subtitle: 'Masshtabingizga mos rejani tanlang'
+    },
+    shop: {
+      title: 'Mahsulotlar katalogi',
+      subtitle: 'Do\'koningiz assortimentini boshqaring',
+      add_product: 'Mahsulot qo\'shish',
+      product_name: 'Mahsulot nomi',
+      product_price: 'Narxi',
+      product_stock: 'Omborda (dona)',
+      product_desc: 'Tavsif',
+      product_img: 'Rasm havolasi',
+      status_instock: 'Mavjud',
+      status_outofstock: 'Mavjud emas',
+      no_products: 'Katalogda hali mahsulotlar yo\'q.',
+      btn_edit: 'O\'zgartirish',
+      btn_delete: 'O\'chirish'
     },
     bot: {
       title: 'Bot konstruktori',

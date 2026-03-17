@@ -441,6 +441,47 @@ function setupBotLogic(bot, businessId) {
     }
   });
 
+  // МОДУЛЬ: МАГАЗИН (Просмотр товаров)
+  bot.action('view_shop', async (ctx) => {
+    await ctx.answerCbQuery();
+    
+    const { data: products } = await supabase
+      .from('products')
+      .select('*')
+      .eq('business_id', businessId)
+      .eq('is_available', true);
+
+    if (!products?.length) {
+      return ctx.reply('🛍 В магазине пока нет товаров.');
+    }
+
+    await ctx.reply('🛍 <b>Наш каталог:</b>', { parse_mode: 'HTML' });
+
+    for (const p of products) {
+      const caption = `<b>${p.name}</b>\n\n${p.description || ''}\n\n💰 Цена: ${p.price} сом`;
+      const buttons = [[{ text: `🛒 Купить ${p.name}`, callback_data: `buy_${p.id}` }]];
+
+      if (p.image_url) {
+        await ctx.replyWithPhoto(p.image_url, { caption, parse_mode: 'HTML', reply_markup: { inline_keyboard: buttons } });
+      } else {
+        await ctx.reply(caption, { parse_mode: 'HTML', reply_markup: { inline_keyboard: buttons } });
+      }
+    }
+  });
+
+  // Обработка покупки (Заказ)
+  bot.action(/^buy_(.+)$/, async (ctx) => {
+    await ctx.answerCbQuery();
+    const productId = ctx.match[1];
+    
+    const { data: product } = await supabase.from('products').select('name').eq('id', productId).single();
+    
+    await ctx.reply(`✅ <b>Заказ принят!</b>\n\nВы выбрали: <b>${product?.name}</b>.\nМенеджер свяжется с вами для уточнения деталей оплаты и доставки.`, { parse_mode: 'HTML' });
+
+    // Уведомление админу
+    await notifyAdmin(businessId, `🛒 <b>Новый заказ!</b>\n\n🛍 Товар: ${product?.name}\n👤 Клиент: ${ctx.from.first_name || 'User'} (@${ctx.from.username || 'n/a'})`);
+  });
+
   // Обработка обычных сообщений через AI (если не начата сцена)
   bot.on('text', async (ctx) => {
     if (ctx.message.text.startsWith('/')) return; // Игнорируем команды
@@ -453,13 +494,17 @@ function setupBotLogic(bot, businessId) {
       await ctx.reply(aiResponse, { parse_mode: 'Markdown' });
     } else {
       // Стандартный ответ если AI не включен
+      const { data: biz } = await supabase.from('businesses').select('modules_config').eq('id', businessId).single();
+      const buttons = [
+        [{ text: '📅 Записаться', callback_data: 'start_booking' }],
+        [{ text: '📋 Мои записи', callback_data: 'my_appointments' }]
+      ];
+      if (biz?.modules_config?.shop) {
+        buttons.push([{ text: '🛍 Магазин', callback_data: 'view_shop' }]);
+      }
+
       await ctx.reply('Используйте меню для записи или отмены.', {
-        reply_markup: {
-          inline_keyboard: [
-            [{ text: '📅 Записаться', callback_data: 'start_booking' }],
-            [{ text: '📋 Мои записи', callback_data: 'my_appointments' }]
-          ]
-        }
+        reply_markup: { inline_keyboard: buttons }
       });
     }
   });

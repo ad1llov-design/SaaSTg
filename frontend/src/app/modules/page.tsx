@@ -157,9 +157,9 @@ export default function ModulesPage() {
                   {!isActive && <ArrowRight className="w-4 h-4" />}
                 </button>
 
-                {isActive && mod.id === 'ai_consultant' && (
+                {isActive && (mod.id === 'ai_consultant' || mod.id === 'shop') && (
                   <Link 
-                    href="/modules/ai-settings"
+                    href={mod.id === 'ai_consultant' ? "/modules/ai-settings" : "/shop"}
                     className="w-full py-4 rounded-xl font-bold text-sm bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-all flex items-center justify-center gap-2 border border-indigo-100 dark:border-indigo-500/20"
                   >
                     {t.modules.btn_configure}
