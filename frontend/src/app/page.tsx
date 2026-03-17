@@ -43,8 +43,8 @@ export default function LandingPage() {
       <DemoModal isOpen={showDemoModal} onClose={() => setShowDemoModal(false)} />
       
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-glass backdrop-blur-xl border-b border-border">
-         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+   <nav className="fixed top-0 w-full z-50 bg-glass backdrop-blur-xl border-b border-border">
+          <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2.5 group">
                <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-600/20 group-hover:scale-110 transition-transform">
                   <Zap className="w-6 h-6 text-white" />
@@ -52,10 +52,10 @@ export default function LandingPage() {
                <span className="text-xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">AuraSync</span>
             </Link>
             
-            <div className="hidden lg:flex items-center gap-10 text-xs font-black uppercase tracking-widest text-slate-500 dark:text-slate-400">
-               <a href="#features" className="hover:text-indigo-500 transition-colors">{t.landing.features_title}</a>
-               <a href="#pricing" className="hover:text-indigo-500 transition-colors">{t.landing.pricing_title}</a>
-               <a href="#demo" className="hover:text-indigo-500 transition-colors uppercase tracking-widest">{t.landing.view_demo}</a>
+            <div className="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+               <a href="#features" className="hover:text-indigo-500 transition-colors">{t.landing.nav_features}</a>
+               <a href="#pricing" className="hover:text-indigo-500 transition-colors">{t.landing.nav_pricing}</a>
+               <Link href="/demo" className="hover:text-indigo-500 transition-colors uppercase tracking-[0.2em]">{t.landing.nav_demo}</Link>
             </div>
 
             <div className="flex items-center gap-6">
@@ -130,17 +130,17 @@ export default function LandingPage() {
                custom={3} initial="hidden" animate="visible" variants={fadeIn}
                className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8"
             >
-               <Link href="/register" className="btn-premium btn-premium-primary min-w-[220px] h-16 text-base shadow-2xl shadow-indigo-600/30">
+               <Link href="/register" className="btn-premium btn-premium-primary min-w-[220px] h-16 text-sm shadow-2xl shadow-indigo-600/30">
                   {t.auth.register_btn}
                   <ArrowRight className="w-5 h-5" />
                </Link>
-               <button 
-                  onClick={() => setShowDemoModal(true)}
-                  className="btn-premium btn-premium-secondary min-w-[220px] h-16 text-base backdrop-blur-md"
+               <Link 
+                  href="/demo"
+                  className="btn-premium btn-premium-secondary min-w-[220px] h-16 text-sm backdrop-blur-md"
                >
                   <Smartphone className="w-5 h-5" />
-                  {t.landing.view_demo}
-               </button>
+                  {t.landing.nav_demo}
+               </Link>
             </motion.div>
  
             {/* Visual Mockup Placeholder */}
@@ -167,10 +167,10 @@ export default function LandingPage() {
                         <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center">
                            <TrendingUp className="w-5 h-5 text-emerald-500" />
                         </div>
-                        <div className="text-left">
-                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Weekly Revenue</p>
-                           <p className="text-lg font-black text-slate-900 dark:text-white leading-none">+145,200 Сом</p>
-                        </div>
+                         <div className="text-left">
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{t.dashboard.revenue}</p>
+                            <p className="text-lg font-black text-slate-900 dark:text-white leading-none">+145,200 Сом</p>
+                         </div>
                      </motion.div>
                      <motion.div 
                         initial={{ x: -50, opacity: 0 }}
@@ -181,10 +181,10 @@ export default function LandingPage() {
                         <div className="w-10 h-10 bg-indigo-500/10 rounded-xl flex items-center justify-center">
                            <Users className="w-5 h-5 text-indigo-500" />
                         </div>
-                        <div className="text-left">
-                           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">New Clients</p>
-                           <p className="text-lg font-black text-slate-900 dark:text-white leading-none">84 This Week</p>
-                        </div>
+                         <div className="text-left">
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{t.dashboard.clients_base}</p>
+                            <p className="text-lg font-black text-slate-900 dark:text-white leading-none">84 This Week</p>
+                         </div>
                      </motion.div>
                   </div>
                </div>
@@ -202,10 +202,10 @@ export default function LandingPage() {
                   className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-500 text-[10px] font-black uppercase tracking-widest border border-indigo-500/20"
                >
                   <Bot className="w-3.5 h-3.5" />
-                  Live Demo Tutorial
+                  {t.landing.showcase_badge}
                </motion.div>
-               <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tight">How it <span className="text-indigo-600 italic">Works</span></h2>
-               <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto">Start your automation journey in under 5 minutes with our streamlined integration process.</p>
+               <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{t.landing.showcase_title_1} <span className="text-indigo-600 italic">{t.landing.showcase_title_2}</span></h2>
+               <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto">{t.landing.showcase_subtitle}</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -213,24 +213,24 @@ export default function LandingPage() {
                   { 
                     step: "01", 
                     icon: MessageSquare, 
-                    title: "Connect BotFather", 
-                    desc: "Simply paste your Telegram Bot Token. No coding, no servers, just plug and play.",
+                    title: t.landing.step1_title, 
+                    desc: t.landing.step1_desc,
                     bg: "bg-blue-500/5",
                     text: "text-blue-500"
                   },
                   { 
                     step: "02", 
                     icon: Sparkles, 
-                    title: "AI Configuration", 
-                    desc: "Train your AI assistant with your business details to handle client inquiries 24/7.",
+                    title: t.landing.step2_title, 
+                    desc: t.landing.step2_desc,
                     bg: "bg-purple-500/5",
                     text: "text-purple-500"
                   },
                   { 
                     step: "03", 
                     icon: Zap, 
-                    title: "Go Live", 
-                    desc: "Share your bot link and watch as clients book, pay, and interact with your brand.",
+                    title: t.landing.step3_title, 
+                    desc: t.landing.step3_desc,
                     bg: "bg-amber-500/5",
                     text: "text-amber-500"
                   }
@@ -250,7 +250,7 @@ export default function LandingPage() {
                      <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{item.desc}</p>
                      
                      <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Learn More</span>
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{t.landing.learn_more}</span>
                         <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-indigo-500 transition-colors" />
                      </div>
                   </motion.div>
@@ -263,24 +263,19 @@ export default function LandingPage() {
                className="mt-20 premium-card bg-indigo-600 !p-1 flex flex-col md:flex-row items-center gap-10 overflow-hidden"
             >
                <div className="flex-1 p-10 md:p-14 space-y-6 text-white text-center md:text-left">
-                  <h3 className="text-3xl md:text-4xl font-black leading-tight uppercase tracking-tight">Ready to see <br/> the <span className="text-indigo-200">real power?</span></h3>
-                  <p className="text-indigo-100 font-medium text-lg leading-relaxed">Join 200+ businesses who automated their workflow this week. No commitment required.</p>
+                  <h3 className="text-3xl md:text-4xl font-black leading-tight uppercase tracking-tight">{t.landing.cta_title_1} <br/> the <span className="text-indigo-200">{t.landing.cta_title_2}</span></h3>
+                  <p className="text-indigo-100 font-medium text-lg leading-relaxed">{t.landing.cta_subtitle}</p>
                   <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-                     <button onClick={() => setShowDemoModal(true)} className="btn-premium bg-white text-indigo-600 hover:bg-indigo-50 tracking-widest text-xs min-w-[200px]">
-                        Watch Video Demo
-                     </button>
+                     <Link href="/demo" className="btn-premium bg-white text-indigo-600 hover:bg-indigo-50 tracking-widest text-xs min-w-[200px]">
+                        {t.landing.nav_demo}
+                     </Link>
                      <Link href="/register" className="btn-premium bg-indigo-500 text-white hover:bg-indigo-400 border border-white/10 tracking-widest text-xs min-w-[200px]">
-                        Try For Free
+                        {t.landing.try_free}
                      </Link>
                   </div>
                </div>
-               <div className="w-full md:w-1/2 aspect-video bg-black/20 backdrop-blur-3xl group relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                     <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-md border border-white/20 group-hover:scale-110 transition-transform cursor-pointer">
-                        <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[15px] border-l-white border-b-[10px] border-b-transparent ml-1" />
-                     </div>
-                  </div>
-                  <img src="/aurasync_dashboard_mockup_1773780044407.png" className="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" alt="Video Placeholder" />
+               <div className="w-full md:w-1/2 aspect-video bg-black/5 dark:bg-black/20 backdrop-blur-3xl group relative overflow-hidden flex items-center justify-center">
+                  <img src="/aurasync_dashboard_mockup_1773780044407.png" className="w-[90%] h-[90%] object-contain rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-700" alt="Demo Preview" />
                </div>
             </motion.div>
          </div>

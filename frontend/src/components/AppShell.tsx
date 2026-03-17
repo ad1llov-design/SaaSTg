@@ -53,12 +53,13 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }, [business?.id, notify]);
   
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
-
+  const isDemoRoute = pathname === '/demo' || pathname?.startsWith('/demo/');
+ 
   if (isPublicRoute) {
     return <div className="min-h-screen transition-colors duration-400">{children}</div>;
   }
-
-  if (loading) {
+ 
+  if (loading && !isDemoRoute) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-main transition-colors">
         <div className="flex flex-col items-center gap-4">
@@ -69,7 +70,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     );
   }
 
-  const isExpired = !isAdmin && trialDaysLeft !== undefined && trialDaysLeft <= 0 && business?.subscription_status !== 'active';
+  const isExpired = !isAdmin && !isDemoRoute && trialDaysLeft !== undefined && trialDaysLeft <= 0 && business?.subscription_status !== 'active';
   const isBillingPage = pathname === '/billing';
 
   // Редирект на оплату, если триал истек (и это не публичный роут)

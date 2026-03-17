@@ -29,33 +29,34 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const isDemo = pathname === '/demo' || pathname?.startsWith('/demo/');
   const { user, business, signOut, theme, toggleTheme, trialDaysLeft, isAdmin } = useAuth();
   const { locale, setLocale, t } = useLanguage();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const menuItems = [
-    { name: t.common.dashboard, href: '/dashboard', icon: LayoutDashboard },
-    { name: t.common.appointments, href: '/appointments', icon: CalendarCheck },
-    { name: t.common.services, href: '/services', icon: Sparkles },
-    { name: t.staff.title, href: '/staff', icon: UserSquare },
-    { name: t.modules?.title || 'Modules', href: '/modules', icon: Package },
-    ...(business?.modules_config?.shop ? [{ name: t.modules.shop, href: '/shop', icon: ShoppingBag }] : []),
-    ...(business?.modules_config?.marketing ? [{ name: t.marketing.title, href: '/marketing', icon: Megaphone }] : []),
-    { name: t.common.clients, href: '/clients', icon: Users },
-    { name: t.common.settings, href: '/settings', icon: Settings },
+    { name: t.common.dashboard, href: isDemo ? '/demo' : '/dashboard', icon: LayoutDashboard },
+    { name: t.common.appointments, href: isDemo ? '/demo/appointments' : '/appointments', icon: CalendarCheck },
+    { name: t.common.services, href: isDemo ? '/demo/services' : '/services', icon: Sparkles },
+    { name: t.staff.title, href: isDemo ? '/demo/staff' : '/staff', icon: UserSquare },
+    { name: t.modules?.title || 'Modules', href: isDemo ? '/demo/modules' : '/modules', icon: Package },
+    ...(business?.modules_config?.shop || isDemo ? [{ name: t.modules?.shop || 'Shop', href: isDemo ? '/demo/shop' : '/shop', icon: ShoppingBag }] : []),
+    ...(business?.modules_config?.marketing || isDemo ? [{ name: t.marketing?.title || 'Marketing', href: isDemo ? '/demo/marketing' : '/marketing', icon: Megaphone }] : []),
+    { name: t.common.clients, href: isDemo ? '/demo/clients' : '/clients', icon: Users },
+    { name: t.common.settings, href: isDemo ? '/demo/settings' : '/settings', icon: Settings },
   ];
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full bg-[var(--bg-card)] lg:bg-transparent">
       {/* Логотип */}
       <div className="p-8">
-        <Link href="/dashboard" className="flex items-center gap-4 group" onClick={() => setIsMobileMenuOpen(false)}>
+        <Link href={isDemo ? "/demo" : "/dashboard"} className="flex items-center gap-4 group" onClick={() => setIsMobileMenuOpen(false)}>
           <div className="w-12 h-12 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-2xl flex items-center justify-center shadow-2xl shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-all border border-white/10 group-hover:-rotate-6">
             <Bot className="w-6 h-6 text-white" />
           </div>
           <div>
             <span className="font-bold text-2xl tracking-tighter text-slate-900 dark:text-white uppercase leading-none">Aura<span className="text-indigo-500">Sync</span></span>
-            <p className="text-[10px] text-slate-400 font-semibold mt-1 opacity-70 italic tracking-widest">{business?.name || 'Smart Beauty'}</p>
+            <p className="text-[10px] text-slate-400 font-semibold mt-1 opacity-70 italic tracking-widest">{isDemo ? 'Demo Mode' : (business?.name || 'Smart Beauty')}</p>
           </div>
         </Link>
       </div>
