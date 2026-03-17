@@ -8,7 +8,9 @@ import {
   CheckCircle2, 
   AlertCircle,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  Zap,
+  Megaphone
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/components/AuthProvider';
@@ -75,6 +77,14 @@ export default function ModulesPage() {
       icon: LifeBuoy, 
       color: 'emerald',
       premium: true 
+    },
+    { 
+      id: 'marketing', 
+      title: t.marketing.title, 
+      desc: t.marketing.desc, 
+      icon: Zap, 
+      color: 'amber',
+      premium: false 
     }
   ];
 
@@ -157,9 +167,13 @@ export default function ModulesPage() {
                   {!isActive && <ArrowRight className="w-4 h-4" />}
                 </button>
 
-                {isActive && (mod.id === 'ai_consultant' || mod.id === 'shop') && (
+                {isActive && (mod.id === 'ai_consultant' || mod.id === 'shop' || mod.id === 'marketing') && (
                   <Link 
-                    href={mod.id === 'ai_consultant' ? "/modules/ai-settings" : "/shop"}
+                    href={
+                      mod.id === 'ai_consultant' ? "/modules/ai-settings" : 
+                      mod.id === 'shop' ? "/shop" : 
+                      "/marketing"
+                    }
                     className="w-full py-4 rounded-xl font-bold text-sm bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-all flex items-center justify-center gap-2 border border-indigo-100 dark:border-indigo-500/20"
                   >
                     {t.modules.btn_configure}

@@ -51,10 +51,10 @@ export default function LandingPage() {
             </div>
 
             <div className="flex items-center gap-4">
-               <Link href="/login" className="hidden sm:block text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-white transition-colors px-4">
+               <Link href="/login" className="hidden sm:block text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-white transition-colors px-4">
                   Login
                </Link>
-               <Link href="/register" className="bg-white text-slate-950 px-6 py-3 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-slate-200 transition-all shadow-xl shadow-white/5 active:scale-95">
+               <Link href="/register" className="btn-premium bg-white text-slate-950 hover:bg-slate-200">
                   {t.auth.join}
                </Link>
             </div>
@@ -96,15 +96,15 @@ export default function LandingPage() {
 
             <motion.div 
                custom={3} initial="hidden" animate="visible" variants={fadeIn}
-               className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+               className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8"
             >
-               <Link href="/register" className="w-full sm:w-auto px-10 py-5 bg-indigo-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-indigo-700 hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-indigo-600/40 flex items-center justify-center gap-2">
-                  {t.landing.get_started}
+               <Link href="/register" className="btn-premium btn-premium-primary min-w-[200px] h-16 text-base">
+                  {t.auth.join}
                   <ArrowRight className="w-5 h-5" />
                </Link>
-               <Link href="#demo" className="w-full sm:w-auto px-10 py-5 bg-white/5 border border-white/10 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-2">
-                  {t.landing.view_demo}
-               </Link>
+               <a href="#features" className="btn-premium btn-premium-secondary min-w-[200px] h-16 text-base">
+                  {t.landing.hero_btn_secondary}
+               </a>
             </motion.div>
 
             {/* Visual Mockup Placeholder */}

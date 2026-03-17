@@ -12,11 +12,13 @@ import {
   Save,
   ShieldCheck,
   AlertTriangle,
-  UserX
+  UserX,
+  Send
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/components/AuthProvider';
 import { useLanguage } from '@/context/LanguageContext';
+import { useNotification } from '@/context/NotificationContext';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import DemoModal from '@/components/DemoModal';
@@ -24,6 +26,7 @@ import DemoModal from '@/components/DemoModal';
 export default function ClientsPage() {
   const { business, user } = useAuth();
   const { t, locale } = useLanguage();
+  const { notify } = useNotification();
   const [clients, setClients] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -85,12 +88,12 @@ export default function ClientsPage() {
       </div>
 
       <div className="flex flex-col md:flex-row gap-6">
-        <div className="premium-card flex-1 flex items-center gap-4 px-6 !py-1 transition-all border-slate-200 dark:border-white/10 shadow-sm bg-white dark:bg-white/5 focus-within:ring-2 focus-within:ring-indigo-500/20">
+        <div className="premium-card flex-1 flex items-center gap-4 px-6 !py-0 transition-all border-slate-200 dark:border-white/10 shadow-sm bg-white dark:bg-white/5 focus-within:ring-2 focus-within:ring-indigo-500/20 h-14">
           <Search className="w-5 h-5 text-slate-400" />
           <input 
             type="text" 
             placeholder={t.common.search_placeholder} 
-            className="flex-1 bg-transparent py-4 focus:outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400" 
+            className="flex-1 bg-transparent py-4 focus:outline-none text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 h-full" 
             value={search} 
             onChange={e => setSearch(e.target.value)} 
           />
@@ -150,16 +153,25 @@ export default function ClientsPage() {
                       <td className="px-6 py-6 text-sm font-medium text-slate-500">
                         {client.last_visit ? new Date(client.last_visit).toLocaleDateString(locale === 'ru' || locale === 'en' ? (locale === 'ru' ? 'ru-RU' : 'en-US') : 'ru-RU') : t.clients.no_visits}
                       </td>
-                      <td className="px-6 py-6 text-right">
-                        <div className="flex items-center justify-end gap-2">
-                           <a href={`https://t.me/${client.telegram_id}`} target="_blank" onClick={(e) => e.stopPropagation()} className="w-9 h-9 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-xl hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-all inline-flex items-center justify-center shadow-sm">
-                            <ExternalLink className="w-4 h-4" />
-                           </a>
-                           <motion.div animate={{ rotate: isExpanded ? 90 : 0 }}>
-                              <ChevronRight className="w-4 h-4 text-slate-400" />
-                           </motion.div>
-                        </div>
-                      </td>
+                       <td className="px-6 py-6 text-right">
+                         <div className="flex items-center justify-end gap-2">
+                            <button 
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setExpandedId(isExpanded ? null : client.id);
+                              }}
+                              className="w-9 h-9 bg-amber-500/10 text-amber-600 rounded-xl hover:bg-amber-500/20 transition-all inline-flex items-center justify-center shadow-sm"
+                            >
+                               <Send className="w-4 h-4" />
+                            </button>
+                            <a href={`https://t.me/${client.telegram_id}`} target="_blank" onClick={(e) => e.stopPropagation()} className="w-9 h-9 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 rounded-xl hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-all inline-flex items-center justify-center shadow-sm">
+                             <ExternalLink className="w-4 h-4" />
+                            </a>
+                            <motion.div animate={{ rotate: isExpanded ? 90 : 0 }}>
+                               <ChevronRight className="w-4 h-4 text-slate-400" />
+                            </motion.div>
+                         </div>
+                       </td>
                     </tr>
                     
                     <AnimatePresence>

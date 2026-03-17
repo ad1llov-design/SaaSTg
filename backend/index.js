@@ -87,6 +87,43 @@ app.post('/api/register-bot', async (req, res) => {
   }
 });
 
+// API для рассылки (Push-уведомления)
+app.post('/api/broadcast', async (req, res) => {
+  const { businessId, message } = req.body;
+
+  if (!businessId || !message) {
+    return res.status(400).json({ error: 'Missing businessId or message' });
+  }
+
+  try {
+    const { data: business } = await supabase.from('businesses').select('bot_token').eq('id', businessId).single();
+    if (!business?.bot_token) return res.status(404).json({ error: 'Bot not configured' });
+
+    const { data: clients } = await supabase.from('clients').select('telegram_id').eq('business_id', businessId).not('telegram_id', 'is', null);
+
+    if (!clients || clients.length === 0) {
+      return res.json({ success: true, sentCount: 0 });
+    }
+
+    const bot = bots.get(business.bot_token);
+    if (!bot) return res.status(500).json({ error: 'Bot runtime not active' });
+
+    let successCount = 0;
+    for (const client of clients) {
+      try {
+        await bot.telegram.sendMessage(client.telegram_id, message, { parse_mode: 'HTML' });
+        successCount++;
+      } catch (err) {
+        console.error(`Broadcast error for ${client.telegram_id}:`, err.message);
+      }
+    }
+
+    res.json({ success: true, sentCount: successCount });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Health Check for Render/Railway
 app.get('/health', (req, res) => res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() }));
 

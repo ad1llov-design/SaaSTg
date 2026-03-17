@@ -4,14 +4,53 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 import Sidebar from '@/components/Sidebar';
 import { useLanguage } from '@/context/LanguageContext';
+import { supabase } from '@/lib/supabase';
+import { useNotification } from '@/context/NotificationContext';
+import { useEffect } from 'react';
 
-const PUBLIC_ROUTES = ['/login', '/register'];
+const PUBLIC_ROUTES = ['/login', '/register', '/'];
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, loading, business, trialDaysLeft, isAdmin } = useAuth();
   const { t } = useLanguage();
+  const { notify } = useNotification();
+  
+  useEffect(() => {
+    if (!business?.id) return;
+
+    // Listen for new appointments
+    const aptsSub = supabase
+      .channel('apts-realtime')
+      .on('postgres_changes', { 
+        event: 'INSERT', 
+        schema: 'public', 
+        table: 'appointments',
+        filter: `business_id=eq.${business.id}`
+      }, (payload) => {
+        notify('push', 'New Appointment!', 'A client just booked a new session via Telegram.');
+      })
+      .subscribe();
+
+    // Listen for new clients
+    const clientsSub = supabase
+      .channel('clients-realtime')
+      .on('postgres_changes', { 
+        event: 'INSERT', 
+        schema: 'public', 
+        table: 'clients',
+        filter: `business_id=eq.${business.id}`
+      }, (payload) => {
+        notify('push', 'New Client Registered', 'Someone new just joined your bot community.');
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(aptsSub);
+      supabase.removeChannel(clientsSub);
+    };
+  }, [business?.id, notify]);
   
   const isPublicRoute = PUBLIC_ROUTES.includes(pathname);
 

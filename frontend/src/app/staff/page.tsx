@@ -90,13 +90,13 @@ export default function StaffPage() {
         <button 
           onClick={() => setIsAdding(!isAdding)}
           className={cn(
-            "flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-xl transition-all shadow-md active:scale-95",
+            "btn-premium h-14",
             isAdding 
-              ? "bg-rose-500/10 text-rose-600 hover:bg-rose-500/20" 
-              : "bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-600/20"
+              ? "bg-rose-500/10 text-rose-600 hover:bg-rose-500/20 shadow-none border border-rose-500/10" 
+              : "btn-premium-primary"
           )}
         >
-          {isAdding ? t.common.cancel : <><Plus className="w-4 h-4" /> {t.staff.add}</>}
+          {isAdding ? t.common.cancel : <><Plus className="w-5 h-5" /> {t.staff.add}</>}
         </button>
       </div>
 
@@ -112,7 +112,7 @@ export default function StaffPage() {
                 <label className="text-xs font-semibold text-slate-500 tracking-wide block ml-1">{t.staff.form_role}</label>
                 <input required type="text" placeholder="Старший мастер" className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-indigo-500 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all text-sm shadow-sm" value={newMember.role} onChange={e => setNewMember({...newMember, role: e.target.value})}/>
               </div>
-              <button type="submit" className="bg-indigo-600 py-3 rounded-xl font-semibold text-white hover:bg-indigo-700 transition-all shadow-md hover:shadow-indigo-600/20 text-sm h-[46px]">{t.common.save}</button>
+              <button type="submit" className="btn-premium btn-premium-primary h-[46px] w-full">{t.common.save}</button>
             </form>
           </motion.div>
         )}

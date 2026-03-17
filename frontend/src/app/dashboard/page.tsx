@@ -180,30 +180,30 @@ export default function DashboardPage() {
             <div className="premium-card !bg-indigo-600 !border-none p-8 text-white relative overflow-hidden group">
                <div className="absolute -right-4 -top-4 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
                <BrainCircuit className="w-10 h-10 text-indigo-200 mb-6" />
-               <h3 className="text-2xl font-bold mb-2">{t.dashboard.insights}</h3>
+               <h3 className="text-2xl font-black mb-2 uppercase tracking-tighter">{t.dashboard.insights}</h3>
                <p className="text-sm text-indigo-100/80 font-medium leading-relaxed mb-8">
-                  Система зафиксировала пик активности в пятницу вечером. Рекомендуем добавить бонусную услугу "Express Care".
+                  {t.dashboard.insights_desc}
                </p>
-               <button className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest bg-white/10 hover:bg-white/20 px-4 py-2.5 rounded-xl transition-all">
-                  Смотреть отчет <ChevronRight className="w-4 h-4" />
+               <button className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-white/10 hover:bg-white/20 px-5 py-3 rounded-xl transition-all border border-white/10">
+                  {t.dashboard.report_btn} <ChevronRight className="w-4 h-4" />
                </button>
             </div>
 
             <div className="premium-card">
-               <div className="flex items-center gap-3 mb-6">
+               <div className="flex items-center gap-3 mb-8">
                 <div className="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center">
                   <PieChartIcon className="w-5 h-5 text-amber-500" />
                 </div>
-                <h4 className="font-bold text-lg dark:text-white">Distribution</h4>
+                <h4 className="font-black text-xs uppercase tracking-widest text-slate-400">{t.dashboard.distribution_title}</h4>
                </div>
-               <div className="space-y-4">
+               <div className="space-y-5">
                   {[
-                    { name: 'Services', val: '65%', color: 'bg-indigo-500' },
-                    { name: 'Retail', val: '25%', color: 'bg-emerald-500' },
-                    { name: 'Other', val: '10%', color: 'bg-amber-500' }
+                    { name: t.dashboard.services_label, val: '65%', color: 'bg-indigo-500' },
+                    { name: t.dashboard.retail_label, val: '25%', color: 'bg-emerald-500' },
+                    { name: t.dashboard.other_label, val: '10%', color: 'bg-amber-500' }
                   ].map((l, i) => (
-                    <div key={i} className="space-y-2">
-                       <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-500">
+                    <div key={i} className="space-y-2.5">
+                       <div className="flex justify-between text-[10px] font-black uppercase tracking-widest text-slate-500">
                           <span>{l.name}</span>
                           <span className="text-slate-900 dark:text-white">{l.val}</span>
                        </div>
@@ -229,10 +229,10 @@ export default function DashboardPage() {
                  <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center overflow-hidden shrink-0">
                     <div className="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 opacity-20" />
                  </div>
-                 <div className="flex-1 min-w-0">
-                    <p className="font-bold text-slate-900 dark:text-white truncate">Новая запись: Стрижка бороды</p>
-                    <p className="text-xs text-slate-500 font-medium">Клиент: Артур М. • 2 часа назад</p>
-                 </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-slate-900 dark:text-white truncate">{t.dashboard.activity_new}: Стрижка бороды</p>
+                    <p className="text-xs text-slate-500 font-medium">{t.dashboard.activity_client}: Артур М. • 2 часа {t.dashboard.activity_ago}</p>
+                  </div>
                  <div className="shrink-0 px-3 py-1 bg-emerald-500/10 text-emerald-500 text-[10px] font-bold rounded-lg uppercase tracking-wider">
                     {t.dashboard.verified}
                  </div>

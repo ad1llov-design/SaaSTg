@@ -21,7 +21,8 @@ import {
   Globe,
   UserSquare,
   Package,
-  ShoppingBag
+  ShoppingBag,
+  Megaphone
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -39,6 +40,7 @@ export default function Sidebar() {
     { name: t.staff.title, href: '/staff', icon: UserSquare },
     { name: t.modules?.title || 'Modules', href: '/modules', icon: Package },
     ...(business?.modules_config?.shop ? [{ name: t.modules.shop, href: '/shop', icon: ShoppingBag }] : []),
+    ...(business?.modules_config?.marketing ? [{ name: t.marketing.title, href: '/marketing', icon: Megaphone }] : []),
     { name: t.common.clients, href: '/clients', icon: Users },
     { name: t.common.settings, href: '/settings', icon: Settings },
   ];
@@ -110,64 +112,63 @@ export default function Sidebar() {
         </div>
 
         {/* Инструменты: Режим + Язык */}
-        <div className="flex items-center justify-between px-2 gap-2">
-           <div className="flex-1">
-             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">{t.common.theme}</span>
-             <button 
-                onClick={toggleTheme}
-                className="w-full h-10 flex items-center justify-center gap-2 rounded-xl bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-indigo-500 transition-all text-sm font-semibold"
-             >
-                {theme === 'dark' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
-             </button>
-           </div>
-           
-           <div className="flex-1">
-             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 block">{t.common.language}</span>
-             <div className="relative">
-               <select 
-                 value={locale} 
-                 onChange={(e) => setLocale(e.target.value as Locale)}
-                 className="w-full h-10 appearance-none bg-slate-100 dark:bg-white/5 border-none rounded-xl pl-4 pr-10 text-sm font-semibold text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-indigo-500 outline-none uppercase tracking-wider"
-               >
-                 <option value="ru">RU</option>
-                 <option value="en">EN</option>
-                 <option value="ky">KG</option>
-                 <option value="uz">UZ</option>
-               </select>
-               <Globe className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-             </div>
+        {/* Инструменты: Режим + Язык (Минималистично) */}
+        <div className="px-2">
+           <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5">
+              <button 
+                 onClick={toggleTheme}
+                 className="w-10 h-10 flex items-center justify-center rounded-xl hover:bg-white dark:hover:bg-white/5 text-slate-500 hover:text-indigo-500 transition-all shadow-sm hover:shadow-md border border-transparent hover:border-slate-100 dark:hover:border-white/10"
+              >
+                 {theme === 'dark' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+              </button>
+              
+              <div className="flex-1 relative group">
+                <Globe className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none group-focus-within:text-indigo-500 transition-colors" />
+                <select 
+                  value={locale} 
+                  onChange={(e) => setLocale(e.target.value as Locale)}
+                  className="w-full h-10 bg-transparent border-none rounded-xl pl-8 pr-4 text-[11px] font-black text-slate-600 dark:text-slate-400 focus:ring-0 outline-none uppercase tracking-widest cursor-pointer"
+                >
+                  <option value="ru">Russian</option>
+                  <option value="en">English</option>
+                  <option value="ky">Kyrgyz</option>
+                  <option value="uz">Uzbek</option>
+                </select>
+              </div>
            </div>
         </div>
 
         {user ? (
-          <div className="space-y-3">
-             <div className="p-4 rounded-xl bg-slate-100 dark:bg-white/5">
-              <p className="text-xs font-bold truncate mb-1 text-slate-900 dark:text-white">{business?.name || 'Owner'}</p>
-              <p className="text-[10px] text-slate-500 truncate tracking-wide">{user?.email}</p>
-            </div>
-            {/* Admin Section */}
-            {isAdmin && (
-              <div className="pt-3">
-                <Link 
-                  href="/admin"
-                  className={cn(
-                    "flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 group",
-                    pathname === '/admin' ? "bg-amber-500 text-white shadow-md shadow-amber-500/20" : "text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-500/10"
-                  )}
-                >
-                  <ShieldCheck className="w-5 h-5 flex-shrink-0" />
-                  <span className="font-bold text-sm tracking-wide">{t.common.admin}</span>
-                </Link>
+          <div className="space-y-4">
+             <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 dark:bg-white/[0.02] border border-slate-100 dark:border-white/5">
+              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 font-black text-xs">
+                {user.email?.[0].toUpperCase()}
               </div>
-            )}
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-black truncate text-slate-900 dark:text-white uppercase tracking-tight">{business?.name || 'Owner'}</p>
+                <p className="text-[10px] text-slate-400 truncate font-bold">{user?.email}</p>
+              </div>
+              <button 
+                onClick={signOut}
+                className="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-500/10 transition-all"
+                title={t.common.logout}
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
 
-            <button 
-              onClick={signOut}
-              className="w-full flex items-center gap-3 px-5 py-3 rounded-xl text-sm font-semibold text-slate-500 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition-all tracking-wide"
-            >
-              <LogOut className="w-4 h-4" />
-              {t.common.logout}
-            </button>
+            {isAdmin && (
+              <Link 
+                href="/admin"
+                className={cn(
+                  "flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-300 group",
+                  pathname === '/admin' ? "bg-amber-500 text-white shadow-md shadow-amber-500/20" : "text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-500/10"
+                )}
+              >
+                <ShieldCheck className="w-5 h-5 flex-shrink-0" />
+                <span className="font-bold text-sm tracking-wide">{t.common.admin}</span>
+              </Link>
+            )}
           </div>
         ) : (
           <Link 

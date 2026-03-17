@@ -46,7 +46,16 @@ export const translations = {
       insights: 'Инсайты',
       promo_title: 'AuraSync Premium',
       promo_subtitle: 'Автоматизируйте свой бизнес сегодня.',
-      promo_btn: 'Активировать'
+      promo_btn: 'Активировать',
+      insights_desc: 'Система зафиксировала пик активности в пятницу вечером. Рекомендуем добавить бонусную заманчивую услугу.',
+      report_btn: 'Смотреть отчет',
+      distribution_title: 'Распределение',
+      retail_label: 'Ритейл',
+      services_label: 'Услуги',
+      other_label: 'Прочее',
+      activity_new: 'Новая запись',
+      activity_client: 'Клиент',
+      activity_ago: 'назад'
     },
     services: {
       title: 'Услуги',
@@ -220,6 +229,7 @@ export const translations = {
       hero_subtitle: 'Единая экосистема для записи, продаж и управления клиентами. Запустите своего персонального бота за 5 минут.',
       get_started: 'Попробовать бесплатно',
       view_demo: 'Посмотреть демо',
+      hero_btn_secondary: 'Возможности',
       features_title: 'Всё, что нужно для роста',
       feature_booking: 'Умная запись',
       feature_booking_desc: 'Автоматическое планирование и напоминания клиентам.',
@@ -244,6 +254,18 @@ export const translations = {
       no_products: 'В каталоге пока нет товаров.',
       btn_edit: 'Изменить',
       btn_delete: 'Удалить'
+    },
+    marketing: {
+      title: 'Рассылки',
+      subtitle: 'Push-уведомления для ваших клиентов',
+      send_btn: 'Отправить всем',
+      message_ph: 'Введите текст сообщения...',
+      history: 'История кампаний',
+      no_campaigns: 'Кампаний еще не было',
+      success_sent: 'Сообщение успешно отправлено!',
+      stats_sent: 'Доставлено',
+      stats_failed: 'Ошибок',
+      desc: 'Отправляйте новости, акции и спецпредложения всем клиентам вашего бота мгновенно.'
     },
     bot: {
       title: 'Конструктор бота',
@@ -313,7 +335,16 @@ export const translations = {
       insights: 'AI Insights',
       promo_title: 'AuraSync Premium',
       promo_subtitle: 'Autonomous infrastructure for global scale.',
-      promo_btn: 'Activate Now'
+      promo_btn: 'Activate',
+      insights_desc: 'System detected peak activity on Friday evening. We recommend adding a bonus service.',
+      report_btn: 'View Report',
+      distribution_title: 'Distribution',
+      retail_label: 'Retail',
+      services_label: 'Services',
+      other_label: 'Other',
+      activity_new: 'New Appointment',
+      activity_client: 'Client',
+      activity_ago: 'ago'
     },
     services: {
       title: 'Services',
@@ -485,9 +516,10 @@ export const translations = {
     landing: {
       hero_title: 'Your Business on Autopilot in Telegram',
       hero_subtitle: 'A unified ecosystem for bookings, sales, and client management. Launch your personal bot in 5 minutes.',
-      get_started: 'Get Started Free',
-      view_demo: 'View Demo',
-      features_title: 'Everything to scale',
+      get_started: 'Try for Free',
+      view_demo: 'Watch Demo',
+      hero_btn_secondary: 'Key Features',
+      features_title: 'Everything for growth',
       feature_booking: 'Smart Booking',
       feature_booking_desc: 'Automatic scheduling and client reminders.',
       feature_ai: 'AI Consultant',
@@ -511,6 +543,18 @@ export const translations = {
       no_products: 'No products in catalog yet.',
       btn_edit: 'Edit',
       btn_delete: 'Delete'
+    },
+    marketing: {
+      title: 'Broadcasts',
+      subtitle: 'Push notifications for your clients',
+      send_btn: 'Send to All',
+      message_ph: 'Enter message text...',
+      history: 'Campaign History',
+      no_campaigns: 'No campaigns yet',
+      success_sent: 'Message sent successfully!',
+      stats_sent: 'Delivered',
+      stats_failed: 'Failed',
+      desc: 'Send news, promotions, and special offers to all your bot clients instantly.'
     },
     bot: {
       title: 'Bot Builder',
@@ -580,7 +624,16 @@ export const translations = {
       insights: 'Инсайттар',
       promo_title: 'AuraSync Premium',
       promo_subtitle: 'Бизнесиңизди бүгүн автоматташтырыңыз.',
-      promo_btn: 'Активдештирүү'
+      promo_btn: 'Активдештирүү',
+      insights_desc: 'Система жума күнү кечинде активдүүлүктүн туу чокусун каттады. Бонустук кызмат кошууну сунуштайбыз.',
+      report_btn: 'Отчетту көрүү',
+      distribution_title: 'Бөлүштүрүү',
+      retail_label: 'Ритейл',
+      services_label: 'Кызматтар',
+      other_label: 'Башкасы',
+      activity_new: 'Жаңы жазуу',
+      activity_client: 'Кардар',
+      activity_ago: 'мурун'
     },
     services: {
       title: 'Кызматтар',
@@ -752,9 +805,10 @@ export const translations = {
     landing: {
       hero_title: 'Telegram-дагы бизнесиңиз автопилотто',
       hero_subtitle: 'Жазуу, сатуу жана кардарларды башкаруу үчүн бирдиктүү экосистема. Өзүңүздүн ботуңузду 5 мүнөттө ишке киргизиңиз.',
-      get_started: 'Акысыз баштаңыз',
-      view_demo: 'Демо көрүү',
-      features_title: 'Өсүү үчүн зарыл нерселер',
+      get_started: 'Акысыз аракет кылыңыз',
+      view_demo: 'Демону көрүү',
+      hero_btn_secondary: 'Мүмкүнчүлүктөр',
+      features_title: 'Өсүү үчүн бардыгы',
       feature_booking: 'Акылдуу жазуу',
       feature_booking_desc: 'Кардарлар үчүн автоматтык пландаштыруу жана эскертүүлөр.',
       feature_ai: 'AI-Консультант',
@@ -778,6 +832,18 @@ export const translations = {
       no_products: 'Каталогдо азырынча товар жок.',
       btn_edit: 'Өзгөртүү',
       btn_delete: 'Өчүрүү'
+    },
+    marketing: {
+      title: 'Рассылкалар',
+      subtitle: 'Кардарларыңыз үчүн Push-билдирүүлөр',
+      send_btn: 'Баарына жөнөтүү',
+      message_ph: 'Билдирүү текстин киргизиңиз...',
+      history: 'Кампаниялардын тарыхы',
+      no_campaigns: 'Кампаниялар азырынча жок',
+      success_sent: 'Билдирүү ийгиликтүү жөнөтүлдү!',
+      stats_sent: 'Жөнөтүлдү',
+      stats_failed: 'Каталар',
+      desc: 'Жаңылыктарды, акцияларды жана атайын сунуштарды боттун бардык кардарларына заматта жөнөтүңүз.'
     },
     bot: {
       title: 'Бот конструктору',
@@ -847,7 +913,16 @@ export const translations = {
       insights: 'Insaytlari',
       promo_title: 'AuraSync Premium',
       promo_subtitle: 'Bugun biznesingizni avtomatlashtiring.',
-      promo_btn: 'Faollashtirish'
+      promo_btn: 'Faollashtirish',
+      insights_desc: 'Tizim juma oqshomida faollik cho\'qqisini aniqladi. Bonus xizmatini qo\'shishni tavsiya qilamiz.',
+      report_btn: 'Hisobotni ko\'rish',
+      distribution_title: 'Taqsimot',
+      retail_label: 'Chakana savdo',
+      services_label: 'Xizmatlar',
+      other_label: 'Boshqa',
+      activity_new: 'Yangi yozuv',
+      activity_client: 'Mijoz',
+      activity_ago: 'oldingi'
     },
     services: {
       title: 'Xizmatlar',
@@ -1019,9 +1094,10 @@ export const translations = {
     landing: {
       hero_title: 'Telegramdagi biznesingiz avtopilotda',
       hero_subtitle: 'Yozilish, sotish va mijozlarni boshqarish uchun yagona ekotizim. Shaxsiy botingizni 5 daqiqada ishga tushiring.',
-      get_started: 'Bepul boshlang',
+      get_started: 'Bepul sinab ko\'ring',
       view_demo: 'Demoni ko\'rish',
-      features_title: 'O\'sish uchun kerakli hamma narsa',
+      hero_btn_secondary: 'Imkoniyatlar',
+      features_title: 'O\'sish uchun hamma narsa',
       feature_booking: 'Aqlli yozilish',
       feature_booking_desc: 'Avtomatik rejalashtirish va mijozlarga eslatmalar.',
       feature_ai: 'AI Konsultant',
@@ -1045,6 +1121,18 @@ export const translations = {
       no_products: 'Katalogda hali mahsulotlar yo\'q.',
       btn_edit: 'O\'zgartirish',
       btn_delete: 'O\'chirish'
+    },
+    marketing: {
+      title: 'Xabarlashlar',
+      subtitle: 'Mijozlaringiz uchun Push-bildirishnomalar',
+      send_btn: 'Barchaga yuborish',
+      message_ph: 'Xabar matnini kiriting...',
+      history: 'Kampaniyalar tarixi',
+      no_campaigns: 'Kampaniyalar hali bo\'lmagan',
+      success_sent: 'Xabar muvaffaqiyatli yuborildi!',
+      stats_sent: 'Yetkazildi',
+      stats_failed: 'Xatolar',
+      desc: 'Yangiliklar, aksiyalar va maxsus takliflarni barcha mijozlaringizga bir zumda yuboring.'
     },
     bot: {
       title: 'Bot konstruktori',

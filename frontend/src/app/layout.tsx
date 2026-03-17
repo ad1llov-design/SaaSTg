@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { NotificationProvider } from "@/context/NotificationContext";
 import AppShell from "@/components/AppShell";
 
-const font = Plus_Jakarta_Sans({ subsets: ["latin", "cyrillic-ext"] });
+const font = Outfit({ subsets: ["latin", "latin-ext"] });
 
 export const metadata: Metadata = {
   title: "AuraSync SaaS — Система онлайн-записи",
-  description: "Управляйте записями клиентов через Telegram-бота. Автоматизация бронирования, аналитика и уведомления.",
+  description: "Автоматизированная платформа для вашего бизнеса",
 };
 
 export default function RootLayout({
@@ -18,13 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
       <body className={font.className}>
-        <AuthProvider>
-          <LanguageProvider>
-            <AppShell>{children}</AppShell>
-          </LanguageProvider>
-        </AuthProvider>
+        <LanguageProvider>
+          <NotificationProvider>
+            <AuthProvider>
+              <AppShell>{children}</AppShell>
+            </AuthProvider>
+          </NotificationProvider>
+        </LanguageProvider>
       </body>
     </html>
   );
