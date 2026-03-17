@@ -12,6 +12,7 @@ interface Business {
   trial_ends_at?: string;
   subscription_status?: 'trialing' | 'active' | 'expired';
   bot_config?: any;
+  modules_config?: any;
 }
 
 interface AuthContextType {

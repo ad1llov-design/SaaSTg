@@ -40,6 +40,10 @@ export const translations = {
       verified: 'Подтверждено',
       denied: 'Отменено',
       awaiting: 'Ожидает',
+      revenue_growth: 'Рост выручки',
+      appointments_stats: 'Статистика записей',
+      average_bill: 'Средний чек',
+      insights: 'Инсайты',
       promo_title: 'AuraSync Premium',
       promo_subtitle: 'Автоматизируйте свой бизнес сегодня.',
       promo_btn: 'Активировать'
@@ -62,6 +66,19 @@ export const translations = {
       table_contact: 'Связь',
       no_visits: 'Нет визитов',
       no_clients: 'Нет клиентов, соответствующих поиску'
+    },
+    staff: {
+      title: 'Команда',
+      subtitle: 'Управление сотрудниками и их графиками',
+      add: 'Добавить мастера',
+      no_staff: 'Сотрудники еще не добавлены',
+      table_name: 'Сотрудник',
+      table_role: 'Специализация',
+      table_status: 'Статус',
+      form_name: 'Имя мастера',
+      form_role: 'Роль (например, Старший барбер)',
+      status_active: 'Активен',
+      status_inactive: 'Неактивен'
     },
     appointments: {
       title: 'Записи',
@@ -164,11 +181,48 @@ export const translations = {
       table_status: 'Статус',
       table_deadline: 'Срок подписки',
       table_actions: 'Действия',
+      table_bot_token: 'Токен бота',
       btn_add_30: '+30 дней',
       btn_add_year: '+Год',
       access_denied: 'Доступ запрещен',
       access_denied_desc: 'У вас нет прав для просмотра этой страницы.',
       days_remaining: 'дней осталось'
+    },
+    modules: {
+      title: 'Модули',
+      subtitle: 'Расширьте возможности вашего бизнеса',
+      shop: 'Магазин',
+      shop_desc: 'Продажа товаров через Telegram бота',
+      ai: 'AI-Консультант',
+      ai_desc: 'Умные ответы на вопросы клиентов через GPT',
+      support: 'Поддержка',
+      support_desc: 'Система тикетов для помощи клиентам',
+      status_enabled: 'Включен',
+      status_disabled: 'Выключен'
+    },
+    crm: {
+      client_notes: 'Заметки о клиенте',
+      notes_placeholder: 'Добавьте детали (предпочтения, аллергии)...',
+      rfm_status: 'Статус лояльности',
+      rfm_active: 'Лояльный',
+      rfm_at_risk: 'Под риском',
+      rfm_lost: 'Потерян',
+      history_none: 'История покупок пуста'
+    },
+    landing: {
+      hero_title: 'Ваш бизнес в Telegram на автопилоте',
+      hero_subtitle: 'Единая экосистема для записи, продаж и управления клиентами. Запустите своего персонального бота за 5 минут.',
+      get_started: 'Попробовать бесплатно',
+      view_demo: 'Посмотреть демо',
+      features_title: 'Всё, что нужно для роста',
+      feature_booking: 'Умная запись',
+      feature_booking_desc: 'Автоматическое планирование и напоминания клиентам.',
+      feature_ai: 'AI-Консультант',
+      feature_ai_desc: 'Бот отвечает на вопросы и продает услуги за вас.',
+      feature_analytics: 'Аналитика',
+      feature_analytics_desc: 'Полный контроль над доходами и эффективностью.',
+      pricing_title: 'Простые тарифы',
+      pricing_subtitle: 'Выберите план, который подходит вашему масштабу'
     },
     bot: {
       title: 'Конструктор бота',
@@ -232,6 +286,10 @@ export const translations = {
       verified: 'Verified',
       denied: 'Denied',
       awaiting: 'Awaiting',
+      revenue_growth: 'Revenue Growth',
+      appointments_stats: 'Booking Trends',
+      average_bill: 'Average Receipt',
+      insights: 'AI Insights',
       promo_title: 'AuraSync Premium',
       promo_subtitle: 'Autonomous infrastructure for global scale.',
       promo_btn: 'Activate Now'
@@ -254,6 +312,19 @@ export const translations = {
       table_contact: 'Contact',
       no_visits: 'No visits',
       no_clients: 'No clients found matching search'
+    },
+    staff: {
+      title: 'Team',
+      subtitle: 'Manage staff members and schedules',
+      add: 'Add Specialist',
+      no_staff: 'No staff members added yet',
+      table_name: 'Specialist',
+      table_role: 'Role',
+      table_status: 'Status',
+      form_name: 'Specialist Name',
+      form_role: 'Role (e.g., Master Barber)',
+      status_active: 'Active',
+      status_inactive: 'Inactive'
     },
     appointments: {
       title: 'Schedule',
@@ -356,11 +427,48 @@ export const translations = {
       table_status: 'Status',
       table_deadline: 'Deadline',
       table_actions: 'Actions',
+      table_bot_token: 'Bot Token',
       btn_add_30: '+30 Days',
       btn_add_year: '+Annual',
       access_denied: 'Access Denied',
       access_denied_desc: 'You do not have permissions to view this page.',
       days_remaining: 'days left'
+    },
+    modules: {
+      title: 'Modules',
+      subtitle: 'Extend your business capabilities',
+      shop: 'Shop',
+      shop_desc: 'Sell products directly via Telegram',
+      ai: 'AI Consultant',
+      ai_desc: 'Smart GPT-powered customer responses',
+      support: 'Support Hub',
+      support_desc: 'Ticket system for customer assistance',
+      status_enabled: 'Enabled',
+      status_disabled: 'Disabled'
+    },
+    crm: {
+      client_notes: 'Client Notes',
+      notes_placeholder: 'Add details (preferences, allergies)...',
+      rfm_status: 'Loyalty Level',
+      rfm_active: 'Loyal',
+      rfm_at_risk: 'At Risk',
+      rfm_lost: 'Lost',
+      history_none: 'Purchase history empty'
+    },
+    landing: {
+      hero_title: 'Your Business on Autopilot in Telegram',
+      hero_subtitle: 'A unified ecosystem for bookings, sales, and client management. Launch your personal bot in 5 minutes.',
+      get_started: 'Get Started Free',
+      view_demo: 'View Demo',
+      features_title: 'Everything to scale',
+      feature_booking: 'Smart Booking',
+      feature_booking_desc: 'Automatic scheduling and client reminders.',
+      feature_ai: 'AI Consultant',
+      feature_ai_desc: 'Bot answers questions and sells services for you.',
+      feature_analytics: 'Analytics',
+      feature_analytics_desc: 'Complete control over revenue and performance.',
+      pricing_title: 'Simple Pricing',
+      pricing_subtitle: 'Choose a plan that fits your scale'
     },
     bot: {
       title: 'Bot Builder',
@@ -424,6 +532,10 @@ export const translations = {
       verified: 'Тастыкталды',
       denied: 'Жокко чыгарылды',
       awaiting: 'Күтүүдө',
+      revenue_growth: 'Кирешенин өсүшү',
+      appointments_stats: 'Жазылуулар статистикасы',
+      average_bill: 'Орточо чек',
+      insights: 'Инсайттар',
       promo_title: 'AuraSync Premium',
       promo_subtitle: 'Бизнесиңизди бүгүн автоматташтырыңыз.',
       promo_btn: 'Активдештирүү'
@@ -446,6 +558,19 @@ export const translations = {
       table_contact: 'Байланыш',
       no_visits: 'Келүү жок',
       no_clients: 'Ылайыктуу кардарлар табылбады'
+    },
+    staff: {
+      title: 'Команда',
+      subtitle: 'Кызматкерлерди жана алардын графиктерин башкаруу',
+      add: 'Мастер кошуу',
+      no_staff: 'Кызматкерлер кошула элек',
+      table_name: 'Кызмеркер',
+      table_role: 'Адистиги',
+      table_status: 'Статус',
+      form_name: 'Мастердин аты',
+      form_role: 'Ролу (мисалы, Башкы барбер)',
+      status_active: 'Активдүү',
+      status_inactive: 'Активдүү эмес'
     },
     appointments: {
       title: 'Жазылуулар',
@@ -548,11 +673,48 @@ export const translations = {
       table_status: 'Статус',
       table_deadline: 'Мөөнөтү',
       table_actions: 'Аракеттер',
+      table_bot_token: 'Бот токени',
       btn_add_30: '+30 күн',
       btn_add_year: '+Жыл',
       access_denied: 'Кирүүгө болбойт',
       access_denied_desc: 'Бул баракты көрүүгө сизде укук жок.',
       days_remaining: 'күн калды'
+    },
+    modules: {
+      title: 'Модулдар',
+      subtitle: 'Бизнесиңиздин мүмкүнчүлүктөрүн кеңейтиңиз',
+      shop: 'Дүкөн',
+      shop_desc: 'Telegram бот аркылуу товарларды сатуу',
+      ai: 'AI-Консультант',
+      ai_desc: 'GPT аркылуу кардарлардын суроолоруна жооптор',
+      support: 'Колдоо',
+      support_desc: 'Кардарларга жардам берүү үчүн тикеттер системасы',
+      status_enabled: 'Күйүк',
+      status_disabled: 'Өчүк'
+    },
+    crm: {
+      client_notes: 'Кардар жөнүндө эскертмелер',
+      notes_placeholder: 'Маалымат кошуңуз (каалоолор, аллергия)...',
+      rfm_status: 'Лоялдуулук статусу',
+      rfm_active: 'Туруктуу',
+      rfm_at_risk: 'Тобокелдикте',
+      rfm_lost: 'Жоголгон',
+      history_none: 'Сатып алуу тарыхы бош'
+    },
+    landing: {
+      hero_title: 'Telegram-дагы бизнесиңиз автопилотто',
+      hero_subtitle: 'Жазуу, сатуу жана кардарларды башкаруу үчүн бирдиктүү экосистема. Өзүңүздүн ботуңузду 5 мүнөттө ишке киргизиңиз.',
+      get_started: 'Акысыз баштаңыз',
+      view_demo: 'Демо көрүү',
+      features_title: 'Өсүү үчүн зарыл нерселер',
+      feature_booking: 'Акылдуу жазуу',
+      feature_booking_desc: 'Кардарлар үчүн автоматтык пландаштыруу жана эскертүүлөр.',
+      feature_ai: 'AI-Консультант',
+      feature_ai_desc: 'Бот суроолорго жооп берет жана сиз үчүн кызматтарды сатат.',
+      feature_analytics: 'Аналитика',
+      feature_analytics_desc: 'Киреше жана натыйжалуулукка толук көзөмөл.',
+      pricing_title: 'Жөнөкөй тарифтер',
+      pricing_subtitle: 'Масштабыңызга ылайыктуу планды тандаңыз'
     },
     bot: {
       title: 'Бот конструктору',
@@ -616,6 +778,10 @@ export const translations = {
       verified: 'Tasdiqlangan',
       denied: 'Bekor qilingan',
       awaiting: 'Kutilmoqda',
+      revenue_growth: 'Daromad o\'sishi',
+      appointments_stats: 'Yozuvlar statistikasi',
+      average_bill: 'O\'rtacha chek',
+      insights: 'Insaytlari',
       promo_title: 'AuraSync Premium',
       promo_subtitle: 'Bugun biznesingizni avtomatlashtiring.',
       promo_btn: 'Faollashtirish'
@@ -638,6 +804,19 @@ export const translations = {
       table_contact: 'Aloqa',
       no_visits: 'Tashriflar yo\'q',
       no_clients: 'Qidiruvga mos mijozlar topilmadi'
+    },
+    staff: {
+      title: 'Jamoa',
+      subtitle: 'Xodimlarni va ularning ish grafiklarini boshqarish',
+      add: 'Usta qo\'shish',
+      no_staff: 'Xodimlar hali qo\'shilmagan',
+      table_name: 'Xodim',
+      table_role: 'Mutaxassisligi',
+      table_status: 'Holat',
+      form_name: 'Usta ismi',
+      form_role: 'Roli (masalan, Usta barber)',
+      status_active: 'Faol',
+      status_inactive: 'Faol emas'
     },
     appointments: {
       title: 'Yozuvlar',
@@ -740,11 +919,48 @@ export const translations = {
       table_status: 'Holat',
       table_deadline: 'Muddati',
       table_actions: 'Harakatlar',
+      table_bot_token: 'Bot tokeni',
       btn_add_30: '+30 kun',
       btn_add_year: '+Yil',
       access_denied: 'Kirish taqiqlangan',
       access_denied_desc: 'Sizda ushbu sahifani ko\'rish huquqi yo\'q.',
       days_remaining: 'kun qoldi'
+    },
+    modules: {
+      title: 'Modullar',
+      subtitle: 'Biznesingiz imkoniyatlarini kengaytiring',
+      shop: 'Do\'kon',
+      shop_desc: 'Telegram bot orqali mahsulot sotish',
+      ai: 'AI Konsultant',
+      ai_desc: 'GPT yordamida mijozlar savollariga javoblar',
+      support: 'Qo\'llab-quvvatlash',
+      support_desc: 'Mijozlarga yordam berish uchun chiptalar tizimi',
+      status_enabled: 'Yoqilgan',
+      status_disabled: 'O\'chirilgan'
+    },
+    crm: {
+      client_notes: 'Mijoz haqida qaydlar',
+      notes_placeholder: 'Tafsilotlarni qo\'shing (afzalliklar, allergiyalar)...',
+      rfm_status: 'Sodiqlik holati',
+      rfm_active: 'Sodiq',
+      rfm_at_risk: 'Xavf ostida',
+      rfm_lost: 'Yo\'qotilgan',
+      history_none: 'Sotib olish tarixi bo\'sh'
+    },
+    landing: {
+      hero_title: 'Telegramdagi biznesingiz avtopilotda',
+      hero_subtitle: 'Yozilish, sotish va mijozlarni boshqarish uchun yagona ekotizim. Shaxsiy botingizni 5 daqiqada ishga tushiring.',
+      get_started: 'Bepul boshlang',
+      view_demo: 'Demoni ko\'rish',
+      features_title: 'O\'sish uchun kerakli hamma narsa',
+      feature_booking: 'Aqlli yozilish',
+      feature_booking_desc: 'Avtomatik rejalashtirish va mijozlarga eslatmalar.',
+      feature_ai: 'AI Konsultant',
+      feature_ai_desc: 'Bot savollarga javob beradi va kiziqishlarni sotadi.',
+      feature_analytics: 'Analitika',
+      feature_analytics_desc: 'Daromad va samaradorlikni to\'liq nazorat qilish.',
+      pricing_title: 'Oddiy tariflar',
+      pricing_subtitle: 'Masshtabingizga mos rejani tanlang'
     },
     bot: {
       title: 'Bot konstruktori',

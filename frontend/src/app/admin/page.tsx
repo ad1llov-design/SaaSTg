@@ -45,6 +45,17 @@ export default function AdminPage() {
     }
   }
 
+  async function updateBotToken(businessId: string, token: string) {
+    const { error } = await supabase
+      .from('businesses')
+      .update({ bot_token: token })
+      .eq('id', businessId);
+
+    if (!error) {
+      setBusinesses(prev => prev.map(b => b.id === businessId ? { ...b, bot_token: token } : b));
+    }
+  }
+
   if (!isAdmin) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
@@ -122,6 +133,7 @@ export default function AdminPage() {
               <tr className="text-xs font-bold text-slate-500 uppercase tracking-widest">
                 <th className="px-8 py-6">{t.admin.table_business}</th>
                 <th className="px-8 py-6 text-center">{t.admin.table_status}</th>
+                <th className="px-8 py-6">{t.admin.table_bot_token}</th>
                 <th className="px-8 py-6 text-center">{t.admin.table_deadline}</th>
                 <th className="px-8 py-6 text-right">{t.admin.table_actions}</th>
               </tr>
@@ -140,6 +152,15 @@ export default function AdminPage() {
                     )}>
                       {b.subscription_status === 'active' ? 'Active' : 'Trial'}
                     </span>
+                  </td>
+                  <td className="px-8 py-6">
+                    <input 
+                      type="password" 
+                      placeholder="Token..."
+                      className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500/50 font-mono"
+                      value={b.bot_token || ''}
+                      onChange={(e) => updateBotToken(b.id, e.target.value)}
+                    />
                   </td>
                   <td className="px-8 py-6 text-center">
                     <div className="flex flex-col items-center">

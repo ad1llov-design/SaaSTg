@@ -36,18 +36,47 @@ const appointmentScene = new Scenes.WizardScene(
     }
 
     ctx.wizard.state.services = services;
-    const buttons = services.map(s => ([{ text: `${s.name} — ${s.price} сом`, callback_data: `service_${s.id}` }]));
+    const buttons = services.map(s => ([{ text: `🛍 ${s.name} — ${s.price} сом`, callback_data: `service_${s.id}` }]));
     
-    await ctx.reply('🛍 Выберите услугу:', {
+    await ctx.reply('Выберите услугу:', {
       reply_markup: { inline_keyboard: buttons }
     });
     return ctx.wizard.next();
   },
-  // Шаг 2: Выбор даты
+  // ШАГ 2: Выбор мастера
   async (ctx) => {
     if (!ctx.callbackQuery) return;
     const serviceId = ctx.callbackQuery.data.replace('service_', '');
     ctx.wizard.state.serviceId = serviceId;
+    const businessId = ctx.wizard.state.businessId;
+
+    const { data: staff, error } = await supabase
+      .from('staff')
+      .select('*')
+      .eq('business_id', businessId)
+      .eq('is_active', true);
+
+    if (error || !staff || staff.length === 0) {
+      // Если мастеров нет, идем дальше без мастера
+      ctx.wizard.state.staffId = null;
+      return ctx.wizard.steps[ctx.wizard.cursor + 1](ctx);
+    }
+
+    ctx.wizard.state.staffList = staff;
+    const buttons = staff.map(s => ([{ text: `👤 ${s.name}${s.role ? ` (${s.role})` : ''}`, callback_data: `staff_${s.id}` }]));
+    
+    await ctx.answerCbQuery();
+    await ctx.editMessageText('👤 Выберите мастера:', {
+      reply_markup: { inline_keyboard: buttons }
+    });
+    return ctx.wizard.next();
+  },
+  // Шаг 3: Выбор даты
+  async (ctx) => {
+    if (!ctx.callbackQuery) return;
+    if (ctx.callbackQuery.data.startsWith('staff_')) {
+      ctx.wizard.state.staffId = ctx.callbackQuery.data.replace('staff_', '');
+    }
 
     const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
     const months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
@@ -66,7 +95,7 @@ const appointmentScene = new Scenes.WizardScene(
     });
     return ctx.wizard.next();
   },
-  // Шаг 3: Выбор времени
+  // Шаг 4: Выбор времени
   async (ctx) => {
     if (!ctx.callbackQuery) return;
     const date = ctx.callbackQuery.data.replace('date_', '');
@@ -74,14 +103,19 @@ const appointmentScene = new Scenes.WizardScene(
 
     const times = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
     
-    // Проверяем занятые слоты
-    const { data: existingApts } = await supabase
+    // Проверяем занятые слоты (по мастеру, если он выбран)
+    let query = supabase
       .from('appointments')
       .select('appointment_time')
       .eq('business_id', ctx.wizard.state.businessId)
       .eq('appointment_date', date)
       .neq('status', 'cancelled');
     
+    if (ctx.wizard.state.staffId) {
+      query = query.eq('staff_id', ctx.wizard.state.staffId);
+    }
+    
+    const { data: existingApts } = await query;
     const busyTimes = (existingApts || []).map(a => a.appointment_time?.substring(0, 5));
     const availableTimes = times.filter(t => !busyTimes.includes(t));
     
@@ -93,25 +127,26 @@ const appointmentScene = new Scenes.WizardScene(
 
     const buttons = [];
     for (let i = 0; i < availableTimes.length; i += 2) {
-      const row = [{ text: `🕐 ${availableTimes[i]}`, callback_data: `time_${availableTimes[i]}` }];
+      const row = [{ text: `⏰ ${availableTimes[i]}`, callback_data: `time_${availableTimes[i]}` }];
       if (availableTimes[i+1]) {
-        row.push({ text: `🕐 ${availableTimes[i+1]}`, callback_data: `time_${availableTimes[i+1]}` });
+        row.push({ text: `⏰ ${availableTimes[i+1]}`, callback_data: `time_${availableTimes[i+1]}` });
       }
       buttons.push(row);
     }
 
     await ctx.answerCbQuery();
-    await ctx.editMessageText(`Вы выбрали: ${date}\n\n⏰ Выберите время:`, {
+    await ctx.editMessageText(`🗓 Дата: ${date}\n\nВыберите время:`, {
       reply_markup: { inline_keyboard: buttons }
     });
     return ctx.wizard.next();
   },
-  // Шаг 4: Подтверждение и сохранение
+  // Шаг 5: Подтверждение и сохранение
   async (ctx) => {
     if (!ctx.callbackQuery) return;
     const time = ctx.callbackQuery.data.replace('time_', '');
-    const { serviceId, date, businessId, services } = ctx.wizard.state;
+    const { serviceId, date, businessId, services, staffId, staffList } = ctx.wizard.state;
     const service = services.find(s => s.id === serviceId);
+    const staffMember = staffList?.find(s => s.id === staffId);
 
     // Сохраняем пользователя
     const { data: user, error: userErr } = await supabase
@@ -137,6 +172,7 @@ const appointmentScene = new Scenes.WizardScene(
         business_id: businessId,
         user_id: user.id,
         service_id: serviceId,
+        staff_id: staffId,
         appointment_date: date,
         appointment_time: time,
         status: 'pending'
@@ -161,6 +197,7 @@ const appointmentScene = new Scenes.WizardScene(
       await ctx.editMessageText(
         `✅ <b>Запись подтверждена!</b>\n\n` +
         `🛍 <b>Услуга:</b> ${service.name}\n` +
+        (staffMember ? `👤 <b>Мастер:</b> ${staffMember.name}\n` : '') +
         `💰 <b>Стоимость:</b> ${service.price} сом\n` +
         `📅 <b>Дата:</b> ${date}\n` +
         `🕐 <b>Время:</b> ${time}\n\n` +
@@ -175,6 +212,7 @@ const appointmentScene = new Scenes.WizardScene(
         `🔔 <b>Новая запись!</b>\n\n` +
         `👤 <b>Клиент:</b> ${clientName} (@${ctx.from.username || '—'})\n` +
         `🛍 <b>Услуга:</b> ${service.name}\n` +
+        (staffMember ? `👤 <b>Мастер:</b> ${staffMember.name}\n` : '') +
         `💰 <b>Цена:</b> ${service.price} сом\n` +
         `📅 <b>Дата:</b> ${date}\n` +
         `🕐 <b>Время:</b> ${time}`
