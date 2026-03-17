@@ -238,7 +238,18 @@ export const translations = {
       feature_analytics: 'Аналитика',
       feature_analytics_desc: 'Полный контроль над доходами и эффективностью.',
       pricing_title: 'Простые тарифы',
-      pricing_subtitle: 'Выберите план, который подходит вашему масштабу'
+      pricing_subtitle: 'Выберите план, который подходит вашему масштабу',
+      plan_trial: 'Пробный период',
+      plan_pro: 'Pro Лицензия',
+      plan_trial_price: '0',
+      plan_pro_price: '1500',
+      period_day: 'дней',
+      period_month: 'в месяц',
+      most_popular: 'Популярный',
+      btn_trial: 'Начать бесплатно',
+      btn_pro: 'Получить доступ',
+      features_pro: ['Полная AI экосистема', 'Складской учет / Магазин', 'Приоритетная поддержка', 'Свой брендинг', 'Продвинутая аналитика'],
+      features_trial: ['Умная запись', 'База клиентов', 'Стандартный дашборд', 'Уведомления админу']
     },
     shop: {
       title: 'Каталог товаров',
@@ -527,7 +538,18 @@ export const translations = {
       feature_analytics: 'Analytics',
       feature_analytics_desc: 'Complete control over revenue and performance.',
       pricing_title: 'Simple Pricing',
-      pricing_subtitle: 'Choose a plan that fits your scale'
+      pricing_subtitle: 'Choose a plan that fits your scale',
+      plan_trial: 'Free Trial',
+      plan_pro: 'Pro License',
+      plan_trial_price: '0',
+      plan_pro_price: '1500',
+      period_day: 'days',
+      period_month: 'per month',
+      most_popular: 'Most Popular',
+      btn_trial: 'Start Free Trial',
+      btn_pro: 'Get Full Access',
+      features_pro: ['Full AI Ecosystem', 'Inventory/Shop Modules', 'Priority Support', 'Custom Branding', 'Advanced Analytics'],
+      features_trial: ['Smart Booking', 'Client Database', 'Standard Dashboards', 'Admin Notifications']
     },
     shop: {
       title: 'Product Catalog',
@@ -816,7 +838,18 @@ export const translations = {
       feature_analytics: 'Аналитика',
       feature_analytics_desc: 'Киреше жана натыйжалуулукка толук көзөмөл.',
       pricing_title: 'Жөнөкөй тарифтер',
-      pricing_subtitle: 'Масштабыңызга ылайыктуу планды тандаңыз'
+      pricing_subtitle: 'Масштабыңызга ылайыктуу планды тандаңыз',
+      plan_trial: 'Сыноо мөөнөтү',
+      plan_pro: 'Pro Лицензия',
+      plan_trial_price: '0',
+      plan_pro_price: '1500',
+      period_day: 'күн',
+      period_month: 'айына',
+      most_popular: 'Популярдуу',
+      btn_trial: 'Акысыз баштоо',
+      btn_pro: 'Мүмкүнчүлүк алуу',
+      features_pro: ['Толук AI экосистемасы', 'Складдык эсеп / Дүкөн', 'Артыкчылыктуу колдоо', 'Өз брендинг', 'Өркүндөтүлгөн аналитика'],
+      features_trial: ['Акылдуу жазуу', 'Кардарлар базасы', 'Стандарттык дашборд', 'Админге билдирүүлөр']
     },
     shop: {
       title: 'Товарлар каталогу',
@@ -1105,7 +1138,18 @@ export const translations = {
       feature_analytics: 'Analitika',
       feature_analytics_desc: 'Daromad va samaradorlikni to\'liq nazorat qilish.',
       pricing_title: 'Oddiy tariflar',
-      pricing_subtitle: 'Masshtabingizga mos rejani tanlang'
+      pricing_subtitle: 'Masshtabingizga mos rejani tanlang',
+      plan_trial: 'Sinov muddati',
+      plan_pro: 'Pro Litsenziya',
+      plan_trial_price: '0',
+      plan_pro_price: '1500',
+      period_day: 'kun',
+      period_month: 'oyiga',
+      most_popular: 'Ommabop',
+      btn_trial: 'Bepul boshlash',
+      btn_pro: 'Kirish huquqini olish',
+      features_pro: ['To\'liq AI ekotizimi', 'Ombor hisobi / Do\'kon', 'Ustuvor yordam', 'O\'z brendingi', 'Kengaytirilgan analitika'],
+      features_trial: ['Aqlli yozilish', 'Mijozlar bazasi', 'Standart dashboard', 'Admin xabarnomalari']
     },
     shop: {
       title: 'Mahsulotlar katalogi',
