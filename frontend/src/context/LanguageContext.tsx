@@ -198,7 +198,13 @@ export const translations = {
       support: 'Поддержка',
       support_desc: 'Система тикетов для помощи клиентам',
       status_enabled: 'Включен',
-      status_disabled: 'Выключен'
+      status_disabled: 'Выключен',
+      btn_configure: 'Настроить',
+      ai_config_title: 'Настройка AI-Консультанта',
+      ai_config_key: 'OpenAI API Key',
+      ai_config_prompt: 'Системный Промпт (Инструкция)',
+      ai_config_knowledge: 'База Знаний (Инфо о бизнесе)',
+      ai_config_help: 'Расскажите боту подробнее о вашем бизнесе, услугах и правилах. Чем больше деталей, тем точнее будут ответы.'
     },
     crm: {
       client_notes: 'Заметки о клиенте',
@@ -444,7 +450,13 @@ export const translations = {
       support: 'Support Hub',
       support_desc: 'Ticket system for customer assistance',
       status_enabled: 'Enabled',
-      status_disabled: 'Disabled'
+      status_disabled: 'Disabled',
+      btn_configure: 'Configure',
+      ai_config_title: 'AI Consultant Settings',
+      ai_config_key: 'OpenAI API Key',
+      ai_config_prompt: 'System Prompt (Instructions)',
+      ai_config_knowledge: 'Knowledge Base (Business Info)',
+      ai_config_help: 'Tell the bot more about your business, services, and rules. The more details you provide, the more accurate the responses will be.'
     },
     crm: {
       client_notes: 'Client Notes',
@@ -690,7 +702,13 @@ export const translations = {
       support: 'Колдоо',
       support_desc: 'Кардарларга жардам берүү үчүн тикеттер системасы',
       status_enabled: 'Күйүк',
-      status_disabled: 'Өчүк'
+      status_disabled: 'Өчүк',
+      btn_configure: 'Ырастоо',
+      ai_config_title: 'AI-Консультантты ырастоо',
+      ai_config_key: 'OpenAI API ачкычы',
+      ai_config_prompt: 'Системалык Промпт (Нускоо)',
+      ai_config_knowledge: 'Билим базасы (Бизнес тууралуу маалымат)',
+      ai_config_help: 'Ботуңузга бизнесиңиз, кызматтарыңыз жана эрежелериңиз жөнүндө көбүрөөк айтып бериңиз. Маалымат канчалык көп болсо, жооптор ошончолук так болот.'
     },
     crm: {
       client_notes: 'Кардар жөнүндө эскертмелер',
@@ -936,7 +954,13 @@ export const translations = {
       support: 'Qo\'llab-quvvatlash',
       support_desc: 'Mijozlarga yordam berish uchun chiptalar tizimi',
       status_enabled: 'Yoqilgan',
-      status_disabled: 'O\'chirilgan'
+      status_disabled: 'O\'chirilgan',
+      btn_configure: 'Sozlash',
+      ai_config_title: 'AI-Konsultantni sozlash',
+      ai_config_key: 'OpenAI API kaliti',
+      ai_config_prompt: 'Tizim prompti (Yo\'riqnoma)',
+      ai_config_knowledge: 'Bilimlar bazasi (Biznes haqida ma\'lumot)',
+      ai_config_help: 'Botga biznesingiz, xizmatlaringiz va qoidalaringiz haqida batafsil ma\'lumot bering. Tafsilotlar qancha ko\'p bo\'lsa, javoblar shunchalik aniq bo\'ladi.'
     },
     crm: {
       client_notes: 'Mijoz haqida qaydlar',

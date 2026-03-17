@@ -16,6 +16,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { supabase } from '@/lib/supabase';
 import { cn } from '@/lib/utils';
 import DemoModal from '@/components/DemoModal';
+import Link from 'next/link';
 
 export default function ModulesPage() {
   const { business, user } = useAuth();
@@ -141,19 +142,30 @@ export default function ModulesPage() {
                 </p>
               </div>
 
-              <button 
-                onClick={() => toggleModule(mod.id)}
-                disabled={loading}
-                className={cn(
-                  "w-full py-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2",
-                  isActive
-                    ? "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:bg-rose-500/10 hover:text-rose-500"
-                    : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-600/20"
+              <div className="flex flex-col gap-3">
+                <button 
+                  onClick={() => toggleModule(mod.id)}
+                  disabled={loading}
+                  className={cn(
+                    "w-full py-4 rounded-xl font-bold text-sm transition-all flex items-center justify-center gap-2",
+                    isActive
+                      ? "bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:bg-rose-500/10 hover:text-rose-500"
+                      : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-600/20"
+                  )}
+                >
+                  {loading ? '...' : isActive ? 'Deactivate' : 'Activate'}
+                  {!isActive && <ArrowRight className="w-4 h-4" />}
+                </button>
+
+                {isActive && mod.id === 'ai_consultant' && (
+                  <Link 
+                    href="/modules/ai-settings"
+                    className="w-full py-4 rounded-xl font-bold text-sm bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-500/20 transition-all flex items-center justify-center gap-2 border border-indigo-100 dark:border-indigo-500/20"
+                  >
+                    {t.modules.btn_configure}
+                  </Link>
                 )}
-              >
-                {loading ? '...' : isActive ? 'Deactivate' : 'Activate'}
-                {!isActive && <ArrowRight className="w-4 h-4" />}
-              </button>
+              </div>
             </motion.div>
           );
         })}

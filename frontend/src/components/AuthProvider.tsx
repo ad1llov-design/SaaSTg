@@ -13,6 +13,7 @@ interface Business {
   subscription_status?: 'trialing' | 'active' | 'expired';
   bot_config?: any;
   modules_config?: any;
+  ai_config?: any;
 }
 
 interface AuthContextType {

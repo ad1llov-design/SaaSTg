@@ -1,5 +1,40 @@
 const { Telegraf, Scenes, session } = require('telegraf');
 const supabase = require('./supabase');
+const { OpenAI } = require('openai');
+
+// Хелпер для получения AI ответа
+async function getAIResponse(businessId, userMessage) {
+  try {
+    const { data: biz } = await supabase
+      .from('businesses')
+      .select('ai_config, modules_config')
+      .eq('id', businessId)
+      .single();
+
+    if (!biz?.modules_config?.ai_consultant || !biz?.ai_config?.openai_api_key) {
+      return null;
+    }
+
+    const openai = new OpenAI({ apiKey: biz.ai_config.openai_api_key });
+    
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { 
+          role: "system", 
+          content: `${biz.ai_config.system_prompt}\n\nBusiness Knowledge:\n${biz.ai_config.knowledge_base}` 
+        },
+        { role: "user", content: userMessage }
+      ],
+      max_tokens: 500
+    });
+
+    return response.choices[0].message.content;
+  } catch (err) {
+    console.error('AI Error:', err.message);
+    return null;
+  }
+}
 
 // Функция отправки уведомления админу
 async function notifyAdmin(businessId, message) {
@@ -403,6 +438,29 @@ function setupBotLogic(bot, businessId) {
         businessId,
         `❌ <b>Запись отменена</b>\n\n👤 Клиент: ${clientName}`
       );
+    }
+  });
+
+  // Обработка обычных сообщений через AI (если не начата сцена)
+  bot.on('text', async (ctx) => {
+    if (ctx.message.text.startsWith('/')) return; // Игнорируем команды
+
+    // Проверяем, не находится ли пользователь в активной сцене
+    if (ctx.session?.__scenes?.current) return;
+
+    const aiResponse = await getAIResponse(businessId, ctx.message.text);
+    if (aiResponse) {
+      await ctx.reply(aiResponse, { parse_mode: 'Markdown' });
+    } else {
+      // Стандартный ответ если AI не включен
+      await ctx.reply('Используйте меню для записи или отмены.', {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📅 Записаться', callback_data: 'start_booking' }],
+            [{ text: '📋 Мои записи', callback_data: 'my_appointments' }]
+          ]
+        }
+      });
     }
   });
 }
