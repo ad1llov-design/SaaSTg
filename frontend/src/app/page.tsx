@@ -22,7 +22,7 @@ import { cn } from '@/lib/utils';
 export default function LandingPage() {
   const { t } = useLanguage();
 
-  const fadeIn = {
+  const fadeIn: any = {
     hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
       opacity: 1,
