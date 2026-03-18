@@ -213,12 +213,12 @@ export default function DemoDashboard() {
           <Zap className="w-10 h-10 text-indigo-400" />
         </div>
         <div className="space-y-4">
-          <h2 className="text-3xl font-black text-white uppercase tracking-tight">Experience AuraSync for your own business</h2>
-          <p className="text-indigo-200 max-w-xl mx-auto font-medium">Get a 7-day full access trial and see how automation can transform your workflow today.</p>
+          <h2 className="text-3xl font-black text-white uppercase tracking-tight">{t.landing.demo_cta_title}</h2>
+          <p className="text-indigo-200 max-w-xl mx-auto font-medium">{t.landing.demo_cta_subtitle}</p>
         </div>
         <div className="flex justify-center pt-4">
           <Link href="/register" className="btn-premium bg-white text-indigo-900 hover:bg-indigo-50 min-w-[280px] h-16 text-sm shadow-2xl shadow-white/10 uppercase tracking-[0.2em] font-black">
-            Register Now
+            {t.landing.demo_register_btn}
             <ArrowUpRight className="w-5 h-5" />
           </Link>
         </div>

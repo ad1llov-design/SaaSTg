@@ -142,6 +142,18 @@ export default function LandingPage() {
                   {t.landing.nav_demo}
                </Link>
             </motion.div>
+
+            {/* Quick Benefits / Value Points */}
+            <motion.div 
+               initial={{ opacity: 0 }}
+               whileInView={{ opacity: 1 }}
+               transition={{ delay: 0.5 }}
+               className="flex flex-wrap items-center justify-center gap-8 pt-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400"
+            >
+               <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> {t.landing.plan_trial}</div>
+               <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-indigo-500" /> {t.auth.no_card}</div>
+               <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-purple-500" /> {t.common.support_247}</div>
+            </motion.div>
  
             {/* Visual Mockup Placeholder */}
             <motion.div 
@@ -149,10 +161,10 @@ export default function LandingPage() {
                className="pt-20 relative group"
             >
                <div className="absolute inset-0 bg-indigo-500/10 rounded-[3rem] blur-3xl group-hover:bg-indigo-500/20 transition-all duration-1000" />
-               <div className="relative border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-slate-900/50 rounded-[3rem] p-3 backdrop-blur-3xl shadow-2xl overflow-hidden aspect-[16/9] group-hover:border-indigo-500/30 transition-all">
+               <div className="relative border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-slate-900/50 rounded-[3rem] p-4 backdrop-blur-3xl shadow-2xl overflow-hidden aspect-[16/9] group-hover:border-indigo-500/20 transition-all">
                   <img 
-                    src="/aurasync_dashboard_mockup_1773780044407.png" 
-                    alt="AuraSync Dashboard Preview" 
+                    src="/dashboard-mockup.png" 
+                    alt={t.common.dashboard} 
                     className="w-full h-full object-cover rounded-[2.2rem] shadow-2xl"
                   />
                   <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent opacity-60 dark:opacity-100" />
@@ -204,7 +216,7 @@ export default function LandingPage() {
                   <Bot className="w-3.5 h-3.5" />
                   {t.landing.showcase_badge}
                </motion.div>
-               <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{t.landing.showcase_title_1} <span className="text-indigo-600 italic">{t.landing.showcase_title_2}</span></h2>
+               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">{t.landing.showcase_title_1} <span className="text-indigo-600 italic">{t.landing.showcase_title_2}</span></h2>
                <p className="text-slate-500 dark:text-slate-400 font-medium max-w-xl mx-auto">{t.landing.showcase_subtitle}</p>
             </div>
 
@@ -263,7 +275,7 @@ export default function LandingPage() {
                className="mt-20 premium-card bg-indigo-600 !p-1 flex flex-col md:flex-row items-center gap-10 overflow-hidden"
             >
                <div className="flex-1 p-10 md:p-14 space-y-6 text-white text-center md:text-left">
-                  <h3 className="text-3xl md:text-4xl font-black leading-tight uppercase tracking-tight">{t.landing.cta_title_1} <br/> the <span className="text-indigo-200">{t.landing.cta_title_2}</span></h3>
+                  <h3 className="text-3xl md:text-4xl font-bold leading-tight uppercase tracking-tight">{t.landing.cta_title_1} <br/> <span className="text-indigo-200">{t.landing.cta_title_2}</span></h3>
                   <p className="text-indigo-100 font-medium text-lg leading-relaxed">{t.landing.cta_subtitle}</p>
                   <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                      <Link href="/demo" className="btn-premium bg-white text-indigo-600 hover:bg-indigo-50 tracking-widest text-xs min-w-[200px]">
@@ -274,8 +286,8 @@ export default function LandingPage() {
                      </Link>
                   </div>
                </div>
-               <div className="w-full md:w-1/2 aspect-video bg-black/5 dark:bg-black/20 backdrop-blur-3xl group relative overflow-hidden flex items-center justify-center">
-                  <img src="/aurasync_dashboard_mockup_1773780044407.png" className="w-[90%] h-[90%] object-contain rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-700" alt="Demo Preview" />
+               <div className="w-full md:w-1/2 aspect-video bg-indigo-500/5 backdrop-blur-3xl group relative overflow-hidden flex items-center justify-center border border-white/5 rounded-3xl">
+                  <img src="/dashboard-mockup.png" className="w-[90%] h-[90%] object-contain rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-700" alt={t.common.dashboard} />
                </div>
             </motion.div>
          </div>

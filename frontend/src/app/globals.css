@@ -48,40 +48,45 @@ body {
   min-height: 100vh;
   letter-spacing: -0.015em;
   -webkit-font-smoothing: antialiased;
-  font-size: 0.95rem; /* Slightly smaller for a more refined look */
+  font-size: 0.9rem; /* Slimmer base font */
 }
 
 h1, h2, h3, h4, .font-headline {
   font-family: var(--font-headline) !important;
   letter-spacing: -0.03em;
-  font-weight: 700 !important;
+  font-weight: 600 !important; /* Lighter weight for headlines */
 }
 
 /* Premium Elements */
 .premium-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-premium);
+  border-radius: 1.25rem; /* Slightly tighter radius */
   padding: 1.5rem;
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.005);
 }
 
 .premium-card:hover {
-  transform: translateY(-2px); /* More subtle lift */
-  border-color: rgba(99, 102, 241, 0.15);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.01);
+  transform: translateY(-2px);
+  border-color: rgba(99, 102, 241, 0.1);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.02), 0 4px 6px -2px rgba(0, 0, 0, 0.005);
 }
 
 .dark .premium-card:hover {
-  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
 }
 
 .glass {
-  background: var(--bg-glass);
-  backdrop-filter: blur(12px); /* Slightly less blur for clarity */
+  background: rgba(255, 255, 255, 0.02); /* More transparent */
+  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 /* Typography Utilities */

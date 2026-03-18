@@ -24,7 +24,8 @@ export const translations = {
       currency: 'сом',
       minutes: 'мин',
       search_placeholder: 'Поиск по имени или ID...',
-      loading: 'Загрузка...'
+      loading: 'Загрузка...',
+      support_247: 'Поддержка 24/7'
     },
     dashboard: {
       title: 'Главная',
@@ -141,7 +142,8 @@ export const translations = {
       sign_in: 'Войти',
       success_title: 'Заявка отправлена',
       success_desc: 'Ссылка для входа отправлена на ваш email:',
-      back_to_login: 'Вернуться ко входу'
+      back_to_login: 'Вернуться ко входу',
+      no_card: 'Без кредитной карты'
     },
     billing: {
       title: 'Тарифы и оплата',
@@ -266,6 +268,9 @@ export const translations = {
       cta_title_2: 'реальную мощь?',
       cta_subtitle: 'Присоединяйтесь к 200+ компаниям, которые уже автоматизировали свой бизнес.',
       try_free: 'Начать бесплатно',
+      demo_cta_title: 'Попробуйте AuraSync для своего бизнеса',
+      demo_cta_subtitle: 'Получите 7-дневный пробный доступ и узнайте, как автоматизация изменит вашу работу уже сегодня.',
+      demo_register_btn: 'Зарегистрироваться сейчас',
       features_pro: ['Полная AI экосистема', 'Складской учет / Магазин', 'Приоритетная поддержка', 'Свой брендинг', 'Продвинутая аналитика'],
       features_trial: ['Умная запись', 'База клиентов', 'Стандартный дашборд', 'Уведомления админу']
     },
@@ -342,7 +347,8 @@ export const translations = {
       currency: 'KGS',
       minutes: 'min',
       search_placeholder: 'Search by Name or ID...',
-      loading: 'Loading...'
+      loading: 'Loading...',
+      support_247: '24/7 Support'
     },
     dashboard: {
       title: 'Overview',
@@ -459,7 +465,8 @@ export const translations = {
       sign_in: 'Sign In',
       success_title: 'Confirmation Sent',
       success_desc: 'A login link has been sent to your email:',
-      back_to_login: 'Back to Login'
+      back_to_login: 'Back to Login',
+      no_card: 'No Credit Card Required'
     },
     billing: {
       title: 'Plans & Billing',
@@ -584,6 +591,9 @@ export const translations = {
       cta_title_2: 'the real power?',
       cta_subtitle: 'Join 200+ businesses who automated their workflow this week.',
       try_free: 'Try For Free',
+      demo_cta_title: 'Experience AuraSync for your own business',
+      demo_cta_subtitle: 'Get a 7-day full access trial and see how automation can transform your workflow today.',
+      demo_register_btn: 'Register Now',
       features_pro: ['Full AI Ecosystem', 'Inventory/Shop Modules', 'Priority Support', 'Custom Branding', 'Advanced Analytics'],
       features_trial: ['Smart Booking', 'Client Database', 'Standard Dashboards', 'Admin Notifications']
     },
@@ -660,7 +670,8 @@ export const translations = {
       currency: 'сом',
       minutes: 'мүн',
       search_placeholder: 'Аты же ID боюнча издөө...',
-      loading: 'Жүктөлүүдө...'
+      loading: 'Жүктөлүүдө...',
+      support_247: '24/7 Колдоо'
     },
     dashboard: {
       title: 'Негизги',
@@ -777,7 +788,8 @@ export const translations = {
       sign_in: 'Кирүү',
       success_title: 'Билдирме жөнөтүлдү',
       success_desc: 'Кирүү үчүн шилтеме почтаңызга жөнөтүлдү:',
-      back_to_login: 'Кирүүгө кайтуу'
+      back_to_login: 'Кирүүгө кайтуу',
+      no_card: 'Кредиттик картасыз'
     },
     billing: {
       title: 'Тарифтер жана төлөм',
@@ -902,6 +914,9 @@ export const translations = {
       cta_title_2: 'көрүүгө даярсызбы?',
       cta_subtitle: 'Бизнесин автоматташтырган 200дөн ашуун компанияга кошулуңуз.',
       try_free: 'Акысыз баштоо',
+      demo_cta_title: 'Бизнесиңиз үчүн AuraSync-ти байкап көрүңүз',
+      demo_cta_subtitle: '7 күндүк акысыз мүмкүнчүлүктү алыңыз жана автоматташтыруу ишиңизди кандайча өзгөртөөрүн билиңиз.',
+      demo_register_btn: 'Азыр катталыңыз',
       features_pro: ['Толук AI экосистемасы', 'Складдык эсеп / Дүкөн', 'Артыкчылыктуу колдоо', 'Өз брендинг', 'Өркүндөтүлгөн аналитика'],
       features_trial: ['Акылдуу жазуу', 'Кардарлар базасы', 'Стандарттык дашборд', 'Админге билдирүүлөр']
     },
@@ -978,7 +993,8 @@ export const translations = {
       currency: 'so\'m',
       minutes: 'daq',
       search_placeholder: 'Ism yoki ID bo\'yicha qidiruv...',
-      loading: 'Yuklanmoqda...'
+      loading: 'Yuklanmoqda...',
+      support_247: '24/7 Yordam'
     },
     dashboard: {
       title: 'Asosiy',
@@ -1095,7 +1111,8 @@ export const translations = {
       sign_in: 'Kirish',
       success_title: 'Tasdiqlash yuborildi',
       success_desc: 'Kirish havolasi elektron pochtangizga yuborildi:',
-      back_to_login: 'Kirishga qaytish'
+      back_to_login: 'Kirishga qaytish',
+      no_card: 'Kredit kartasiz'
     },
     billing: {
       title: 'Tariflar va to\'lov',
@@ -1220,6 +1237,9 @@ export const translations = {
       cta_title_2: 'ko\'rishga tayyormisiz?',
       cta_subtitle: 'O\'z biznesini avtomatlashtirgan 200 dan ortiq kompaniyalarga qo\'shiling.',
       try_free: 'Bepul boshlash',
+      demo_cta_title: 'O\'z biznesingiz uchun AuraSync-ni sinab ko\'ring',
+      demo_cta_subtitle: '7 kunlik bepul kirish huquqini oling va avtomatlashtirish ish faoliyatingizni qanday o\'zgartirishini bilib oling.',
+      demo_register_btn: 'Hozir ro\'yxatdan o\'ting',
       features_pro: ['To\'liq AI ekotizimi', 'Ombor hisobi / Do\'kon', 'Ustuvor yordam', 'O\'z brendingi', 'Kengaytirilgan analitika'],
       features_trial: ['Aqlli yozilish', 'Mijozlar bazasi', 'Standart dashboard', 'Admin xabarnomalari']
     },
