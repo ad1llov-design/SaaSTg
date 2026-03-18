@@ -97,7 +97,7 @@ export default function DemoPage() {
       {/* Demo Badge */}
       <div className="fixed top-24 right-10 z-[100] hidden xl:block">
         <div className="bg-amber-500 text-white px-6 py-2 rounded-full font-black uppercase tracking-widest text-[10px] shadow-2xl animate-bounce shadow-amber-500/20">
-          Viewing Demo Mode • Read Only
+          {t.landing.demo_badge}
         </div>
       </div>
 
@@ -159,7 +159,7 @@ function DashboardMockup({ t, containerVariants, itemVariants }: any) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="lg:col-span-2 premium-card !p-8 h-[450px]">
            <div className="flex items-center justify-between mb-10">
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">Revenue Analytics</h3>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white uppercase tracking-tight">{t.landing.demo_revenue_analytics}</h3>
                 <div className="flex gap-2">
                     <div className="w-3 h-3 bg-indigo-500 rounded-full" />
                     <div className="w-3 h-3 bg-indigo-500/20 rounded-full" />
@@ -180,7 +180,7 @@ function DashboardMockup({ t, containerVariants, itemVariants }: any) {
               <h3 className="text-2xl font-black uppercase mb-3 leading-tight tracking-tighter">{t.dashboard.insights}</h3>
               <p className="text-indigo-100/80 font-medium leading-relaxed mb-10">{t.dashboard.insights_desc}</p>
               <button className="w-full flex items-center justify-between px-6 py-4 bg-white/10 hover:bg-white/20 border border-white/10 rounded-2xl text-[10px] font-bold uppercase tracking-widest transition-all">
-                Generate AI Audit <ArrowUpRight className="w-4 h-4" />
+                {t.landing.demo_generate_ai} <ArrowUpRight className="w-4 h-4" />
               </button>
            </div>
            <div className="premium-card !p-8">
@@ -209,19 +209,19 @@ function AppointmentsMockup({ t }: any) {
       <SectionHeader icon={<CalendarCheck className="w-3.5 h-3.5" />} title={t.appointments.title} subtitle={t.appointments.subtitle} t={t} />
       <div className="premium-card !p-0 overflow-hidden shadow-xl border-slate-200 dark:border-white/5">
         <div className="p-6 border-b border-slate-100 dark:border-white/5 flex items-center justify-between">
-            <h3 className="text-sm font-black uppercase tracking-widest text-slate-400">Queue Management</h3>
+            <h3 className="text-sm font-black uppercase tracking-widest text-slate-400">{t.landing.demo_queue}</h3>
             <div className="flex bg-slate-100 dark:bg-white/5 rounded-xl p-1">
-                <button className="px-4 py-1.5 bg-white dark:bg-slate-700 rounded-lg text-xs font-bold shadow-sm">Today</button>
-                <button className="px-4 py-1.5 text-xs text-slate-500 font-bold">Week</button>
+                <button className="px-4 py-1.5 bg-white dark:bg-slate-700 rounded-lg text-xs font-bold shadow-sm">{t.landing.demo_today}</button>
+                <button className="px-4 py-1.5 text-xs text-slate-500 font-bold">{t.landing.demo_week}</button>
             </div>
         </div>
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="bg-slate-50/50 dark:bg-white/[0.01] border-b border-slate-100 dark:border-white/5">
-              <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Client Info</th>
-              <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Selected Service</th>
-              <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Specialist</th>
-              <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Status</th>
+              <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">{t.landing.demo_th_client}</th>
+              <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">{t.landing.demo_th_service}</th>
+              <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">{t.landing.demo_th_specialist}</th>
+              <th className="p-6 text-[10px] font-black uppercase tracking-widest text-slate-400">{t.landing.demo_th_status}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-white/5">
@@ -345,12 +345,12 @@ function ModulesMockup({ t }: any) {
                     </div>
                     <div>
                         <h3 className="text-2xl font-black uppercase tracking-tight leading-none mb-2">{t.modules.ai}</h3>
-                        <div className="px-2 py-0.5 bg-emerald-500/10 text-emerald-500 text-[8px] font-black rounded uppercase tracking-widest inline-block">Active</div>
+                        <div className="px-2 py-0.5 bg-emerald-500/10 text-emerald-500 text-[8px] font-black rounded uppercase tracking-widest inline-block">✓</div>
                     </div>
                 </div>
                 <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-10">{t.modules.ai_desc}</p>
                 <div className="flex gap-4 pt-6 mt-auto border-t border-slate-100 dark:border-white/5">
-                    <button className="flex-1 py-4 bg-blue-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl shadow-blue-600/20">Configure</button>
+                    <button className="flex-1 py-4 bg-blue-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest shadow-xl shadow-blue-600/20">{t.landing.demo_configure}</button>
                     <button className="w-14 h-14 bg-slate-100 dark:bg-white/5 rounded-2xl flex items-center justify-center text-slate-400"><LayoutDashboard className="w-4 h-4" /></button>
                 </div>
             </div>
@@ -368,7 +368,7 @@ function ModulesMockup({ t }: any) {
                 </div>
                 <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-10">{t.modules.shop_desc}</p>
                 <div className="pt-6 mt-auto border-t border-slate-100 dark:border-white/5">
-                    <button className="w-full py-4 bg-slate-200 dark:bg-white/10 text-slate-400 rounded-2xl font-black text-[10px] uppercase tracking-widest cursor-not-allowed">Upgrade to Unlock</button>
+                    <button className="w-full py-4 bg-slate-200 dark:bg-white/10 text-slate-400 rounded-2xl font-black text-[10px] uppercase tracking-widest cursor-not-allowed">{t.landing.demo_unlock}</button>
                 </div>
             </div>
 
@@ -383,9 +383,9 @@ function ModulesMockup({ t }: any) {
                         <div className="px-2 py-0.5 bg-indigo-500/10 text-indigo-500 text-[8px] font-black rounded uppercase tracking-widest inline-block font-mono">CORE</div>
                     </div>
                 </div>
-                 <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-10">Smart Telegram-based booking system with automated reminders.</p>
+                 <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed mb-10">{t.landing.demo_booking_desc}</p>
                 <div className="pt-6 mt-auto border-t border-slate-100 dark:border-white/5">
-                    <button className="w-full py-4 bg-slate-100 dark:bg-white/5 text-slate-400 rounded-2xl font-black text-[10px] uppercase tracking-widest">Manage Flow</button>
+                    <button className="w-full py-4 bg-slate-100 dark:bg-white/5 text-slate-400 rounded-2xl font-black text-[10px] uppercase tracking-widest">{t.landing.demo_manage}</button>
                 </div>
             </div>
         </div>
@@ -399,11 +399,11 @@ function ShopMockup({ t }: any) {
         <SectionHeader icon={<Package className="w-3.5 h-3.5" />} title={t.shop.title} subtitle={t.shop.subtitle} t={t} />
         <div className="flex items-center justify-between mb-8 px-2">
             <div className="flex gap-4">
-                <button className="px-6 py-2 bg-indigo-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest">All Items</button>
+                <button className="px-6 py-2 bg-indigo-600 text-white rounded-xl text-[10px] font-black uppercase tracking-widest">{t.landing.demo_all_items}</button>
                 <button className="px-6 py-2 text-slate-400 text-[10px] font-black uppercase tracking-widest">Cosmetics</button>
             </div>
             <button className="flex items-center gap-2 px-6 py-2 border border-slate-100 dark:border-white/10 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-500">
-                <Plus className="w-3.5 h-3.5" /> Add Stock
+                <Plus className="w-3.5 h-3.5" /> {t.landing.demo_add_stock}
             </button>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -424,7 +424,7 @@ function ShopMockup({ t }: any) {
                 </div>
                 <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-white/5">
                     <p className="text-xl font-black text-indigo-500 tracking-tighter">{item.price} SOM</p>
-                    <div className="text-[9px] text-emerald-500 font-bold uppercase tracking-widest bg-emerald-500/10 px-2 py-1 rounded-lg">Qty: {item.stock}</div>
+                    <div className="text-[9px] text-emerald-500 font-bold uppercase tracking-widest bg-emerald-500/10 px-2 py-1 rounded-lg">{t.landing.demo_qty}: {item.stock}</div>
                 </div>
               </div>
             </div>
@@ -443,7 +443,7 @@ function MarketingMockup({ t }: any) {
                 <div className="flex items-center justify-between mb-10 pb-6 border-b border-slate-100 dark:border-white/5">
                     <div className="flex items-center gap-4">
                         <MessageSquare className="w-6 h-6 text-indigo-500" />
-                        <h3 className="text-xl font-black uppercase tracking-tight">Active Broadcasts</h3>
+                        <h3 className="text-xl font-black uppercase tracking-tight">{t.landing.demo_active_broadcasts}</h3>
                     </div>
                     <button className="p-3 bg-indigo-600 text-white rounded-xl shadow-xl shadow-indigo-600/20"><Plus className="w-5 h-5" /></button>
                 </div>
@@ -459,7 +459,7 @@ function MarketingMockup({ t }: any) {
                                 <p className="text-xs text-slate-500 font-medium">Sent on {cmp.sent} to <span className="text-indigo-500 font-bold">{cmp.clients}</span> clients via {cmp.type}</p>
                             </div>
                             <div className="flex items-center gap-4">
-                                <span className="px-4 py-1.5 bg-indigo-500 text-white text-[10px] font-black rounded-xl uppercase tracking-widest">Delivered</span>
+                                <span className="px-4 py-1.5 bg-indigo-500 text-white text-[10px] font-black rounded-xl uppercase tracking-widest">{t.landing.demo_delivered}</span>
                                 <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-amber-500 transition-colors cursor-pointer"><PieChartIcon className="w-4 h-4" /></div>
                             </div>
                         </div>
@@ -470,9 +470,9 @@ function MarketingMockup({ t }: any) {
             <div className="space-y-6">
                 <div className="premium-card !bg-slate-900 dark:!bg-white/10 !border-none text-white p-10">
                     <Megaphone className="w-12 h-12 mb-6 opacity-30" />
-                    <h3 className="text-2xl font-black uppercase tracking-tight mb-4">Broadcast Power</h3>
-                    <p className="text-sm text-slate-400 font-medium leading-relaxed mb-10 italic">"Drive 40% more repeats by sending automated 'Miss You' rewards to clients who haven't visited in 30 days."</p>
-                    <button className="w-full py-4 border border-white/10 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-slate-900 transition-all">Setup Automation</button>
+                    <h3 className="text-2xl font-black uppercase tracking-tight mb-4">{t.landing.demo_broadcast_power}</h3>
+                    <p className="text-sm text-slate-400 font-medium leading-relaxed mb-10 italic">"{t.landing.demo_broadcast_tip}"</p>
+                    <button className="w-full py-4 border border-white/10 rounded-2xl text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-slate-900 transition-all">{t.landing.demo_setup_auto}</button>
                 </div>
             </div>
         </div>
@@ -488,10 +488,10 @@ function ClientsMockup({ t }: any) {
           <table className="w-full text-left">
             <thead>
               <tr className="bg-slate-50/50 dark:bg-white/[0.03] border-b border-slate-100 dark:border-white/5">
-                <th className="p-8 text-[10px] font-black uppercase tracking-widest text-slate-400">Client Info</th>
-                <th className="p-8 text-[10px] font-black uppercase tracking-widest text-slate-400">Loyalty Status</th>
-                <th className="p-8 text-[10px] font-black uppercase tracking-widest text-slate-400">Total Visits</th>
-                <th className="p-8 text-[10px] font-black uppercase tracking-widest text-slate-400">LTV (Lifetime Value)</th>
+                <th className="p-8 text-[10px] font-black uppercase tracking-widest text-slate-400">{t.landing.demo_th_client}</th>
+                <th className="p-8 text-[10px] font-black uppercase tracking-widest text-slate-400">{t.landing.demo_th_loyalty}</th>
+                <th className="p-8 text-[10px] font-black uppercase tracking-widest text-slate-400">{t.landing.demo_th_visits}</th>
+                <th className="p-8 text-[10px] font-black uppercase tracking-widest text-slate-400">{t.landing.demo_th_ltv}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-white/5">
@@ -522,7 +522,7 @@ function ClientsMockup({ t }: any) {
                           {clnt.status}
                       </span>
                   </td>
-                  <td className="p-8 text-sm font-bold text-slate-600 dark:text-slate-400">{clnt.visits} times</td>
+                  <td className="p-8 text-sm font-bold text-slate-600 dark:text-slate-400">{clnt.visits} {t.landing.demo_times}</td>
                   <td className="p-8">
                       <p className="text-xl font-black text-indigo-600 dark:text-indigo-400 tracking-tighter">{clnt.ltv} <span className="text-[10px] uppercase">SOM</span></p>
                   </td>
@@ -543,24 +543,24 @@ function SettingsMockup({ t }: any) {
             <div className="premium-card space-y-10">
                 <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500"><Bot className="w-6 h-6" /></div>
-                    <h3 className="text-2xl font-black uppercase tracking-tight">Bot Engine Core</h3>
+                    <h3 className="text-2xl font-black uppercase tracking-tight">{t.landing.demo_bot_engine}</h3>
                 </div>
                 <div className="space-y-8">
                     <div className="p-8 bg-slate-100 dark:bg-black/20 rounded-[2rem] border border-slate-200 dark:border-white/5 flex items-center justify-between">
                         <div>
-                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">BotFather Status</p>
-                            <p className="text-sm font-bold text-emerald-500">API CONNECTED</p>
+                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">{t.landing.demo_bot_status}</p>
+                            <p className="text-sm font-bold text-emerald-500">{t.landing.demo_api_ok}</p>
                         </div>
                         <CheckCircle2 className="w-8 h-8 text-emerald-500 opacity-20" />
                     </div>
                     <div>
-                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4 block">Telegram Token</label>
+                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4 block">{t.landing.demo_token}</label>
                         <div className="p-6 bg-slate-50 dark:bg-white/5 rounded-2xl border border-dashed border-slate-200 dark:border-white/10 text-xs font-mono text-slate-500 overflow-hidden">
                             7******************************************K
                         </div>
                     </div>
                     <button className="w-full py-5 bg-indigo-600 text-white rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl shadow-indigo-600/30 opacity-50 cursor-not-allowed">
-                        Save Changes (Read Only)
+                        {t.landing.demo_save_readonly}
                     </button>
                 </div>
             </div>
@@ -569,13 +569,13 @@ function SettingsMockup({ t }: any) {
                 <div className="premium-card">
                     <div className="flex items-center gap-4 mb-10">
                         <div className="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500"><Bell className="w-6 h-6" /></div>
-                        <h3 className="text-xl font-black uppercase tracking-tight">Admin Alerts</h3>
+                        <h3 className="text-xl font-black uppercase tracking-tight">{t.landing.demo_alerts}</h3>
                     </div>
                     <div className="space-y-6">
                         {[
-                            { label: 'New Appointment Notifications', active: true },
-                            { label: 'Daily Revenue Summary', active: true },
-                            { label: 'Client Retention Alerts', active: false }
+                            { label: t.landing.demo_alert_apt, active: true },
+                            { label: t.landing.demo_alert_revenue, active: true },
+                            { label: t.landing.demo_alert_retention, active: false }
                         ].map((alt, i) => (
                             <div key={i} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-white/5 rounded-2xl">
                                 <span className="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-tight">{alt.label}</span>

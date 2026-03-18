@@ -104,7 +104,7 @@ export default function LandingPage() {
                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em]"
             >
                <Sparkles className="w-3.5 h-3.5" />
-               The Future of Business Control
+               {t.landing.showcase_badge}
             </motion.div>
  
             <motion.h1 
@@ -155,24 +155,30 @@ export default function LandingPage() {
                <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-purple-500" /> {t.common.support_247}</div>
             </motion.div>
  
-            {/* New Advantage Grid (Replaces large mockup) */}
+            {/* Advantage Grid with Header */}
             <motion.div 
                custom={4} initial="hidden" animate="visible" variants={fadeIn}
-               className="pt-24 grid grid-cols-1 md:grid-cols-3 gap-8"
+               className="pt-28 space-y-12"
             >
-               {[
-                 { title: t.landing.hero_adv_1_title, desc: t.landing.hero_adv_1_desc, icon: Sparkles, color: "text-indigo-500", bg: "bg-indigo-500/5" },
-                 { title: t.landing.hero_adv_2_title, desc: t.landing.hero_adv_2_desc, icon: ShieldCheck, color: "text-emerald-500", bg: "bg-emerald-500/5" },
-                 { title: t.landing.hero_adv_3_title, desc: t.landing.hero_adv_3_desc, icon: BrainCircuit, color: "text-purple-500", bg: "bg-purple-500/5" }
-               ].map((adv, i) => (
-                 <div key={i} className="premium-card text-left group hover:border-indigo-500/20 transition-all">
-                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-inner", adv.bg, adv.color)}>
-                        <adv.icon className="w-7 h-7" />
+               <div className="text-center space-y-4">
+                  <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white uppercase tracking-tight">{t.landing.features_title}</h2>
+                  <div className="w-16 h-1 bg-indigo-600 mx-auto rounded-full" />
+               </div>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  {[
+                    { title: t.landing.hero_adv_1_title, desc: t.landing.hero_adv_1_desc, icon: Sparkles, color: "text-indigo-500", bg: "bg-indigo-500/10" },
+                    { title: t.landing.hero_adv_2_title, desc: t.landing.hero_adv_2_desc, icon: ShieldCheck, color: "text-emerald-500", bg: "bg-emerald-500/10" },
+                    { title: t.landing.hero_adv_3_title, desc: t.landing.hero_adv_3_desc, icon: BrainCircuit, color: "text-purple-500", bg: "bg-purple-500/10" }
+                  ].map((adv, i) => (
+                    <div key={i} className="premium-card text-left group hover:border-indigo-500/20 hover:-translate-y-1 transition-all">
+                       <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6", adv.bg, adv.color)}>
+                           <adv.icon className="w-7 h-7" />
+                       </div>
+                       <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white uppercase tracking-tight">{adv.title}</h3>
+                       <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{adv.desc}</p>
                     </div>
-                    <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white uppercase tracking-tight">{adv.title}</h3>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{adv.desc}</p>
-                 </div>
-               ))}
+                  ))}
+               </div>
             </motion.div>
          </div>
       </section>
@@ -225,19 +231,13 @@ export default function LandingPage() {
                      initial={{ opacity: 0, y: 20 }}
                      whileInView={{ opacity: 1, y: 0 }}
                      transition={{ delay: i * 0.1 }}
-                     className="premium-card relative group hover:border-indigo-500/30 overflow-hidden"
+                     className="premium-card relative group hover:border-indigo-500/30 hover:-translate-y-1 overflow-hidden"
                   >
-                     <div className="absolute -right-4 -top-4 text-6xl font-black text-slate-100 dark:text-white/[0.02] group-hover:text-indigo-500/[0.05] transition-colors">{item.step}</div>
-                     <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-inner", item.bg, item.text)}>
+                     <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6", item.bg, item.text)}>
                         <item.icon className="w-7 h-7" />
                      </div>
                      <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white">{item.title}</h3>
                      <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{item.desc}</p>
-                     
-                     <div className="mt-8 pt-6 border-t border-slate-100 dark:border-white/5 flex items-center justify-between">
-                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{t.landing.learn_more}</span>
-                        <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-indigo-500 transition-colors" />
-                     </div>
                   </motion.div>
                ))}
             </div>
@@ -245,17 +245,18 @@ export default function LandingPage() {
             <motion.div 
                initial={{ opacity: 0, y: 30 }}
                whileInView={{ opacity: 1, y: 0 }}
-               className="mt-20 premium-card bg-indigo-600 !p-12 md:!p-20 overflow-hidden relative group"
+               className="mt-20 rounded-[3rem] bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 p-12 md:p-20 overflow-hidden relative group shadow-2xl shadow-indigo-600/20"
             >
-               <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
+               <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-white/5 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
+               <div className="absolute left-10 top-10 w-40 h-40 bg-indigo-400/10 rounded-full blur-2xl" />
                <div className="max-w-4xl mx-auto space-y-8 text-white text-center relative z-10">
-                  <h3 className="text-4xl md:text-6xl font-black leading-none uppercase tracking-tighter">{t.landing.cta_title_1} <br/> <span className="text-indigo-200">{t.landing.cta_title_2}</span></h3>
-                  <p className="text-indigo-100 font-medium text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">{t.landing.cta_subtitle}</p>
+                  <h3 className="text-4xl md:text-6xl font-black leading-none uppercase tracking-tighter">{t.landing.cta_title_1} <br/> <span className="text-indigo-200/80">{t.landing.cta_title_2}</span></h3>
+                  <p className="text-indigo-100/70 font-medium text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">{t.landing.cta_subtitle}</p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
-                     <Link href="/demo" className="btn-premium bg-white text-indigo-600 hover:bg-indigo-50 tracking-[0.2em] text-xs font-black min-w-[260px] h-16 shadow-2xl shadow-black/20 uppercase">
+                     <Link href="/demo" className="btn-premium bg-white text-indigo-700 hover:bg-indigo-50 tracking-[0.2em] text-xs font-black min-w-[260px] h-16 shadow-2xl shadow-black/20 uppercase">
                         {t.landing.nav_demo}
                      </Link>
-                     <Link href="/register" className="btn-premium bg-indigo-500/40 text-white hover:bg-indigo-500/60 border border-white/20 tracking-[0.2em] text-xs font-black min-w-[260px] h-16 backdrop-blur-md uppercase">
+                     <Link href="/register" className="btn-premium bg-white/10 text-white hover:bg-white/20 border border-white/20 tracking-[0.2em] text-xs font-black min-w-[260px] h-16 backdrop-blur-md uppercase">
                         {t.landing.try_free}
                      </Link>
                   </div>
