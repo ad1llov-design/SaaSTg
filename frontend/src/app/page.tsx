@@ -155,51 +155,24 @@ export default function LandingPage() {
                <div className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-purple-500" /> {t.common.support_247}</div>
             </motion.div>
  
-            {/* Visual Mockup Placeholder */}
+            {/* New Advantage Grid (Replaces large mockup) */}
             <motion.div 
                custom={4} initial="hidden" animate="visible" variants={fadeIn}
-               className="pt-20 relative group"
+               className="pt-24 grid grid-cols-1 md:grid-cols-3 gap-8"
             >
-               <div className="absolute inset-0 bg-indigo-500/10 rounded-[3rem] blur-3xl group-hover:bg-indigo-500/20 transition-all duration-1000" />
-               <div className="relative border border-slate-200 dark:border-white/10 bg-white/50 dark:bg-slate-900/50 rounded-[3rem] p-4 backdrop-blur-3xl shadow-2xl overflow-hidden aspect-[16/9] group-hover:border-indigo-500/20 transition-all">
-                  <img 
-                    src="/dashboard-mockup.png" 
-                    alt={t.common.dashboard} 
-                    className="w-full h-full object-cover rounded-[2.2rem] shadow-2xl"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-900 via-slate-900/80 to-transparent opacity-60 dark:opacity-100" />
-                  
-                  {/* Floating Stat Cards for "Information" */}
-                  <div className="absolute top-10 left-10 space-y-4 hidden md:block">
-                     <motion.div 
-                        initial={{ x: -50, opacity: 0 }}
-                        whileInView={{ x: 0, opacity: 1 }}
-                        className="bg-white dark:bg-slate-900/80 border border-indigo-500/20 rounded-2xl p-4 backdrop-blur-xl shadow-xl flex items-center gap-4"
-                     >
-                        <div className="w-10 h-10 bg-emerald-500/10 rounded-xl flex items-center justify-center">
-                           <TrendingUp className="w-5 h-5 text-emerald-500" />
-                        </div>
-                         <div className="text-left">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{t.dashboard.revenue}</p>
-                            <p className="text-lg font-black text-slate-900 dark:text-white leading-none">+145,200 Сом</p>
-                         </div>
-                     </motion.div>
-                     <motion.div 
-                        initial={{ x: -50, opacity: 0 }}
-                        whileInView={{ x: 0, opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="bg-white dark:bg-slate-900/80 border border-indigo-500/20 rounded-2xl p-4 backdrop-blur-xl shadow-xl flex items-center gap-4"
-                     >
-                        <div className="w-10 h-10 bg-indigo-500/10 rounded-xl flex items-center justify-center">
-                           <Users className="w-5 h-5 text-indigo-500" />
-                        </div>
-                         <div className="text-left">
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">{t.dashboard.clients_base}</p>
-                            <p className="text-lg font-black text-slate-900 dark:text-white leading-none">84 This Week</p>
-                         </div>
-                     </motion.div>
-                  </div>
-               </div>
+               {[
+                 { title: t.landing.hero_adv_1_title, desc: t.landing.hero_adv_1_desc, icon: Sparkles, color: "text-indigo-500", bg: "bg-indigo-500/5" },
+                 { title: t.landing.hero_adv_2_title, desc: t.landing.hero_adv_2_desc, icon: ShieldCheck, color: "text-emerald-500", bg: "bg-emerald-500/5" },
+                 { title: t.landing.hero_adv_3_title, desc: t.landing.hero_adv_3_desc, icon: BrainCircuit, color: "text-purple-500", bg: "bg-purple-500/5" }
+               ].map((adv, i) => (
+                 <div key={i} className="premium-card text-left group hover:border-indigo-500/20 transition-all">
+                    <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-inner", adv.bg, adv.color)}>
+                        <adv.icon className="w-7 h-7" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white uppercase tracking-tight">{adv.title}</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed">{adv.desc}</p>
+                 </div>
+               ))}
             </motion.div>
          </div>
       </section>
@@ -272,22 +245,20 @@ export default function LandingPage() {
             <motion.div 
                initial={{ opacity: 0, y: 30 }}
                whileInView={{ opacity: 1, y: 0 }}
-               className="mt-20 premium-card bg-indigo-600 !p-1 flex flex-col md:flex-row items-center gap-10 overflow-hidden"
+               className="mt-20 premium-card bg-indigo-600 !p-12 md:!p-20 overflow-hidden relative group"
             >
-               <div className="flex-1 p-10 md:p-14 space-y-6 text-white text-center md:text-left">
-                  <h3 className="text-3xl md:text-4xl font-bold leading-tight uppercase tracking-tight">{t.landing.cta_title_1} <br/> <span className="text-indigo-200">{t.landing.cta_title_2}</span></h3>
-                  <p className="text-indigo-100 font-medium text-lg leading-relaxed">{t.landing.cta_subtitle}</p>
-                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-                     <Link href="/demo" className="btn-premium bg-white text-indigo-600 hover:bg-indigo-50 tracking-widest text-xs min-w-[200px]">
+               <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000" />
+               <div className="max-w-4xl mx-auto space-y-8 text-white text-center relative z-10">
+                  <h3 className="text-4xl md:text-6xl font-black leading-none uppercase tracking-tighter">{t.landing.cta_title_1} <br/> <span className="text-indigo-200">{t.landing.cta_title_2}</span></h3>
+                  <p className="text-indigo-100 font-medium text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">{t.landing.cta_subtitle}</p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-4">
+                     <Link href="/demo" className="btn-premium bg-white text-indigo-600 hover:bg-indigo-50 tracking-[0.2em] text-xs font-black min-w-[260px] h-16 shadow-2xl shadow-black/20 uppercase">
                         {t.landing.nav_demo}
                      </Link>
-                     <Link href="/register" className="btn-premium bg-indigo-500 text-white hover:bg-indigo-400 border border-white/10 tracking-widest text-xs min-w-[200px]">
+                     <Link href="/register" className="btn-premium bg-indigo-500/40 text-white hover:bg-indigo-500/60 border border-white/20 tracking-[0.2em] text-xs font-black min-w-[260px] h-16 backdrop-blur-md uppercase">
                         {t.landing.try_free}
                      </Link>
                   </div>
-               </div>
-               <div className="w-full md:w-1/2 aspect-video bg-indigo-500/5 backdrop-blur-3xl group relative overflow-hidden flex items-center justify-center border border-white/5 rounded-3xl">
-                  <img src="/dashboard-mockup.png" className="w-[90%] h-[90%] object-contain rounded-2xl shadow-2xl group-hover:scale-105 transition-transform duration-700" alt={t.common.dashboard} />
                </div>
             </motion.div>
          </div>
@@ -393,19 +364,53 @@ export default function LandingPage() {
       </section>
  
       {/* Footer */}
-      <footer className="py-20 border-t border-slate-200 dark:border-white/5 transition-colors">
-         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-10">
-            <div className="space-y-4 text-center md:text-left">
-               <div className="flex items-center gap-2.5 justify-center md:justify-start">
-                  <Zap className="w-6 h-6 text-indigo-600" />
-                  <span className="text-xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">AuraSync</span>
+      <footer className="py-24 border-t border-slate-200 dark:border-white/5 bg-slate-50 dark:bg-black/20 transition-colors">
+         <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
+               <div className="md:col-span-2 space-y-8">
+                  <Link href="/" className="flex items-center gap-2.5 group">
+                     <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-xl shadow-indigo-600/20 group-hover:scale-110 transition-transform">
+                        <Zap className="w-7 h-7 text-white" />
+                     </div>
+                     <span className="text-2xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">AuraSync</span>
+                  </Link>
+                  <p className="text-slate-500 dark:text-slate-400 font-medium text-lg leading-relaxed max-w-sm">
+                     The unified ecosystem for recording, sales and customer management. Built for high-performance businesses.
+                  </p>
+                  <div className="space-y-2 pt-4">
+                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Headquarters</p>
+                     <p className="text-slate-600 dark:text-slate-300 font-bold">{t.landing.footer_address}</p>
+                  </div>
                </div>
-               <p className="text-slate-500 dark:text-slate-500 font-medium text-sm">© 2024 AuraSync Platform. Built for the modern business.</p>
+               
+               <div className="space-y-8">
+                  <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Product</h4>
+                  <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-slate-500">
+                     <li><a href="#features" className="hover:text-indigo-500 transition-colors">{t.landing.nav_features}</a></li>
+                     <li><a href="#pricing" className="hover:text-indigo-500 transition-colors">{t.landing.nav_pricing}</a></li>
+                     <li><Link href="/demo" className="hover:text-indigo-500 transition-colors">{t.landing.nav_demo}</Link></li>
+                  </ul>
+               </div>
+
+               <div className="space-y-8">
+                  <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Company</h4>
+                  <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-slate-500">
+                     <li><button className="hover:text-indigo-500 transition-colors uppercase">{t.landing.privacy}</button></li>
+                     <li><button className="hover:text-indigo-500 transition-colors uppercase">{t.landing.terms}</button></li>
+                     <li><button className="hover:text-indigo-500 transition-colors uppercase">{t.landing.support}</button></li>
+                  </ul>
+               </div>
             </div>
-            <div className="flex gap-10 text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-               <a href="#" className="hover:text-indigo-500 transition-colors">Privacy</a>
-               <a href="#" className="hover:text-indigo-500 transition-colors">Terms</a>
-               <a href="#" className="hover:text-indigo-500 transition-colors">Support</a>
+
+            <div className="pt-10 border-t border-slate-200 dark:border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+               <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                  {t.landing.footer_copyright}
+               </p>
+               <div className="flex gap-6">
+                  <div className="w-8 h-8 rounded-lg bg-slate-200 dark:bg-white/5 flex items-center justify-center text-slate-400 cursor-pointer hover:bg-indigo-500 hover:text-white transition-all">
+                     <Globe className="w-4 h-4" />
+                  </div>
+               </div>
             </div>
          </div>
       </footer>

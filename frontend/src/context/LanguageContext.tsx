@@ -272,7 +272,18 @@ export const translations = {
       demo_cta_subtitle: 'Получите 7-дневный пробный доступ и узнайте, как автоматизация изменит вашу работу уже сегодня.',
       demo_register_btn: 'Зарегистрироваться сейчас',
       features_pro: ['Полная AI экосистема', 'Складской учет / Магазин', 'Приоритетная поддержка', 'Свой брендинг', 'Продвинутая аналитика'],
-      features_trial: ['Умная запись', 'База клиентов', 'Стандартный дашборд', 'Уведомления админу']
+      features_trial: ['Умная запись', 'База клиентов', 'Стандартный дашборд', 'Уведомления админу'],
+      hero_adv_1_title: '7-дневный триал',
+      hero_adv_1_desc: 'Полный доступ ко всем функциям без ограничений.',
+      hero_adv_2_title: 'Без карты',
+      hero_adv_2_desc: 'Начните пользоваться без привязки банковской карты.',
+      hero_adv_3_title: 'Поддержка 24/7',
+      hero_adv_3_desc: 'Ваш бизнес всегда под контролем нашей команды.',
+      footer_address: 'Кыргызстан, г. Бишкек, ул. Московская 123',
+      footer_copyright: '© 2026 AuraSync Platform. Все права защищены.',
+      privacy: 'Конфиденциальность',
+      terms: 'Условия',
+      support: 'Поддержка'
     },
     shop: {
       title: 'Каталог товаров',
@@ -595,7 +606,18 @@ export const translations = {
       demo_cta_subtitle: 'Get a 7-day full access trial and see how automation can transform your workflow today.',
       demo_register_btn: 'Register Now',
       features_pro: ['Full AI Ecosystem', 'Inventory/Shop Modules', 'Priority Support', 'Custom Branding', 'Advanced Analytics'],
-      features_trial: ['Smart Booking', 'Client Database', 'Standard Dashboards', 'Admin Notifications']
+      features_trial: ['Smart Booking', 'Client Database', 'Standard Dashboards', 'Admin Notifications'],
+      hero_adv_1_title: '7-Day Trial',
+      hero_adv_1_desc: 'Full access to all features with no limits.',
+      hero_adv_2_title: 'No Credit Card',
+      hero_adv_2_desc: 'Start using without binding your bank card.',
+      hero_adv_3_title: '24/7 Support',
+      hero_adv_3_desc: 'Your business is always under our team\'s care.',
+      footer_address: '123 Moskovskaya St, Bishkek, Kyrgyzstan',
+      footer_copyright: '© 2026 AuraSync Platform. All rights reserved.',
+      privacy: 'Privacy',
+      terms: 'Terms',
+      support: 'Support'
     },
     shop: {
       title: 'Product Catalog',
@@ -918,7 +940,18 @@ export const translations = {
       demo_cta_subtitle: '7 күндүк акысыз мүмкүнчүлүктү алыңыз жана автоматташтыруу ишиңизди кандайча өзгөртөөрүн билиңиз.',
       demo_register_btn: 'Азыр катталыңыз',
       features_pro: ['Толук AI экосистемасы', 'Складдык эсеп / Дүкөн', 'Артыкчылыктуу колдоо', 'Өз брендинг', 'Өркүндөтүлгөн аналитика'],
-      features_trial: ['Акылдуу жазуу', 'Кардарлар базасы', 'Стандарттык дашборд', 'Админге билдирүүлөр']
+      features_trial: ['Акылдуу жазуу', 'Кардарлар базасы', 'Стандарттык дашборд', 'Админге билдирүүлөр'],
+      hero_adv_1_title: '7 күндүк триал',
+      hero_adv_1_desc: 'Бардык функцияларга чектөөсүз толук мүмкүнчүлүк.',
+      hero_adv_2_title: 'Картасыз',
+      hero_adv_2_desc: 'Банк картасын байлабастан колдоно баштаңыз.',
+      hero_adv_3_title: '24/7 Колдоо',
+      hero_adv_3_desc: 'Сиздин бизнесиңиз ар дайым биздин команданын көзөмөлүндө.',
+      footer_address: 'Кыргызстан, Бишкек ш., Московская көч. 123',
+      footer_copyright: '© 2026 AuraSync Platform. Бардык укуктар корголгон.',
+      privacy: 'Купуялык',
+      terms: 'Шарттар',
+      support: 'Колдоо'
     },
     shop: {
       title: 'Товарлар каталогу',
@@ -1241,7 +1274,18 @@ export const translations = {
       demo_cta_subtitle: '7 kunlik bepul kirish huquqini oling va avtomatlashtirish ish faoliyatingizni qanday o\'zgartirishini bilib oling.',
       demo_register_btn: 'Hozir ro\'yxatdan o\'ting',
       features_pro: ['To\'liq AI ekotizimi', 'Ombor hisobi / Do\'kon', 'Ustuvor yordam', 'O\'z brendingi', 'Kengaytirilgan analitika'],
-      features_trial: ['Aqlli yozilish', 'Mijozlar bazasi', 'Standart dashboard', 'Admin xabarnomalari']
+      features_trial: ['Aqlli yozilish', 'Mijozlar bazasi', 'Standart dashboard', 'Admin xabarnomalari'],
+      hero_adv_1_title: '7 kunlik trial',
+      hero_adv_1_desc: 'Barcha funktsiyalarga hech qanday cheklovlarsiz to\'liq kirish.',
+      hero_adv_2_title: 'Kartasiz',
+      hero_adv_2_desc: 'Bank kartasini bog\'lamasdan foydalanishni boshlang.',
+      hero_adv_3_title: '24/7 Yordam',
+      hero_adv_3_desc: 'Sizning biznesingiz har doim bizning jamoamiz nazoratida.',
+      footer_address: 'G. Bishkek, Moskovskaya ko\'chasi 123, Qirg\'iziston',
+      footer_copyright: '© 2026 AuraSync Platform. Barcha huquqlar himoyalangan.',
+      privacy: 'Maxfiylik',
+      terms: 'Shartlar',
+      support: 'Yordam'
     },
     shop: {
       title: 'Mahsulotlar katalogi',
