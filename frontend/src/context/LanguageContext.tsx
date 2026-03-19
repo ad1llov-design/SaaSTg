@@ -323,7 +323,11 @@ export const translations = {
       demo_configure: 'Настроить',
       demo_manage: 'Управлять',
       demo_unlock: 'Разблокировать (Pro)',
-      demo_booking_desc: 'Умная система записи через Telegram с автоматическими напоминаниями.'
+      demo_booking_desc: 'Умная система записи через Telegram с автоматическими напоминаниями.',
+      footer_desc: 'Единая экосистема для записи, продаж и управления клиентами. Создана для высокоэффективного бизнеса.',
+      footer_hq: 'Штabs-квартира',
+      footer_product: 'Продукт',
+      footer_company: 'Компания'
     },
     shop: {
       title: 'Каталог товаров',
@@ -697,7 +701,11 @@ export const translations = {
       demo_configure: 'Configure',
       demo_manage: 'Manage Flow',
       demo_unlock: 'Upgrade to Unlock',
-      demo_booking_desc: 'Smart Telegram-based booking system with automated reminders.'
+      demo_booking_desc: 'Smart Telegram-based booking system with automated reminders.',
+      footer_desc: 'The unified ecosystem for recording, sales and customer management. Built for high-performance businesses.',
+      footer_hq: 'Headquarters',
+      footer_product: 'Product',
+      footer_company: 'Company'
     },
     shop: {
       title: 'Product Catalog',
@@ -1071,7 +1079,11 @@ export const translations = {
       demo_configure: 'Жөндөө',
       demo_manage: 'Башкаруу',
       demo_unlock: 'Ачуу (Pro)',
-      demo_booking_desc: 'Telegram аркылуу акылдуу жазуу тутуму.'
+      demo_booking_desc: 'Telegram аркылуу акылдуу жазуу тутуму.',
+      footer_desc: 'Жазуу, сатуу жана кардарларды башкаруу үчүн бирдиктүү экосистема.',
+      footer_hq: 'Штаб-квартира',
+      footer_product: 'Продукт',
+      footer_company: 'Компания'
     },
     shop: {
       title: 'Товарлар каталогу',
@@ -1445,7 +1457,11 @@ export const translations = {
       demo_configure: 'Sozlash',
       demo_manage: 'Boshqarish',
       demo_unlock: 'Ochish (Pro)',
-      demo_booking_desc: 'Telegram orqali aqlli yozilish tizimi.'
+      demo_booking_desc: 'Telegram orqali aqlli yozilish tizimi.',
+      footer_desc: 'Yozilish, savdo va mijozlarni boshqarish uchun yagona ekotizim.',
+      footer_hq: 'Bosh ofis',
+      footer_product: 'Mahsulot',
+      footer_company: 'Kompaniya'
     },
     shop: {
       title: 'Mahsulotlar katalogi',

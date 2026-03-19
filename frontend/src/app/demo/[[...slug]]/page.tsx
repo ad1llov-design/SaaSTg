@@ -238,7 +238,7 @@ function AppointmentsMockup({ t }: any) {
                         <div className="w-10 h-10 rounded-full bg-indigo-500/10 flex items-center justify-center font-bold text-indigo-500 text-xs">{apt.name[0]}</div>
                         <div>
                             <p className="font-bold text-sm text-slate-900 dark:text-white leading-tight">{apt.name}</p>
-                            <p className="text-[10px] text-slate-400 font-bold">{apt.time} • Today</p>
+                            <p className="text-[10px] text-slate-400 font-bold">{apt.time} • {t.landing.demo_today}</p>
                         </div>
                     </div>
                 </td>
@@ -251,7 +251,10 @@ function AppointmentsMockup({ t }: any) {
                         apt.status === 'In Progress' ? "bg-amber-500/10 text-amber-500" :
                         "bg-slate-200 dark:bg-white/10 text-slate-400"
                     )}>
-                        {apt.status}
+                        {apt.status === 'Confirmed' ? t.landing.demo_confirmed :
+                         apt.status === 'In Progress' ? t.landing.demo_in_progress :
+                         apt.status === 'Waiting' ? t.landing.demo_waiting :
+                         t.landing.demo_upcoming}
                     </span>
                 </td>
               </tr>
@@ -317,12 +320,12 @@ function StaffMockup({ t }: any) {
               
               <div className="w-full grid grid-cols-2 gap-4 pt-6 border-t border-slate-100 dark:border-white/5">
                 <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Apts</p>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{t.appointments.title}</p>
                     <p className="font-bold text-slate-900 dark:text-white">{stf.appointments}</p>
                 </div>
                 <div>
-                    <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Status</p>
-                    <span className="text-[9px] font-black text-emerald-500 uppercase">Active</span>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{t.landing.demo_th_status}</p>
+                    <span className="text-[9px] font-black text-emerald-500 uppercase">{t.landing.demo_api_ok.split(' ')[0]}</span>
                 </div>
               </div>
             </div>
@@ -598,7 +601,7 @@ function SectionHeader({ icon, title, subtitle, t }: any) {
       <div className="space-y-2">
         <div className="flex items-center gap-3 text-indigo-600 dark:text-indigo-400 font-black tracking-[0.2em] text-[10px] uppercase mb-4">
           <div className="w-8 h-8 rounded-xl bg-indigo-500/10 flex items-center justify-center">{icon}</div>
-          {title} <span className="opacity-40 translate-x-1">/ Demo Flow</span>
+          {title} <span className="opacity-40 translate-x-1">/ {t.landing.demo_badge.split('•')[0].trim()}</span>
         </div>
         <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-slate-900 dark:text-white uppercase leading-none">
           {title}

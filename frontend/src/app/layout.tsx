@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/AuthProvider";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { NotificationProvider } from "@/context/NotificationContext";
 import AppShell from "@/components/AppShell";
 
-const font = Outfit({ subsets: ["latin", "latin-ext"] });
+const outfit = Outfit({ subsets: ["latin", "latin-ext"], variable: '--font-outfit' });
+const inter = Inter({ subsets: ["latin", "latin-ext"], variable: '--font-inter' });
 
 export const metadata: Metadata = {
   title: "AuraSync SaaS — Система онлайн-записи",
@@ -19,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru" suppressHydrationWarning>
-      <body className={font.className}>
+    <html lang="ru" suppressHydrationWarning className={`${outfit.variable} ${inter.variable}`}>
+      <body className="font-inter antialiased">
         <LanguageProvider>
           <NotificationProvider>
             <AuthProvider>

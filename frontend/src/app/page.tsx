@@ -376,16 +376,16 @@ export default function LandingPage() {
                      <span className="text-2xl font-black tracking-tighter uppercase italic text-slate-900 dark:text-white">AuraSync</span>
                   </Link>
                   <p className="text-slate-500 dark:text-slate-400 font-medium text-lg leading-relaxed max-w-sm">
-                     The unified ecosystem for recording, sales and customer management. Built for high-performance businesses.
+                    {t.landing.footer_desc}
                   </p>
                   <div className="space-y-2 pt-4">
-                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Headquarters</p>
+                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{t.landing.footer_hq}</p>
                      <p className="text-slate-600 dark:text-slate-300 font-bold">{t.landing.footer_address}</p>
                   </div>
                </div>
                
                <div className="space-y-8">
-                  <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Product</h4>
+                  <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">{t.landing.footer_product}</h4>
                   <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-slate-500">
                      <li><a href="#features" className="hover:text-indigo-500 transition-colors">{t.landing.nav_features}</a></li>
                      <li><a href="#pricing" className="hover:text-indigo-500 transition-colors">{t.landing.nav_pricing}</a></li>
@@ -394,7 +394,7 @@ export default function LandingPage() {
                </div>
 
                <div className="space-y-8">
-                  <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">Company</h4>
+                  <h4 className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-[0.2em]">{t.landing.footer_company}</h4>
                   <ul className="space-y-4 text-xs font-bold uppercase tracking-widest text-slate-500">
                      <li><button className="hover:text-indigo-500 transition-colors uppercase">{t.landing.privacy}</button></li>
                      <li><button className="hover:text-indigo-500 transition-colors uppercase">{t.landing.terms}</button></li>
